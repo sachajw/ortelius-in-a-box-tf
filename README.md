@@ -25,7 +25,7 @@
 
 ### Configs for WSL
 #### Windows Operating System
-`c:\Users\beavis\.wslconfig`
+`c:\Users\abraham\.wslconfig`
 ```
 # Settings apply across all Linux distros running on WSL 2
 [wsl2]
@@ -61,7 +61,7 @@ nestedVirtualization=false
 # Turns on output console showing contents of dmesg when opening a WSL 2 distro for debugging
 debugConsole=true
 [user]
-default = beavis
+default = abraham
 
 [automount]
 options = "metadata"
@@ -210,7 +210,7 @@ sudo brew services start chipmk/tap/docker-mac-net-connect
 #### `.gitconfig` inspiration
 ```
 [core]
-	excludesfile = /Users/beavis/.gitignore_global
+	excludesfile = /Users/abraham/.gitignore_global
 [alias]
 # Make sure you're adding under the [alias] block.
 # Git Commit, Add all and Push in one step.
@@ -231,8 +231,8 @@ tst = "!f() { git cap \"🤖 TEST: $@\"; }; f"
 # BREAKING CHANGE.
 brk = "!f() { git cap \"‼️ BREAKING: $@\"; }; f"
 [user "https://github.com"]
-	name = Beavis Zombie
-	email = beavis.zombie@allianz.de
+	name = abraham ortelius
+	email = abraham.ortelius@ortelius.io
 [core]
 	repositoryformatversion = 0
         filemode = false
@@ -240,7 +240,7 @@ brk = "!f() { git cap \"‼️ BREAKING: $@\"; }; f"
         logallrefupdates = false
 [init]
   defaultBranch = main
-	templatedir = /Users/beavis/.git_template
+	templatedir = /Users/abraham/.git_template
 [pull]
 	rebase = false
 [credential "https://github.com"]
@@ -261,12 +261,9 @@ brk = "!f() { git cap \"‼️ BREAKING: $@\"; }; f"
 	browser = firefox
 ```
 
-### [Agile Delivery Platform Support](https://github.developer.allianz.io/AgileDeliveryPlatform)
-- [adp-2fa config and installation](https://github.developer.allianz.io/AgileDeliveryPlatform/2fa/tree/master/adp-2fa)
-- adp-2fa provides two-factor authentication to access Github Enterprise from outside sources
-- [ADP 101](https://github.developer.allianz.io/AgileDeliveryPlatform/ADP-101/blob/master/getting-started/GETTING-STARTED-GITHUB.md)
-- [Git Credential Manager Core](https://github.com/microsoft/Git-Credential-Manager-Core) helps greatly to manage credentials securely
-- [Log a GitHub Enterprise support requests](https://github.developer.allianz.io/AgileDeliveryPlatform/Support/issues)
+### Source Control [GitHub.com](https://github.com/)
+- Set yourself up on GitHub
+- [Terms & Conditions](https://docs.github.com/en/site-policy/github-terms/github-terms-of-service)
 
 ### [VSCode](https://code.visualstudio.com/) IDE
 - Download the `VSCode IDE` [here](https://code.visualstudio.com/download)
@@ -327,7 +324,7 @@ docker image rm <account number>.dkr.ecr.eu-central-1.amazonaws.com/dex:v2.27.0
 ```
 
 ### AWS ECR
-- Login in to AWS on the command line with your Allianz credentials to refresh your session token
+- Login in to AWS on the command line with your credentials to refresh your session token
 #### Auth with ECR
 ```
 aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin <account number>.dkr.ecr.eu-central-1.amazonaws.com
@@ -466,7 +463,7 @@ helm install argocd ./helm-appsofapps --dry-run --debug
 - Documentation is [here](https://www.terraform.io/docs)
 - [Terms & Conditions](https://registry.terraform.io/terms)
 #### Steps to get going
-- Clone `helm-argocd` [here](https://github.developer.allianz.io/azt-grl/helm-argocd)
+- Clone `ortelius-in-a-box` [here](https://github.com/sachajw/ortelius-in-a-box)
 - Navigate to `helm-argocd/terraform`
 - Make sure you are on the `acm-in-a-box` branch
 - Run the following
@@ -495,5 +492,5 @@ In total, there 5 log levels which can be used for debugging purposes:
 export TF_LOG="DEBUG"
 ```
 ```
-export TF_LOG_PATH="/beavis/terraform-debug.log"
+export TF_LOG_PATH="/abraham/terraform-debug.log"
 ```
