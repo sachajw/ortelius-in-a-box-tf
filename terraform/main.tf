@@ -37,16 +37,17 @@ resource "null_resource" "aws_ecr" {
     key = uuid()
   }
 
-  provisioner "local-exec" {
-    command = <<EOF
-    sleep 30
-    kind load docker-image --name ortelius-in-a-box --nodes ortelius-in-a-box-control-plane,ortelius-in-a-box-worker 239907433624.dkr.ecr.eu-central-1.amazonaws.com/argocd:2.0.5.803-165841
-    kind load docker-image --name ortelius-in-a-box --nodes ortelius-in-a-box-control-plane,ortelius-in-a-box-worker 239907433624.dkr.ecr.eu-central-1.amazonaws.com/redis:6.2.4-alpine
-    kind load docker-image --name ortelius-in-a-box --nodes ortelius-in-a-box-control-plane,ortelius-in-a-box-worker 239907433624.dkr.ecr.eu-central-1.amazonaws.com/dex:v2.27.0
-    EOF
-  }
-  depends_on = [kind_cluster.default]
+  #  provisioner "local-exec" {
+  #    command = <<EOF
+  #    sleep 30
+  #    kind load docker-image --name ortelius-in-a-box --nodes ortelius-in-a-box-control-plane,ortelius-in-a-box-worker 239907433624.dkr.ecr.eu-central-1.amazonaws.com/argocd:2.0.5.803-165841
+  #    kind load docker-image --name ortelius-in-a-box --nodes ortelius-in-a-box-control-plane,ortelius-in-a-box-worker 239907433624.dkr.ecr.eu-central-1.amazonaws.com/redis:6.2.4-alpine
+  #    kind load docker-image --name ortelius-in-a-box --nodes ortelius-in-a-box-control-plane,ortelius-in-a-box-worker 239907433624.dkr.ecr.eu-central-1.amazonaws.com/dex:v2.27.0
+  #    EOF
+  #  }
+  #  depends_on = [kind_cluster.default]
 }
+
 
 provider "kubectl" {
   host                   = kind_cluster.default.endpoint
@@ -74,37 +75,38 @@ resource "helm_release" "argocd" {
   version          = "5.6.2"
   create_namespace = true
 
-#  values = [
-#    file("argocd/application.yaml")
-#  ]
+  #  values = [
+  #    file("argocd/application.yaml")
+  #  ]
 }
 
 resource "helm_release" "ortelius" {
   name             = "ortelius"
-  repository       = "https://github.com/ortelius/ortelius-charts" #"https://github.com/DeployHubProject/DeployHub-Pro" #dirname("~/Documents/repos/tvl/ortelius-charts/chart") #"https://github.com/sachajw/ortelius-charts" #"https://deployhubproject.github.io/DeployHub-Pro/" #"https://github.com/ortelius/ortelius/index.yaml"
+  repository       = "https://github.com/ortelius/ortelius-charts/" #"https://github.com/DeployHubProject/DeployHub-Pro" #dirname("~/Documents/repos/tvl/ortelius-charts/chart") #"https://github.com/sachajw/ortelius-charts" #"https://deployhubproject.github.io/DeployHub-Pro/" #"https://github.com/ortelius/ortelius/index.yaml"
   chart            = "ortelius"
   version          = "10.0.0"
   namespace        = "ortelius"
   create_namespace = true
 
-#  values = [
-#    file("argocd/application.yaml")
-#  ]
+  #  values = [
+  #    file("argocd/application.yaml")
+  #  ]
 }
 
-#resource "helm_release" "keptn" {
-#  name = "keptn"
-#
-#  repository       = "https://charts.keptn.sh"
-#  chart            = "keptn"
-#  namespace        = "keptn"
-#  version          = "0.19.1"
-#  create_namespace = true
-#
-#  values = [
-#    file("argocd/application.yaml")
-#  ]
-#}
+resource "helm_release" "keptn" {
+  name = "keptn"
+
+  repository       = "https://charts.keptn.sh"
+  chart            = "keptn"
+  namespace        = "keptn"
+  version          = "0.19.1"
+  create_namespace = true
+  timeout          = "300"
+
+  #  values = [
+  #    file("argocd/application.yaml")
+  #  ]
+}
 
 #resource "helm_release" "argocd" {
 #  chart            = "../helm"
