@@ -2,9 +2,8 @@ apiVersion: v2
 name: argocd
 description: A Helm chart for argocd
 type: application
-version: 0.7.0
-appVersion: 2.0.5
+version: 0.0.1
+appVersion: 0.0.1
 icon: https://cncf-branding.netlify.app/img/projects/argo/stacked/color/argo-stacked-color.png
 maintainers:
-  - name: Arnau Oncins
-    email: arnau.oncins@allianz.com
+  - name: Sacha Wharton
