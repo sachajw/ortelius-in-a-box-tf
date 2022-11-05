@@ -47,36 +47,76 @@ resource "null_resource" "aws_ecr" {
 }
 
 resource "helm_release" "argocd" {
-  chart            = "../helm"
-  namespace        = "argocd"
   name             = "argocd"
+  repository       = "https://argoproj.github.io/argo-helm"
+  chart            = "argo-cd"
+  namespace        = "argocd"
+  version          = "5.6.2"
   create_namespace = true
-  depends_on       = [helm_release.ingress_nginx]
-  timeout          = "600"
 
-  values = [
-    file("../helm/values-${local.environment}.yaml"),
-    file("configuration/${local.environment}/capabilities.yaml"),
-  ]
+#  values = [
+#    file("argocd/application.yaml")
+#  ]
 }
 
-resource "helm_release" "argocdappsofapps" {
-  namespace  = "argocd"
-  name       = "argocdappsofapps"
-  chart      = "../helm-appsofapps"
-  depends_on = [helm_release.argocd]
+resource "helm_release" "ortelius" {
+  name             = "ortelius"
+  repository       = "https://github.com/ortelius/ortelius-charts" #"https://github.com/DeployHubProject/DeployHub-Pro" #dirname("~/Documents/repos/tvl/ortelius-charts/chart") #"https://github.com/sachajw/ortelius-charts" #"https://deployhubproject.github.io/DeployHub-Pro/" #"https://github.com/ortelius/ortelius/index.yaml"
+  chart            = "ortelius"
+  version          = "10.0.0"
+  namespace        = "ortelius"
+  create_namespace = true
 
-  values = [
-    <<EOS
-capabilities:%{if length(local.capabilities) == 0} []%{endif}
-%{for capability in local.capabilities}- ${capability.name}
-%{endfor}
-regtestCapabilities:%{if length(local.regtest_capability_names) == 0} []%{endif}
-%{for capname in local.regtest_capability_names}- ${capname}
-%{endfor}
-clusters:
-%{for cluster in local.config.clusters}- ${cluster}
-%{endfor}
-EOS
-  ]
+#  values = [
+#    file("argocd/application.yaml")
+#  ]
 }
+
+#resource "helm_release" "keptn" {
+#  name = "keptn"
+#
+#  repository       = "https://charts.keptn.sh"
+#  chart            = "keptn"
+#  namespace        = "keptn"
+#  version          = "0.19.1"
+#  create_namespace = true
+#
+#  values = [
+#    file("argocd/application.yaml")
+#  ]
+#}
+
+#resource "helm_release" "argocd" {
+#  chart            = "../helm"
+#  namespace        = "argocd"
+#  name             = "argocd"
+#  create_namespace = true
+#  depends_on       = [helm_release.ingress_nginx]
+#  timeout          = "600"
+#
+#  values = [
+#    file("../helm/values-${local.environment}.yaml"),
+#    file("configuration/${local.environment}/capabilities.yaml"),
+#  ]
+#}
+#
+#resource "helm_release" "argocdappsofapps" {
+#  namespace  = "argocd"
+#  name       = "argocdappsofapps"
+#  chart      = "../helm-appsofapps"
+#  depends_on = [helm_release.argocd]
+#
+#  values = [
+#    <<EOS
+#capabilities:%{if length(local.capabilities) == 0} []%{endif}
+#%{for capability in local.capabilities}- ${capability.name}
+#%{endfor}
+#regtestCapabilities:%{if length(local.regtest_capability_names) == 0} []%{endif}
+#%{for capname in local.regtest_capability_names}- ${capname}
+#%{endfor}
+#clusters:
+#%{for cluster in local.config.clusters}- ${cluster}
+#%{endfor}
+#EOS
+#  ]
+#}
