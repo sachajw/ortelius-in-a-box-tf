@@ -301,7 +301,7 @@ brk = "!f() { git cap \"‼️ BREAKING: $@\"; }; f"
 ```
 {
 	"auths": {
-		"239907433624.dkr.ecr.eu-central-1.amazonaws.com": {},
+		"<account number>.dkr.ecr.eu-central-1.amazonaws.com": {},
 		"https://index.docker.io/v1/": {}
 	},
 	"credsStore": "desktop",
@@ -311,44 +311,43 @@ brk = "!f() { git cap \"‼️ BREAKING: $@\"; }; f"
 ### Helpful commands
 #### List images
 ```
-docker image list | grep 239907433624
+docker image list | grep <account number>
 ```
 #### Copy
 ```
-docker cp ~/.docker/config.json crp2-in-a-box-control-plane:/var/lib/kubelet/config.json
+docker cp ~/.docker/config.json ortelius-in-a-box-control-plane:/var/lib/kubelet/config.json
 ```
 #### Exec
 ```
-docker exec -it crp2-in-a-box-worker bash
+docker exec -it ortelius-in-a-box-worker bash
 ```
 #### Delete images
 ```
-docker image rm 239907433624.dkr.ecr.eu-central-1.amazonaws.com/dex:v2.27.0
+docker image rm <account number>.dkr.ecr.eu-central-1.amazonaws.com/dex:v2.27.0
 ```
 
 ### AWS ECR
 - Login in to AWS on the command line with your Allianz credentials to refresh your session token
 #### Auth with ECR
 ```
-aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin 239907433624.dkr.ecr.eu-central-1.amazonaws.com
+aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin <account number>.dkr.ecr.eu-central-1.amazonaws.com
 ```
-- Check here for the latest images being used [helm-argocd](https://github.developer.allianz.io/azt-grl/helm-argocd/blob/master/helm/values.yaml)
 - Pull the current images to the local machine at the time of writing
 ```
-docker pull 239907433624.dkr.ecr.eu-central-1.amazonaws.com/argocd:2.0.5.803-165841
+docker pull <account number>.dkr.ecr.eu-central-1.amazonaws.com/argocd:2.0.5.803-165841
 ```
 ```
-docker pull 239907433624.dkr.ecr.eu-central-1.amazonaws.com/dex:v2.27.0
+docker pull <account number>.dkr.ecr.eu-central-1.amazonaws.com/dex:v2.27.0
 ```
 ```
-docker pull 239907433624.dkr.ecr.eu-central-1.amazonaws.com/redis:6.2.4-alpine
+docker pull <account number>.dkr.ecr.eu-central-1.amazonaws.com/redis:6.2.4-alpine
 ```
 
 ### Container Registries
 #### [AWS Public registry](https://gallery.ecr.aws/)
 - [Terms & Conditions](https://aws.amazon.com/service-terms/)
-### AWS CRP2 registry
-- `239907433624.dkr.ecr.eu-central-1.amazonaws.com`
+### AWS ortelius registry
+- `<account number>.dkr.ecr.eu-central-1.amazonaws.com`
 
 #### [Kind.sigs.k8s.io](https://kind.sigs.k8s.io/)
 - Install [here](https://kind.sigs.k8s.io/docs/user/quick-start/#installation)
@@ -385,19 +384,19 @@ rm -f crictl-$VERSION-linux-amd64.tar.gz
 ### Helpful commands
 #### Get the list of nodes
 ```
-kind get nodes -n crp2-in-a-box
+kind get nodes -n ortelius-in-a-box
 ```
 #### Cluster info
 ```
-kubectl cluster-info --context crp2-in-a-box
+kubectl cluster-info --context ortelius-in-a-box
 ```
 #### Logs
 ```
-kind export logs -n crp2-in-a-box
+kind export logs -n ortelius-in-a-box
 ```
 #### Load images onto the container nodes
 ```
-kind load docker-image --name crp2-in-a-box --nodes crp2-in-a-box-control-plane,crp2-in-a-box-worker,crp2-in-a-box-worker2 239907433624.dkr.ecr.eu-central-1.amazonaws.com/redis:6.2.4-alpine
+kind load docker-image --name ortelius-in-a-box --nodes ortelius-in-a-box-control-plane,ortelius-in-a-box-worker,ortelius-in-a-box-worker2 <account number>.dkr.ecr.eu-central-1.amazonaws.com/redis:6.2.4-alpine
 ```
 
 #### [Kubernetes.io](https://kubernetes.io/)
@@ -414,7 +413,7 @@ kind load docker-image --name crp2-in-a-box --nodes crp2-in-a-box-control-plane,
 #### Helpful tools
 #### Kubectx for switching context
 ```
-kubectx kind-crp2-in-a-box
+kubectx kind-ortelius-in-a-box
 ```
 #### Kubens for switching namespaces
 ```
@@ -481,7 +480,7 @@ terraform plan
 terraform apply
 ```
 - You should see something like in the image in Docker Desktop
- ![CRP2 Docker nodes!](images/docker/crp2-nodes-docker.jpg "CRP2 Docker nodes")
+ ![ortelius Docker nodes!](images/docker/ortelius-nodes-docker.jpg "ortelius Docker nodes")
 
 ### Helpful tips
 #### Logs
