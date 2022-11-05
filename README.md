@@ -427,11 +427,25 @@ A simple Kubernetes client-go application that creates and patches imagePullSecr
 - Also known as the package manager for Kubernetes
 #### Please make sure you add the following Helm packages
 ```
+helm repo add ortelius https://ortelius.github.io/ortelius-charts
+```
+```
 helm repo add argo https://argoproj.github.io/argo-helm
 ```
 ```
-helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+helm repo add nginx-stable https://helm.nginx.com/stable
 ```
+```
+helm repo add keptn-ortelius-service https://ortelius.github.io/keptn-ortelius-service
+```
+```
+helm repo add keptn https://charts.keptn.sh
+```
+
+
+
+
+
 #### Use `helm repo list` to make sure they are there
 ```
 helm repo list
