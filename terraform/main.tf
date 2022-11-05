@@ -56,6 +56,31 @@ provider "kubectl" {
   client_key             = kind_cluster.default.client_key
 }
 
+resource "kubectl_manifest" "spekt8" {
+  yaml_body =  <<YAML
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spekt8
+spec:
+  selector:
+    matchLabels:
+      component: spekt8
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        component: spekt8
+    spec:
+      containers:
+        - name: spekt8
+          image: elliotxkim/spekt8
+          ports:
+            - containerPort: 3000
+YAML
+    depends_on = [kind_cluster.default]
+}
+
 provider "helm" {
   debug = true
   kubernetes {
