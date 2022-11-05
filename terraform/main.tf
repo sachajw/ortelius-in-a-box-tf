@@ -74,71 +74,40 @@ resource "helm_release" "argocd" {
   namespace        = "argocd"
   version          = "5.6.2"
   create_namespace = true
-
-  #  values = [
-  #    file("argocd/application.yaml")
-  #  ]
+  depends_on = [kind_cluster.default]
 }
 
-resource "helm_release" "ortelius" {
-  name             = "ortelius"
-  #repository       = "https://github.com/ortelius/ortelius-charts/ortelius" #"https://github.com/DeployHubProject/DeployHub-Pro" #dirname("~/Documents/repos/tvl/ortelius-charts/chart") #"https://github.com/sachajw/ortelius-charts" #"https://deployhubproject.github.io/DeployHub-Pro/" #"https://github.com/ortelius/ortelius/index.yaml"
-  chart            = "ortelius"
-  version          = "10.0.0"
-  namespace        = "ortelius"
+#resource "null_resource" "helm_install" {
+#  triggers = {
+#    key = uuid()
+#  }
+#
+#    provisioner "local-exec" {
+#      command = <<EOF
+#      #!/bin/bash
+#      set -euo pipefail
+#      echo "Adding & installing Keptn Ortelius Service & Ortelius"
+#      helm repo add keptn-ortelius-service https://ortelius.github.io/keptn-ortelius-service
+#      helm repo add ortelius https://ortelius.github.io/ortelius-charts/
+#      helm install my-ms-dep-pkg-cud ortelius/ms-dep-pkg-cud --version 10.0.0-build.66
+#      helm install my-ms-compitem-crud ortelius/ms-compitem-crud --version 10.0.0-build.78
+#      helm install my-ms-dep-pkg-r ortelius/ms-dep-pkg-r --version 10.0.0-build.53
+#      helm install my-ms-validate-user ortelius/ms-validate-user --version 10.0.0-build.48
+#      helm install my-keptn-ortelius-service keptn-ortelius-service/keptn-ortelius-service --version 0.0.1
+#      echo "Done"
+#      EOF
+#    }
+#    depends_on = [kind_cluster.default]
+#}
+
+resource "helm_release" "keptn" {
+  name = "keptn"
+
+  repository       = "https://charts.keptn.sh"
+  chart            = "keptn"
+  namespace        = "keptn"
+  version          = "0.19.1"
   create_namespace = true
-
-  values = [
-      file("ortelius-index.yaml")
-    ]
+  timeout          = "300"
+  depends_on = [kind_cluster.default]
 }
-
-#resource "helm_release" "keptn" {
-#  name = "keptn"
-#
-#  repository       = "https://charts.keptn.sh"
-#  chart            = "keptn"
-#  namespace        = "keptn"
-#  version          = "0.19.1"
-#  create_namespace = true
-#  timeout          = "300"
-
-  #  values = [
-  #    file("argocd/application.yaml")
-  #  ]
-#}
-
-#resource "helm_release" "argocd" {
-#  chart            = "../helm"
-#  namespace        = "argocd"
-#  name             = "argocd"
-#  create_namespace = true
-#  depends_on       = [helm_release.ingress_nginx]
-#  timeout          = "600"
-#
-#  values = [
-#    file("../helm/values-${local.environment}.yaml"),
-#    file("configuration/${local.environment}/capabilities.yaml"),
-#  ]
-#}
-#
-#resource "helm_release" "argocdappsofapps" {
-#  namespace  = "argocd"
-#  name       = "argocdappsofapps"
-#  chart      = "../helm-appsofapps"
-#  depends_on = [helm_release.argocd]
-#
-#  values = [
-#    <<EOS
-#capabilities:%{if length(local.capabilities) == 0} []%{endif}
-#%{for capability in local.capabilities}- ${capability.name}
-#%{endfor}
-#regtestCapabilities:%{if length(local.regtest_capability_names) == 0} []%{endif}
-#%{for capname in local.regtest_capability_names}- ${capname}
-#%{endfor}
-#clusters:
-#%{for cluster in local.config.clusters}- ${cluster}
-#%{endfor}
-#EOS
-#  ]
-#}

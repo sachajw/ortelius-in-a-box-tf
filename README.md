@@ -441,11 +441,6 @@ helm repo add keptn-ortelius-service https://ortelius.github.io/keptn-ortelius-s
 ```
 helm repo add keptn https://charts.keptn.sh
 ```
-
-
-
-
-
 #### Use `helm repo list` to make sure they are there
 ```
 helm repo list
