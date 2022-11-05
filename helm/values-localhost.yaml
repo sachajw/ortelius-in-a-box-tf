@@ -1,0 +1,36 @@
+ingress:
+  host: localhost
+
+server:
+  sa:
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::054819306458:role/oidc-role-argocd-server
+
+applicationController:
+  resources:
+    requests:
+      cpu: 0.5
+      memory: 1Gi
+    limits:
+      cpu: 1
+      memory: 1Gi
+
+githubSSO:
+  clientID: "43c2a0f5a9ee1ed0ae06"
+
+proxy:
+  host: proxyv2.apfr-acm-infra.ec1.aws.aztec.cloud.allianz
+  noProxyHosts: "10.251.0.0/16,44.135.74.0/24,44.135.81.128/25,10.100.0.0/16,172.20.0.0/16,.svc,.local,.cluster.local,.svc.cluster.local,localhost,127.0.0.1,.internal,169.254.169.254,argocd-dex-server,argocd-metrics,argocd-redis,argocd-repo-server,argocd-server,argocd-server-metrics"
+
+servers:
+  localhost: https://kubernetes.default.svc
+
+repos:
+  - helm-argocd
+  - helm-bookinfo
+  - playground-generic-microservice-inheritor
+  - helm-guestbook-demo
+  - playground-generic-logstash-inheritor
+  - argocdapps-playground
+
+helmrepoBackendS3Location: acm-platform-common-helmrepobackend/charts

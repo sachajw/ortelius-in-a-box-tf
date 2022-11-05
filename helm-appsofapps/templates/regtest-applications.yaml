@@ -1,0 +1,27 @@
+{{- range $capability := .Values.regtestCapabilities }}
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: apps-{{ $capability }}-regtest
+  namespace: argocd
+spec:
+  # The project the application belongs to.
+  project: apps-setup
+  source:
+    repoURL: https://github.developer.allianz.io/azt-grl/argocdapps-{{ $capability }}-regtest.git
+    targetRevision: HEAD
+    path: ./
+    helm:
+      valueFiles:
+        - values.yaml
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: argocd
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: true
+{{- end -}}

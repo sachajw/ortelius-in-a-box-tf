@@ -1,0 +1,68 @@
+# Default values for argocd.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+image:
+  repository: 239907433624.dkr.ecr.eu-central-1.amazonaws.com/argocd
+  tag: 2.0.5.803-165841
+
+dex:
+  image:
+    repository: 239907433624.dkr.ecr.eu-central-1.amazonaws.com/dex
+    tag: v2.27.0
+
+redis:
+  image:
+    repository: 239907433624.dkr.ecr.eu-central-1.amazonaws.com/redis
+    tag: 6.2.4-alpine
+  resources:
+    requests:
+      cpu: 15m
+      memory: 512Mi
+    limits:
+      cpu: 75m
+      memory: 512Mi
+
+# only support AWS alb ingress controller
+ingress:
+  enabled: true
+  annotations:
+#    alb.ingress.kubernetes.io/scheme: internal
+#    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:eu-central-1:239907433624:certificate/a2b5105e-1bc2-4ce8-95d6-f4bcac72db44
+
+githubSSO:
+  id: acm-cloud-github
+  name: ACM Cloud GitHub
+  hostname: github.developer.allianz.io
+  org: azt-grl
+
+repoServer:
+  resources:
+    requests:
+      cpu: 250m
+      memory: 1.5Gi
+    limits:
+      cpu: 1500m
+      memory: 1.5Gi
+
+namespace:
+  create: true
+  name: argocd
+
+proxy:
+  enabled: false
+  port: 8888
+
+# Sync windows are not working as expected:
+# - The schedule for a deny is ignored, see https://github.com/argoproj/argo-cd/issues/5590
+# - The clusters filter does not work, see https://github.com/argoproj/argo-cd/issues/6110
+#syncWindows:
+#  - kind: deny
+#    manualSync: true
+#    schedule: '* * * * *'
+#    duration: 1h
+#    applications:
+#      - playground-playground-bookinfo
+
+# ACM Cloud repositories
+repos: []

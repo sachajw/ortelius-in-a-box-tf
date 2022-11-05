@@ -1,0 +1,32 @@
+{{- range $capability := .Values.capabilities }}
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: apps-{{ $capability }}
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  # The project the application belongs to.
+  project: apps-setup
+  source:
+    repoURL: https://github.developer.allianz.io/azt-grl/argocdapps-{{ $capability }}.git
+    targetRevision: HEAD
+    path: ./
+    helm:
+      valueFiles:
+        - values.yaml
+      values: |
+        argocdapps:
+          clusters:
+{{- range $.Values.clusters }}
+            - {{ . }}
+{{- end }}
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: argocd
+
+  syncPolicy:
+    automated: {}
+{{- end -}}
