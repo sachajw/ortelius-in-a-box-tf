@@ -1,0 +1,15 @@
+{{- if .Values.service.enabled -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "keptn-ortelius-service.fullname" . }}
+  labels:
+    {{- include "keptn-ortelius-service.labels" . | nindent 4 }}
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8080
+      protocol: TCP
+  selector:
+    {{- include "keptn-ortelius-service.selectorLabels" . | nindent 4 }}
+  {{- end }}

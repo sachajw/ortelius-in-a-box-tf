@@ -47,7 +47,6 @@ resource "null_resource" "aws_ecr" {
     depends_on = [kind_cluster.default]
 }
 
-
 provider "kubectl" {
   host                   = kind_cluster.default.endpoint
   cluster_ca_certificate = kind_cluster.default.cluster_ca_certificate
