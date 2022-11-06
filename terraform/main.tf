@@ -39,13 +39,14 @@ resource "null_resource" "kind_container_image" {
 
   provisioner "local-exec" {
     command = <<EOF
+      kubectl create namespace istio-system
       kind load docker-image --name ortelius-in-a-box --nodes ortelius-in-a-box-control-plane,ortelius-in-a-box-worker quay.io/ortelius/ortelius
       kind load docker-image --name ortelius-in-a-box --nodes ortelius-in-a-box-control-plane,ortelius-in-a-box-worker ghcr.io/ortelius/keptn-ortelius-service:0.0.2-dev
       kind load docker-image --name ortelius-in-a-box --nodes ortelius-in-a-box-control-plane,ortelius-in-a-box-worker docker.io/istio/base:1.16-2022-11-02T13-31-52
       kind load docker-image --name ortelius-in-a-box --nodes ortelius-in-a-box-control-plane,ortelius-in-a-box-worker elliotxkim/spekt8:latest
       sleep 60
       kubectl patch deployment keptn-keptn-ortelius-service --patch-file keptn-patch-image.yaml -n keptn
-      EOF
+    EOF
   }
   depends_on = [kind_cluster.default]
 }
@@ -66,9 +67,7 @@ metadata:
   name: fabric8-rbac
 subjects:
   - kind: ServiceAccount
-    # Reference to upper's `metadata.name`
     name: speckt8
-    # Reference to upper's `metadata.namespace`
     namespace: default
 roleRef:
   kind: ClusterRole
@@ -134,12 +133,6 @@ resource "helm_release" "keptn" {
   depends_on = [kind_cluster.default]
 }
 
-resource "kubernetes_namespace" "istio_system" {
-  metadata {
-    name = "istio-system"
-  }
-}
-
 resource "helm_release" "istio_base" {
   name            = "istio"
   repository      = "https://istio-release.storage.googleapis.com/charts"
@@ -148,7 +141,6 @@ resource "helm_release" "istio_base" {
   cleanup_on_fail = true
   force_update    = false
   namespace       = "istio-system"
-  #depends_on      = [kind_cluster.default]
 }
 
 resource "helm_release" "istio_istiod" {
@@ -159,7 +151,6 @@ resource "helm_release" "istio_istiod" {
   cleanup_on_fail = true
   force_update    = false
   namespace       = "istio-system"
-  #depends_on      = [kind_cluster.default]
 
   set {
     name  = "meshConfig.accessLogFile"
@@ -175,5 +166,4 @@ resource "helm_release" "istio_ingress" {
   cleanup_on_fail = true
   force_update    = false
   namespace       = "istio-system"
-  #depends_on      = [kind_cluster.default]
 }
