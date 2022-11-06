@@ -39,7 +39,6 @@ resource "null_resource" "aws_ecr" {
 
     provisioner "local-exec" {
       command = <<EOF
-      sleep 30
       kubectl patch deployment keptn-keptn-ortelius-service --patch-file keptn-patch-image.yaml -n keptn
       kind load docker-image --name ortelius-in-a-box --nodes ortelius-in-a-box-control-plane,ortelius-in-a-box-worker quay.io/ortelius/ortelius
       kind load docker-image --name ortelius-in-a-box --nodes ortelius-in-a-box-control-plane,ortelius-in-a-box-worker ghcr.io/ortelius/keptn-ortelius-service:0.0.2-dev
@@ -55,10 +54,11 @@ provider "kubectl" {
   cluster_ca_certificate = kind_cluster.default.cluster_ca_certificate
   client_certificate     = kind_cluster.default.client_certificate
   client_key             = kind_cluster.default.client_key
+  load_config_file       = false
 }
 
 resource "kubectl_manifest" "spekt8" {
-  yaml_body =  <<YAML
+    yaml_body =  <<YAML
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -92,12 +92,23 @@ provider "helm" {
 
   }
 }
-resource "helm_release" "istio" {
+resource "helm_release" "istio_base" {
   name = "istio"
-  repository       = "https://https://istio-release.storage.googleapis.com/charts"
-  chart            = "istio"
+  repository       = "https://istio-release.storage.googleapis.com/charts"
+  chart            = "base"
   namespace        = "istio-system"
-  #version          = "0.0.1"
+  #version          = "1.16.0-beta.2"
+  create_namespace = true
+  #timeout          = "300"
+  depends_on = [kind_cluster.default]
+}
+
+resource "helm_release" "istio_istiod" {
+  name = "istio"
+  repository       = "https://istio-release.storage.googleapis.com/charts"
+  chart            = "istiod"
+  namespace        = "istio-system"
+  #version          = "1.16.0-beta.2"
   create_namespace = true
   #timeout          = "300"
   depends_on = [kind_cluster.default]
