@@ -109,6 +109,27 @@ provider "helm" {
   }
 }
 
+resource "helm_release" "argocd" {
+  name             = "argocd"
+  repository       = "https://argoproj.github.io/argo-helm"
+  chart            = "argo-cd"
+  namespace        = "argocd"
+  version          = "5.6.2"
+  create_namespace = true
+  depends_on       = [kind_cluster.default]
+}
+
+resource "helm_release" "keptn" {
+  name             = "keptn"
+  repository       = "https://ortelius.github.io/keptn-ortelius-service"
+  chart            = "keptn-ortelius-service"
+  namespace        = "keptn"
+  version          = "0.0.1"
+  create_namespace = true
+  #timeout          = 300
+  depends_on = [kind_cluster.default]
+}
+
 resource "kubernetes_namespace" "istio_system" {
   metadata {
     name = "istio-system"
@@ -151,25 +172,4 @@ resource "helm_release" "istio_ingress" {
   force_update    = false
   namespace       = "istio-system"
   depends_on      = [kind_cluster.default]
-}
-
-resource "helm_release" "argocd" {
-  name             = "argocd"
-  repository       = "https://argoproj.github.io/argo-helm"
-  chart            = "argo-cd"
-  namespace        = "argocd"
-  version          = "5.6.2"
-  create_namespace = true
-  depends_on       = [kind_cluster.default]
-}
-
-resource "helm_release" "keptn" {
-  name             = "keptn"
-  repository       = "https://ortelius.github.io/keptn-ortelius-service"
-  chart            = "keptn-ortelius-service"
-  namespace        = "keptn"
-  version          = "0.0.1"
-  create_namespace = true
-  #timeout          = 300
-  depends_on = [kind_cluster.default]
 }
