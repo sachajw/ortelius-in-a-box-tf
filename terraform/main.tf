@@ -89,6 +89,16 @@ provider "helm" {
 
   }
 }
+resource "helm_release" "istio" {
+  name = "istio"
+  repository       = "https://https://istio-release.storage.googleapis.com/charts"
+  chart            = "istio"
+  namespace        = "istio-system"
+  #version          = "0.0.1"
+  create_namespace = true
+  #timeout          = "300"
+  depends_on = [kind_cluster.default]
+}
 
 resource "helm_release" "argocd" {
   name             = "argocd"
@@ -102,7 +112,6 @@ resource "helm_release" "argocd" {
 
 resource "helm_release" "keptn" {
   name = "keptn"
-
   repository       = "https://ortelius.github.io/keptn-ortelius-service"
   chart            = "keptn-ortelius-service"
   namespace        = "keptn"

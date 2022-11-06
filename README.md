@@ -85,6 +85,9 @@ gcloud auth print-access-token | docker login -u oauth2accesstoken --password-st
 - kind supports Linux, macOS and Windows
 - kind is a `CNCF certified conformant Kubernetes installer`
 
+#### Istio on Kind
+- [Kind platform setup](https://istio.io/latest/docs/setup/platform-setup/kind/)
+
 ### Helpful tool
 #### Container Runtime Interface (CRI) CLI
 - crictl is available [here](https://github.com/kubernetes-sigs/cri-tools/blob/master/docs/crictl.md)
