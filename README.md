@@ -47,6 +47,9 @@
 docker pull quay.io/ortelius/ortelius
 ```
 ```
+docker pull ghcr.io/ortelius/keptn-ortelius-service:0.0.2-dev
+```
+```
 docker image list | grep <add your desired filter>
 ```
 #### Copy

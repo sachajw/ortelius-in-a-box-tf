@@ -40,7 +40,8 @@ resource "null_resource" "aws_ecr" {
     provisioner "local-exec" {
       command = <<EOF
       sleep 30
-      kind load docker-image --name ortelius-in-a-box --nodes ortelius-in-a-box-control-plane,ortelius-in-a-box-worker 239907433624.dkr.ecr.eu-central-1.amazonaws.com/argocd:2.0.5.803-165841
+      kind load docker-image --name ortelius-in-a-box --nodes ortelius-in-a-box-control-plane,ortelius-in-a-box-worker quay.io/ortelius/ortelius
+      kind load docker-image --name ortelius-in-a-box --nodes ortelius-in-a-box-control-plane,ortelius-in-a-box-worker ghcr.io/ortelius/keptn-ortelius-service:0.0.2-dev
       EOF
     }
     depends_on = [kind_cluster.default]
@@ -106,7 +107,7 @@ resource "helm_release" "keptn" {
   repository       = "https://ortelius.github.io/keptn-ortelius-service"
   chart            = "keptn"
   namespace        = "keptn"
-  version          = "0.19.1"
+  version          = "0.0.1"
   create_namespace = true
   timeout          = "300"
   depends_on = [kind_cluster.default]
