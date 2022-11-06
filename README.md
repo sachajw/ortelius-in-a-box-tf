@@ -166,9 +166,6 @@ helm repo add nginx-stable https://helm.nginx.com/stable
 ```
 helm repo add keptn-ortelius-service https://ortelius.github.io/keptn-ortelius-service
 ```
-```
-helm repo add keptn https://charts.keptn.sh
-```
 #### Use `helm repo list` to make sure they are there
 ```
 helm repo list
@@ -202,7 +199,6 @@ helm install argocd ./helm-appsofapps --dry-run --debug
 #### Steps to get going
 - Clone `ortelius-in-a-box` [here](https://github.com/sachajw/ortelius-in-a-box)
 - Navigate to `helm-argocd/terraform`
-- Make sure you are on the `acm-in-a-box` branch
 - Run the following
 ```
 terraform init
