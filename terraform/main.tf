@@ -103,11 +103,10 @@ resource "helm_release" "istio_base" {
   name            = "istio"
   repository      = "https://istio-release.storage.googleapis.com/charts"
   chart           = "base"
-  namespace       = "istio-system"
-  #version         = "istio-1.16.0-beta.2/manifests/charts/base"
   timeout         = 120
   cleanup_on_fail = true
-  force_update    = true
+  force_update    = false
+  namespace       = kubernetes_namespace.istio_system.metadata.0.name
   depends_on      = [kind_cluster.default]
 }
 
@@ -115,35 +114,26 @@ resource "helm_release" "istio_istiod" {
   name            = "istio"
   repository      = "https://istio-release.storage.googleapis.com/charts"
   chart           = "istiod"
-  namespace       = "istio-system"
-  #version         = "istio-1.16.0-beta.2/manifests/charts/istio-control/istio-discovery"
   timeout         = 120
   cleanup_on_fail = true
-  force_update    = true
+  force_update    = false
+  namespace       = kubernetes_namespace.istio_system.metadata.0.name
   depends_on      = [kind_cluster.default]
 
   set {
-  name = "meshConfig.accessLogFile"
-  value = "/dev/stdout"
+    name  = "meshConfig.accessLogFile"
+    value = "/dev/stdout"
   }
 }
 
 resource "helm_release" "istio_ingress" {
   name            = "istio-ingress"
-  chart           = "istio-1.16.0-beta.2/manifests/charts/gateways/istio-ingress"
-  timeout         = 120
+  repository      = "https://istio-release.storage.googleapis.com/charts"
+  chart           = "gateway"
+  timeout         = 500
   cleanup_on_fail = true
-  force_update    = true
-  namespace       = "istio-system"
-}
-
-resource "helm_release" "istio_egress" {
-  name            = "istio-egress"
-  chart           = "istio-1.16.0-beta.2/manifests/charts/gateways/istio-egress"
-  timeout         = 120
-  cleanup_on_fail = true
-  force_update    = true
-  namespace       = "istio-system"
+  force_update    = false
+  namespace       = kubernetes_namespace.istio_system.metadata.0.name
   depends_on      = [kind_cluster.default]
 }
 
@@ -164,6 +154,6 @@ resource "helm_release" "keptn" {
   namespace        = "keptn"
   version          = "0.0.1"
   create_namespace = true
-  timeout          = "300"
-  depends_on       = [kind_cluster.default]
+  #timeout          = 300
+  depends_on = [kind_cluster.default]
 }
