@@ -128,7 +128,7 @@ resource "helm_release" "argocd" {
 resource "helm_release" "keptn" {
   name = "keptn"
 
-  repository       = "https://charts.keptn.sh"
+  repository       = "https://ortelius.github.io/keptn-ortelius-service"
   chart            = "keptn"
   namespace        = "keptn"
   version          = "0.19.1"
