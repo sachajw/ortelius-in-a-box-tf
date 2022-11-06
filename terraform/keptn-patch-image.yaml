@@ -4,5 +4,5 @@ spec:
   template:
     spec:
       containers:
-      - name: keptn-ortelius-service
-        image: ghcr.io/ortelius/keptn-ortelius-service:0.0.2-dev
+        - name: keptn-ortelius-service
+          image: ghcr.io/ortelius/keptn-ortelius-service:0.0.2-dev

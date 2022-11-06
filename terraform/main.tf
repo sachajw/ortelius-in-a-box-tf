@@ -60,6 +60,22 @@ provider "kubectl" {
 
 resource "kubectl_manifest" "spekt8" {
   yaml_body  = <<YAML
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  name: fabric8-rbac
+subjects:
+  - kind: ServiceAccount
+    # Reference to upper's `metadata.name`
+    name: speckt8
+    # Reference to upper's `metadata.namespace`
+    namespace: default
+roleRef:
+  kind: ClusterRole
+  name: cluster-admin
+  apiGroup: rbac.authorization.k8s.io
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -106,7 +122,7 @@ resource "helm_release" "istio_base" {
   timeout         = 120
   cleanup_on_fail = true
   force_update    = false
-  namespace       = kubernetes_namespace.istio_system.metadata.0.name
+  namespace       = "istio-system"
   depends_on      = [kind_cluster.default]
 }
 
@@ -117,7 +133,7 @@ resource "helm_release" "istio_istiod" {
   timeout         = 120
   cleanup_on_fail = true
   force_update    = false
-  namespace       = kubernetes_namespace.istio_system.metadata.0.name
+  namespace       = "istio-system"
   depends_on      = [kind_cluster.default]
 
   set {
@@ -133,7 +149,7 @@ resource "helm_release" "istio_ingress" {
   timeout         = 500
   cleanup_on_fail = true
   force_update    = false
-  namespace       = kubernetes_namespace.istio_system.metadata.0.name
+  namespace       = "istio-system"
   depends_on      = [kind_cluster.default]
 }
 
