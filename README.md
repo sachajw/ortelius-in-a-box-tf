@@ -115,10 +115,11 @@ kubectl cluster-info --context ortelius-in-a-box
 ```
 kind export logs -n ortelius-in-a-box
 ```
-#### Load images onto the container nodes
+#### Load Ortelius image onto the container nodes
 ```
 kind load docker-image --name ortelius-in-a-box --nodes ortelius-in-a-box-control-plane,ortelius-in-a-box-worker,ortelius-in-a-box-worker2 quay.io/ortelius/ortelius
 ```
+#### Load Keptn image onto the container nodes
 ```
 kind load docker-image --name ortelius-in-a-box --nodes ortelius-in-a-box-control-plane,ortelius-in-a-box-worker ghcr.io/ortelius/keptn-ortelius-service:0.0.2-dev
 ```
