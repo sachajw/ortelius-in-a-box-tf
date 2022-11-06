@@ -331,15 +331,8 @@ aws ecr get-login-password --region eu-central-1 | docker login --username AWS -
 ```
 - Pull the current images to the local machine at the time of writing
 ```
-docker pull <account number>.dkr.ecr.eu-central-1.amazonaws.com/argocd:2.0.5.803-165841
+docker pull quay.io/ortelius/ortelius
 ```
-```
-docker pull <account number>.dkr.ecr.eu-central-1.amazonaws.com/dex:v2.27.0
-```
-```
-docker pull <account number>.dkr.ecr.eu-central-1.amazonaws.com/redis:6.2.4-alpine
-```
-
 ### Container Registries
 #### [AWS Public registry](https://gallery.ecr.aws/)
 - [Terms & Conditions](https://aws.amazon.com/service-terms/)
