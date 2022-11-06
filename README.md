@@ -209,7 +209,7 @@ terraform plan
 ```
 terraform apply
 ```
-- You should see something like in the image in Docker Desktop
+- You should see something like this in Docker Desktop
  ![ortelius Docker nodes!](images/docker/ortelius-nodes-docker.jpg "ortelius Docker nodes")
 
 ### Helpful tips
