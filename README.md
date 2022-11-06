@@ -45,7 +45,7 @@
 #### List images
 #### Pull the current images to the local machine at the time of writing
 ```
-docker pull quay.io/ortelius/ortelius
+docker pull quay.io/ortelius/ortelius:latest
 ```
 ```
 docker pull ghcr.io/ortelius/keptn-ortelius-service:0.0.2-dev
