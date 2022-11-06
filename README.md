@@ -313,7 +313,7 @@ brk = "!f() { git cap \"‼️ BREAKING: $@\"; }; f"
 docker pull quay.io/ortelius/ortelius
 ```
 ```
-docker image list | grep <account number>
+docker image list | grep <add your desired filter>
 ```
 #### Copy
 ```
