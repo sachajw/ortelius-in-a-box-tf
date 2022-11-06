@@ -305,8 +305,13 @@ brk = "!f() { git cap \"‼️ BREAKING: $@\"; }; f"
 	"currentContext": "desktop-linux"
 }
 ```
+
 ### Helpful commands
 #### List images
+#### Pull the current images to the local machine at the time of writing
+```
+docker pull quay.io/ortelius/ortelius
+```
 ```
 docker image list | grep <account number>
 ```
@@ -322,16 +327,16 @@ docker exec -it ortelius-in-a-box-worker bash
 ```
 docker image rm <account number>.dkr.ecr.eu-central-1.amazonaws.com/dex:v2.27.0
 ```
-
+### GCP GCR
+- Login to GCR on the command line
+```
+gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://gcr.io
+```
 ### AWS ECR
-- Login in to AWS on the command line with your credentials to refresh your session token
+- Login in to AWS on the command line
 #### Auth with ECR
 ```
 aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin <account number>.dkr.ecr.eu-central-1.amazonaws.com
-```
-- Pull the current images to the local machine at the time of writing
-```
-docker pull quay.io/ortelius/ortelius
 ```
 ### Container Registries
 #### [AWS Public registry](https://gallery.ecr.aws/)
