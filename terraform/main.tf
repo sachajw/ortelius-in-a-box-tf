@@ -43,7 +43,7 @@ resource "null_resource" "kind_container_image" {
       kind load docker-image --name ortelius-in-a-box --nodes ortelius-in-a-box-control-plane,ortelius-in-a-box-worker ghcr.io/ortelius/keptn-ortelius-service:0.0.2-dev
       kind load docker-image --name ortelius-in-a-box --nodes ortelius-in-a-box-control-plane,ortelius-in-a-box-worker docker.io/istio/base:1.16-2022-11-02T13-31-52
       kind load docker-image --name ortelius-in-a-box --nodes ortelius-in-a-box-control-plane,ortelius-in-a-box-worker elliotxkim/spekt8:latest
-      sleep 30
+      sleep 60
       kubectl patch deployment keptn-keptn-ortelius-service --patch-file keptn-patch-image.yaml -n keptn
       EOF
   }
@@ -58,9 +58,8 @@ provider "kubectl" {
   load_config_file       = false
 }
 
-resource "kubectl_manifest" "spekt8" {
+resource "kubectl_manifest" "rbac_spekt8" {
   yaml_body  = <<YAML
----
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
 metadata:
@@ -75,7 +74,12 @@ roleRef:
   kind: ClusterRole
   name: cluster-admin
   apiGroup: rbac.authorization.k8s.io
----
+YAML
+  depends_on = [kind_cluster.default]
+}
+
+resource "kubectl_manifest" "deployment_spekt8" {
+  yaml_body  = <<YAML
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -144,7 +148,7 @@ resource "helm_release" "istio_base" {
   cleanup_on_fail = true
   force_update    = false
   namespace       = "istio-system"
-  depends_on      = [kind_cluster.default]
+  #depends_on      = [kind_cluster.default]
 }
 
 resource "helm_release" "istio_istiod" {
@@ -155,7 +159,7 @@ resource "helm_release" "istio_istiod" {
   cleanup_on_fail = true
   force_update    = false
   namespace       = "istio-system"
-  depends_on      = [kind_cluster.default]
+  #depends_on      = [kind_cluster.default]
 
   set {
     name  = "meshConfig.accessLogFile"
@@ -171,5 +175,5 @@ resource "helm_release" "istio_ingress" {
   cleanup_on_fail = true
   force_update    = false
   namespace       = "istio-system"
-  depends_on      = [kind_cluster.default]
+  #depends_on      = [kind_cluster.default]
 }
