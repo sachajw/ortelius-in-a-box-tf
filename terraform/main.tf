@@ -104,7 +104,7 @@ resource "helm_release" "istio_base" {
   repository      = "https://istio-release.storage.googleapis.com/charts"
   chart           = "base"
   namespace       = "istio-system"
-  version         = "istio-1.16.0-beta.2/manifests/charts/base"
+  #version         = "istio-1.16.0-beta.2/manifests/charts/base"
   timeout         = 120
   cleanup_on_fail = true
   force_update    = true
@@ -116,11 +116,16 @@ resource "helm_release" "istio_istiod" {
   repository      = "https://istio-release.storage.googleapis.com/charts"
   chart           = "istiod"
   namespace       = "istio-system"
-  version         = "istio-1.16.0-beta.2/manifests/charts/istio-control/istio-discovery"
+  #version         = "istio-1.16.0-beta.2/manifests/charts/istio-control/istio-discovery"
   timeout         = 120
   cleanup_on_fail = true
   force_update    = true
   depends_on      = [kind_cluster.default]
+
+  set {
+  name = "meshConfig.accessLogFile"
+  value = "/dev/stdout"
+  }
 }
 
 resource "helm_release" "istio_ingress" {
