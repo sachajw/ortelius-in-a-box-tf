@@ -198,7 +198,7 @@ helm install argocd ./helm-appsofapps --dry-run --debug
 - [Terms & Conditions](https://registry.terraform.io/terms)
 #### Steps to get going
 - Clone `ortelius-in-a-box` [here](https://github.com/sachajw/ortelius-in-a-box)
-- Navigate to `helm-argocd/terraform`
+- Navigate to `/terraform`
 - Run the following
 ```
 terraform init
