@@ -114,7 +114,7 @@ kind export logs -n ortelius-in-a-box
 ```
 #### Load images onto the container nodes
 ```
-kind load docker-image --name ortelius-in-a-box --nodes ortelius-in-a-box-control-plane,ortelius-in-a-box-worker,ortelius-in-a-box-worker2 <account number>.dkr.ecr.eu-central-1.amazonaws.com/redis:6.2.4-alpine
+kind load docker-image --name ortelius-in-a-box --nodes ortelius-in-a-box-control-plane,ortelius-in-a-box-worker,ortelius-in-a-box-worker2 quay.io/ortelius/ortelius
 ```
 
 #### [Kubernetes.io](https://kubernetes.io/)

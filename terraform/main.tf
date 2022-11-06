@@ -37,15 +37,13 @@ resource "null_resource" "aws_ecr" {
     key = uuid()
   }
 
-  #  provisioner "local-exec" {
-  #    command = <<EOF
-  #    sleep 30
-  #    kind load docker-image --name ortelius-in-a-box --nodes ortelius-in-a-box-control-plane,ortelius-in-a-box-worker 239907433624.dkr.ecr.eu-central-1.amazonaws.com/argocd:2.0.5.803-165841
-  #    kind load docker-image --name ortelius-in-a-box --nodes ortelius-in-a-box-control-plane,ortelius-in-a-box-worker 239907433624.dkr.ecr.eu-central-1.amazonaws.com/redis:6.2.4-alpine
-  #    kind load docker-image --name ortelius-in-a-box --nodes ortelius-in-a-box-control-plane,ortelius-in-a-box-worker 239907433624.dkr.ecr.eu-central-1.amazonaws.com/dex:v2.27.0
-  #    EOF
-  #  }
-  #  depends_on = [kind_cluster.default]
+    provisioner "local-exec" {
+      command = <<EOF
+      sleep 30
+      kind load docker-image --name ortelius-in-a-box --nodes ortelius-in-a-box-control-plane,ortelius-in-a-box-worker 239907433624.dkr.ecr.eu-central-1.amazonaws.com/argocd:2.0.5.803-165841
+      EOF
+    }
+    depends_on = [kind_cluster.default]
 }
 
 
@@ -101,7 +99,7 @@ resource "helm_release" "argocd" {
   create_namespace = true
   depends_on = [kind_cluster.default]
 }
-ß
+
 resource "helm_release" "keptn" {
   name = "keptn"
 
