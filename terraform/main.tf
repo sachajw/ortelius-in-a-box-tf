@@ -86,7 +86,7 @@ resource "helm_release" "argocd" {
   repository       = "https://argoproj.github.io/argo-helm"
   chart            = "argo-cd"
   namespace        = "argocd"
-  #version          = "5.6.2"
+  version          = "5.6.2"
   create_namespace = true
   depends_on       = [kind_cluster.default]
 }
@@ -96,7 +96,7 @@ resource "helm_release" "keptn" {
   repository       = "https://ortelius.github.io/keptn-ortelius-service"
   chart            = "keptn-ortelius-service"
   namespace        = "keptn"
-  #version          = "0.0.1"
+  version          = "0.0.1"
   create_namespace = true
   #timeout          = 300
   depends_on = [kind_cluster.default]
@@ -110,6 +110,7 @@ resource "helm_release" "istio_base" {
   cleanup_on_fail = true
   force_update    = false
   namespace       = "istio-system"
+  depends_on       = [kind_cluster.default]
 }
 
 resource "helm_release" "istio_istiod" {
@@ -125,6 +126,7 @@ resource "helm_release" "istio_istiod" {
     name  = "meshConfig.accessLogFile"
     value = "/dev/stdout"
   }
+  depends_on       = [kind_cluster.default]
 }
 
 resource "helm_release" "istio_ingress" {
@@ -135,4 +137,5 @@ resource "helm_release" "istio_ingress" {
   cleanup_on_fail = true
   force_update    = false
   namespace       = "istio-system"
+  depends_on       = [kind_cluster.default]
 }

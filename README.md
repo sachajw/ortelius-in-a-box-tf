@@ -1,7 +1,7 @@
 ### [Ortelius Issue 535](https://github.com/ortelius/ortelius/issues/535)
 ### Start here and work your way down one stair at a time
 ### [VSCode](https://code.visualstudio.com/) IDE
-- Download the `VSCode IDE` [here](https://code.visualstudio.com/download)
+- Download `VSCode IDE` [here](https://code.visualstudio.com/download)
 - Security starts in the IDE
 - [Terms & Conditions](https://code.visualstudio.com/License/)
 
