@@ -164,16 +164,16 @@ Octant is a tool for developers to understand how applications run on a Kubernet
 - Also known as the package manager for Kubernetes
 #### Please make sure you add the following Helm packages
 ```
-helm repo add ortelius https://ortelius.github.io/ortelius-charts
-```
-```
 helm repo add argo https://argoproj.github.io/argo-helm
 ```
 ```
-helm repo add nginx-stable https://helm.nginx.com/stable
+helm repo add ortelius https://ortelius.github.io/ortelius-charts
 ```
 ```
 helm repo add keptn-ortelius-service https://ortelius.github.io/keptn-ortelius-service
+```
+```
+helm repo add istio https://istio-release.storage.googleapis.com/charts
 ```
 #### Use `helm repo list` to make sure they are there
 ```
