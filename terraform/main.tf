@@ -32,6 +32,37 @@ resource "kind_cluster" "default" {
   }
 }
 
+resource "null_resource" "kubectl_commands" {
+  triggers = {
+    key = uuid()
+  }
+
+  provisioner "local-exec" {
+    command = <<EOF
+      kubectl create namespace istio-system
+      sleep 60
+      kubectl patch deployment keptn-keptn-ortelius-service --patch-file keptn-patch-image.yaml -n keptn
+    EOF
+  }
+  depends_on = [kind_cluster.default]
+}
+
+resource "null_resource" "kind_container_images" {
+  triggers = {
+    key = uuid()
+  }
+
+  provisioner "local-exec" {
+    command = <<EOF
+      kind load docker-image --name ortelius-in-a-box --nodes ortelius-in-a-box-control-plane,ortelius-in-a-box-worker quay.io/ortelius/ortelius
+      kind load docker-image --name ortelius-in-a-box --nodes ortelius-in-a-box-control-plane,ortelius-in-a-box-worker ghcr.io/ortelius/keptn-ortelius-service:0.0.2-dev
+      kind load docker-image --name ortelius-in-a-box --nodes ortelius-in-a-box-control-plane,ortelius-in-a-box-worker docker.io/istio/base:1.16-2022-11-02T13-31-52
+      kind load docker-image --name ortelius-in-a-box --nodes ortelius-in-a-box-control-plane,ortelius-in-a-box-worker elliotxkim/spekt8:latest
+    EOF
+  }
+  depends_on = [kind_cluster.default]
+}
+
 provider "kubectl" {
   host                   = kind_cluster.default.endpoint
   cluster_ca_certificate = kind_cluster.default.cluster_ca_certificate
@@ -47,6 +78,7 @@ provider "helm" {
     cluster_ca_certificate = kind_cluster.default.cluster_ca_certificate
     client_certificate     = kind_cluster.default.client_certificate
     client_key             = kind_cluster.default.client_key
+
   }
 }
 
@@ -55,16 +87,16 @@ resource "helm_release" "argocd" {
   repository       = "https://argoproj.github.io/argo-helm"
   chart            = "argo-cd"
   namespace        = "argocd"
-  version          = "5.6.2"
+  #version          = "5.6.2"
   create_namespace = true
   depends_on       = [kind_cluster.default]
 }
 
 resource "helm_release" "keptn" {
-  name       = "keptn"
-  repository = "https://ortelius.github.io/keptn-ortelius-service"
-  chart      = "keptn-ortelius-service"
-  namespace  = "keptn"
+  name             = "keptn"
+  repository       = "https://ortelius.github.io/keptn-ortelius-service"
+  chart            = "keptn-ortelius-service"
+  namespace        = "keptn"
   #version          = "0.0.1"
   create_namespace = true
   #timeout          = 300
@@ -89,7 +121,6 @@ resource "helm_release" "istio_istiod" {
   cleanup_on_fail = true
   force_update    = false
   namespace       = "istio-system"
-  depends_on      = [kind_cluster.default]
 
   set {
     name  = "meshConfig.accessLogFile"
@@ -105,5 +136,4 @@ resource "helm_release" "istio_ingress" {
   cleanup_on_fail = true
   force_update    = false
   namespace       = "istio-system"
-  depends_on      = [kind_cluster.default]
 }
