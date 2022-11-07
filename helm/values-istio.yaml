@@ -8,6 +8,9 @@ global:
   # Used to locate istiod.
   istioNamespace: istio-system
 
+  ports:
+    - containerPort: 8080
+
   istiod:
     enableAnalysis: false
 
