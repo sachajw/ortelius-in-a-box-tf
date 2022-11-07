@@ -47,7 +47,7 @@ provider "helm" {
     cluster_ca_certificate = kind_cluster.default.cluster_ca_certificate
     client_certificate     = kind_cluster.default.client_certificate
     client_key             = kind_cluster.default.client_key
-
+  depends_on       = [kind_cluster.default]
   }
 }
 
@@ -90,6 +90,7 @@ resource "helm_release" "istio_istiod" {
   cleanup_on_fail = true
   force_update    = false
   namespace       = "istio-system"
+  depends_on       = [kind_cluster.default]
 
   set {
     name  = "meshConfig.accessLogFile"
@@ -105,4 +106,5 @@ resource "helm_release" "istio_ingress" {
   cleanup_on_fail = true
   force_update    = false
   namespace       = "istio-system"
+  depends_on       = [kind_cluster.default]
 }
