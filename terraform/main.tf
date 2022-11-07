@@ -32,25 +32,6 @@ resource "kind_cluster" "default" {
   }
 }
 
-resource "null_resource" "kind_container_image" {
-  triggers = {
-    key = uuid()
-  }
-
-  provisioner "local-exec" {
-    command = <<EOF
-      kubectl create namespace istio-system
-      kind load docker-image --name ortelius-in-a-box --nodes ortelius-in-a-box-control-plane,ortelius-in-a-box-worker quay.io/ortelius/ortelius
-      kind load docker-image --name ortelius-in-a-box --nodes ortelius-in-a-box-control-plane,ortelius-in-a-box-worker ghcr.io/ortelius/keptn-ortelius-service:0.0.2-dev
-      kind load docker-image --name ortelius-in-a-box --nodes ortelius-in-a-box-control-plane,ortelius-in-a-box-worker docker.io/istio/base:1.16-2022-11-02T13-31-52
-      kind load docker-image --name ortelius-in-a-box --nodes ortelius-in-a-box-control-plane,ortelius-in-a-box-worker elliotxkim/spekt8:latest
-      sleep 60
-      kubectl patch deployment keptn-keptn-ortelius-service --patch-file keptn-patch-image.yaml -n keptn
-    EOF
-  }
-  depends_on = [kind_cluster.default]
-}
-
 provider "kubectl" {
   host                   = kind_cluster.default.endpoint
   cluster_ca_certificate = kind_cluster.default.cluster_ca_certificate
@@ -59,48 +40,6 @@ provider "kubectl" {
   load_config_file       = false
 }
 
-resource "kubectl_manifest" "rbac_spekt8" {
-  yaml_body  = <<YAML
-apiVersion: rbac.authorization.k8s.io/v1beta1
-kind: ClusterRoleBinding
-metadata:
-  name: fabric8-rbac
-subjects:
-  - kind: ServiceAccount
-    name: speckt8
-    namespace: default
-roleRef:
-  kind: ClusterRole
-  name: cluster-admin
-  apiGroup: rbac.authorization.k8s.io
-YAML
-  depends_on = [kind_cluster.default]
-}
-
-resource "kubectl_manifest" "deployment_spekt8" {
-  yaml_body  = <<YAML
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: spekt8
-spec:
-  selector:
-    matchLabels:
-      component: spekt8
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        component: spekt8
-    spec:
-      containers:
-        - name: spekt8
-          image: elliotxkim/spekt8
-          ports:
-            - containerPort: 3000
-YAML
-  depends_on = [kind_cluster.default]
-}
 provider "helm" {
   #debug = true
   kubernetes {
