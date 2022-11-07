@@ -154,6 +154,11 @@ kubens argocd
 A simple Kubernetes client-go application that creates and patches imagePullSecrets to service accounts in all Kubernetes namespaces to allow cluster-wide authenticated access to private container registry.
 - Download [here](https://github.com/titansoft-pte-ltd/imagepullsecret-patcher)
 
+### Octant | Graphical representation of your K8s Clusters
+
+Octant is a tool for developers to understand how applications run on a Kubernetes cluster. It aims to be part of the developer's toolkit for gaining insight and approaching complexity found in Kubernetes. Octant offers a combination of introspective tooling, cluster navigation, and object management along with a plugin system to further extend its capabilities.
+- Download [here](https://github.com/vmware-tanzu/octant)
+
 ### Helm
 - Install Helm [here](https://helm.sh/)
 - Also known as the package manager for Kubernetes
