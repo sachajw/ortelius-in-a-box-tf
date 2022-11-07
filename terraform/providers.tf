@@ -36,9 +36,3 @@ terraform {
 provider "null" {
   # Configuration options
 }
-
-provider "aws" {
-  # Configuration options
-  region  = "eu-central-1"
-  profile = "gsinonprod"
-}
