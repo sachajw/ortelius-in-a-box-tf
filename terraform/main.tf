@@ -66,7 +66,7 @@ resource "helm_release" "keptn" {
   repository       = "https://ortelius.github.io/keptn-ortelius-service"
   chart            = "keptn-ortelius-service"
   namespace        = "keptn"
-  version          = "0.0.1"
+  #version          = "0.0.1"
   create_namespace = true
   #timeout          = 300
   depends_on = [kind_cluster.default]
