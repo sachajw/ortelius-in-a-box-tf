@@ -43,7 +43,7 @@ resource "null_resource" "kubectl" {
       kubectl create namespace istio-system
       kubectl create namespace istio-ingress
       kubectl label namespace istio-ingress istio-injection=enabled
-      sleep 45
+      sleep 30
       kubectl patch deployment keptn-keptn-ortelius-service --patch-file keptn-patch-image.yaml -n keptn
     EOF
   }
