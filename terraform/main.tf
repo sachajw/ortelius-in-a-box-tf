@@ -1,6 +1,6 @@
 provider "kind" {}
 
-resource "kind_cluster" "default" {
+resource "kind_cluster" "ortelius" {
   name            = var.kind_cluster_name
   node_image      = "kindest/node:v1.25.3"
   kubeconfig_path = pathexpand(var.kind_cluster_config_path)
@@ -32,7 +32,8 @@ resource "kind_cluster" "default" {
   }
 }
 
-resource "null_resource" "kubectl_commands" {
+resource "null_resource" "kubectl" {
+  depends_on = [kind_cluster.ortelius]
   triggers = {
     key = uuid()
   }
@@ -46,10 +47,10 @@ resource "null_resource" "kubectl_commands" {
       kubectl patch deployment keptn-keptn-ortelius-service --patch-file keptn-patch-image.yaml -n keptn
     EOF
   }
-  depends_on = [kind_cluster.default]
 }
 
 resource "null_resource" "kind_container_images" {
+  depends_on = [kind_cluster.ortelius]
   triggers = {
     key = uuid()
   }
@@ -61,24 +62,23 @@ resource "null_resource" "kind_container_images" {
       kind load docker-image --name ortelius-in-a-box --nodes ortelius-in-a-box-control-plane,ortelius-in-a-box-worker docker.io/istio/base:1.16-2022-11-02T13-31-52
     EOF
   }
-  depends_on = [kind_cluster.default]
 }
 
 provider "kubectl" {
-  host                   = kind_cluster.default.endpoint
-  cluster_ca_certificate = kind_cluster.default.cluster_ca_certificate
-  client_certificate     = kind_cluster.default.client_certificate
-  client_key             = kind_cluster.default.client_key
+  host                   = kind_cluster.ortelius.endpoint
+  cluster_ca_certificate = kind_cluster.ortelius.cluster_ca_certificate
+  client_certificate     = kind_cluster.ortelius.client_certificate
+  client_key             = kind_cluster.ortelius.client_key
   load_config_file       = false
 }
 
 provider "helm" {
   #debug = true
   kubernetes {
-    host                   = kind_cluster.default.endpoint
-    cluster_ca_certificate = kind_cluster.default.cluster_ca_certificate
-    client_certificate     = kind_cluster.default.client_certificate
-    client_key             = kind_cluster.default.client_key
+    host                   = kind_cluster.ortelius.endpoint
+    cluster_ca_certificate = kind_cluster.ortelius.cluster_ca_certificate
+    client_certificate     = kind_cluster.ortelius.client_certificate
+    client_key             = kind_cluster.ortelius.client_key
 
   }
 }
@@ -90,7 +90,7 @@ resource "helm_release" "argocd" {
   namespace        = "argocd"
   version          = "5.6.2"
   create_namespace = true
-  depends_on       = [kind_cluster.default]
+  depends_on       = [kind_cluster.ortelius]
 }
 
 resource "helm_release" "keptn" {
@@ -101,7 +101,7 @@ resource "helm_release" "keptn" {
   version          = "0.0.1"
   create_namespace = true
   #timeout          = 300
-  depends_on = [kind_cluster.default]
+  depends_on = [kind_cluster.ortelius]
 }
 
 resource "helm_release" "istio_base" {
@@ -112,6 +112,7 @@ resource "helm_release" "istio_base" {
   cleanup_on_fail = true
   force_update    = false
   namespace       = "istio-system"
+  depends_on       = [kind_cluster.ortelius]
 }
 
 resource "helm_release" "istio_istiod" {
@@ -127,14 +128,16 @@ resource "helm_release" "istio_istiod" {
     name  = "meshConfig.accessLogFile"
     value = "/dev/stdout"
   }
+  depends_on = [helm_release.istio_base]
 }
 
 resource "helm_release" "istio_ingress" {
   name            = "istio-ingress"
   repository      = "https://istio-release.storage.googleapis.com/charts"
   chart           = "gateway"
-  timeout         = 500
+  timeout         = 300
   cleanup_on_fail = true
   force_update    = true
   namespace       = "istio-ingress"
+  depends_on = [helm_release.istio_istiod]
 }
