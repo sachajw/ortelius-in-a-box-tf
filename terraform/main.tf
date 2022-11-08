@@ -105,6 +105,10 @@ resource "helm_release" "keptn" {
   depends_on       = [kind_cluster.ortelius]
 }
 
+resource "time_sleep" "wait_20_seconds" {
+  create_duration = "20s"
+}
+
 resource "helm_release" "istio_base" {
   name            = "istio"
   repository      = "https://istio-release.storage.googleapis.com/charts"
@@ -113,8 +117,11 @@ resource "helm_release" "istio_base" {
   cleanup_on_fail = true
   force_update    = false
   namespace       = "istio-system"
-  #depends_on      = [kind_cluster.ortelius]
-  create_duration = "20"
+  depends_on      = [time_sleep.wait_20_seconds]
+}
+
+resource "time_sleep" "wait_40_seconds" {
+  create_duration = "40s"
 }
 
 resource "helm_release" "istio_istiod" {
@@ -130,8 +137,11 @@ resource "helm_release" "istio_istiod" {
     name  = "meshConfig.accessLogFile"
     value = "/dev/stdout"
   }
-  #depends_on = [helm_release.istio_base]
-  create_duration = "40"
+  depends_on = [time_sleep.wait_40_seconds]
+}
+
+resource "time_sleep" "wait_60_seconds" {
+  create_duration = "60s"
 }
 
 resource "helm_release" "istio_ingress" {
@@ -142,6 +152,5 @@ resource "helm_release" "istio_ingress" {
   cleanup_on_fail = true
   force_update    = false
   namespace       = "istio-ingress"
-  #depends_on      = [helm_release.istio_istiod]
-  create_duration = "60"
+  depends_on      = [time_sleep.wait_60_seconds]
 }
