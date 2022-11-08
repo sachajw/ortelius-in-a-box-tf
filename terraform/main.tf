@@ -43,7 +43,7 @@ resource "null_resource" "kubectl" {
       kubectl create namespace istio-system
       kubectl create namespace istio-ingress
       kubectl label namespace istio-ingress istio-injection=enabled
-      sleep 30
+      sleep 20
       kubectl patch deployment keptn-keptn-ortelius-service --patch-file keptn-patch-image.yaml -n keptn
     EOF
   }
@@ -108,7 +108,7 @@ resource "helm_release" "keptn" {
 }
 
 resource "time_sleep" "wait_20_seconds" {
-  create_duration = "20s"
+  create_duration = "10s"
 }
 
 resource "helm_release" "istio_base" {
@@ -119,7 +119,7 @@ resource "helm_release" "istio_base" {
   cleanup_on_fail = true
   force_update    = false
   namespace       = "istio-system"
-  depends_on      = [time_sleep.wait_20_seconds]
+  depends_on      = [time_sleep.wait_10_seconds]
 }
 
 resource "time_sleep" "wait_40_seconds" {
