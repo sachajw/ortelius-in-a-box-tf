@@ -34,6 +34,7 @@ resource "kind_cluster" "ortelius" {
 
 resource "null_resource" "kubectl" {
   depends_on = [kind_cluster.ortelius]
+  #create_duration = "45"
   triggers = {
     key = uuid()
   }
@@ -43,7 +44,7 @@ resource "null_resource" "kubectl" {
       kubectl create namespace istio-system
       kubectl create namespace istio-ingress
       kubectl label namespace istio-ingress istio-injection=enabled
-      sleep 60
+      sleep 45
       kubectl patch deployment keptn-keptn-ortelius-service --patch-file keptn-patch-image.yaml -n keptn
     EOF
   }
@@ -51,6 +52,7 @@ resource "null_resource" "kubectl" {
 
 resource "null_resource" "kind_container_images" {
   depends_on = [kind_cluster.ortelius]
+  #create_duration = "60"
   triggers = {
     key = uuid()
   }
@@ -100,7 +102,6 @@ resource "helm_release" "keptn" {
   namespace        = "keptn"
   version          = "0.0.1"
   create_namespace = true
-  #timeout          = 300
   depends_on = [kind_cluster.ortelius]
 }
 
@@ -112,7 +113,8 @@ resource "helm_release" "istio_base" {
   cleanup_on_fail = true
   force_update    = false
   namespace       = "istio-system"
-  depends_on       = [kind_cluster.ortelius]
+  #depends_on      = [kind_cluster.ortelius]
+  create_duration = "20"
 }
 
 resource "helm_release" "istio_istiod" {
@@ -128,7 +130,8 @@ resource "helm_release" "istio_istiod" {
     name  = "meshConfig.accessLogFile"
     value = "/dev/stdout"
   }
-  depends_on = [helm_release.istio_base]
+  #depends_on = [helm_release.istio_base]
+  create_duration = "40"
 }
 
 resource "helm_release" "istio_ingress" {
@@ -139,5 +142,6 @@ resource "helm_release" "istio_ingress" {
   cleanup_on_fail = true
   force_update    = true
   namespace       = "istio-ingress"
-  depends_on = [helm_release.istio_istiod]
+  #depends_on      = [helm_release.istio_istiod]
+  create_duration = "60"
 }

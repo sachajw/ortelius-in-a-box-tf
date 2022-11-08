@@ -29,10 +29,19 @@ terraform {
       source  = "hashicorp/null"
       version = "3.2.0"
     }
+
+    time = {
+      source = "hashicorp/time"
+      version = "0.9.1"
+    }
   }
   required_version = ">=1.0.0"
 }
 
 provider "null" {
+  # Configuration options
+}
+
+provider "time" {
   # Configuration options
 }
