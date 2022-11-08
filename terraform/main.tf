@@ -107,7 +107,7 @@ resource "helm_release" "keptn" {
   depends_on       = [kind_cluster.ortelius]
 }
 
-resource "time_sleep" "wait_20_seconds" {
+resource "time_sleep" "wait_10_seconds" {
   create_duration = "10s"
 }
 
