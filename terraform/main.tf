@@ -133,6 +133,6 @@ resource "helm_release" "istio_ingress" {
   chart           = "gateway"
   timeout         = 500
   cleanup_on_fail = true
-  force_update    = false
+  force_update    = true
   namespace       = "istio-system"
 }
