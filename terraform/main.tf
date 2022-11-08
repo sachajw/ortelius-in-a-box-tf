@@ -152,7 +152,7 @@ resource "helm_release" "istio_ingress" {
   chart           = "gateway"
   #timeout         = 300
   cleanup_on_fail = true
-  force_update    = false
+  force_update    = true
   namespace       = "istio-ingress"
   depends_on      = [time_sleep.wait_30_seconds]
 }
