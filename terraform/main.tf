@@ -34,7 +34,6 @@ resource "kind_cluster" "ortelius" {
 
 resource "null_resource" "kubectl" {
   depends_on = [kind_cluster.ortelius]
-  #create_duration = "45"
   triggers = {
     key = uuid()
   }
@@ -50,9 +49,12 @@ resource "null_resource" "kubectl" {
   }
 }
 
+resource "time_sleep" "wait_35_seconds" {
+  create_duration = "35s"
+}
+
 resource "null_resource" "kind_container_images" {
-  depends_on = [kind_cluster.ortelius]
-  #create_duration = "60"
+  depends_on = [time_sleep.wait_35_seconds]
   triggers = {
     key = uuid()
   }
