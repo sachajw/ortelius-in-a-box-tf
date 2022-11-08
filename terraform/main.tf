@@ -102,7 +102,7 @@ resource "helm_release" "keptn" {
   namespace        = "keptn"
   version          = "0.0.1"
   create_namespace = true
-  depends_on = [kind_cluster.ortelius]
+  depends_on       = [kind_cluster.ortelius]
 }
 
 resource "helm_release" "istio_base" {
@@ -138,9 +138,9 @@ resource "helm_release" "istio_ingress" {
   name            = "istio-ingress"
   repository      = "https://istio-release.storage.googleapis.com/charts"
   chart           = "gateway"
-  timeout         = 300
+  #timeout         = 300
   cleanup_on_fail = true
-  force_update    = true
+  force_update    = false
   namespace       = "istio-ingress"
   #depends_on      = [helm_release.istio_istiod]
   create_duration = "60"
