@@ -34,8 +34,6 @@
 | Name | Type |
 |------|------|
 | [helm_release.argocd](https://registry.terraform.io/providers/hashicorp/helm/2.7.1/docs/resources/release) | resource |
-| [helm_release.istio_base](https://registry.terraform.io/providers/hashicorp/helm/2.7.1/docs/resources/release) | resource |
-| [helm_release.istio_istiod](https://registry.terraform.io/providers/hashicorp/helm/2.7.1/docs/resources/release) | resource |
 | [helm_release.keptn](https://registry.terraform.io/providers/hashicorp/helm/2.7.1/docs/resources/release) | resource |
 | [kind_cluster.ortelius](https://registry.terraform.io/providers/tehcyx/kind/latest/docs/resources/cluster) | resource |
 | [null_resource.kind_container_images](https://registry.terraform.io/providers/hashicorp/null/3.2.0/docs/resources/resource) | resource |

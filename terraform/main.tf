@@ -40,9 +40,9 @@ resource "null_resource" "kubectl" {
 
   provisioner "local-exec" {
     command = <<EOF
-      kubectl create namespace istio-system
-      kubectl create namespace istio-ingress
-      kubectl label namespace istio-ingress istio-injection=enabled
+      #kubectl create namespace istio-system
+      #kubectl create namespace istio-ingress
+      #kubectl label namespace istio-ingress istio-injection=enabled
       sleep 45
       kubectl patch deployment keptn-keptn-ortelius-service --patch-file keptn-patch-image.yaml -n keptn
     EOF
