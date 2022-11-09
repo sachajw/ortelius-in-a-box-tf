@@ -149,8 +149,8 @@ kubectx kind-ortelius-in-a-box
 kubens argocd
 ```
 #### Combine Kubens & Kubectx with Fuzzy Finder
-- Download [here](https://github.com/junegunn/fzf)
-- Download [here](https://github.com/ahmetb/kubectx)
+- Download Fuzzy Finder [here](https://github.com/junegunn/fzf)
+- Download Kubens & Kubectx [here](https://github.com/ahmetb/kubectx)
 
  ![kubectx with fuzzy finder!](images/k8s/kubens-kubectx-fuzzyfinder.jpg "kubectx with fuzzy finder")
 
