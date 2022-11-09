@@ -22,7 +22,7 @@ terraform {
 
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 4.37.0"
+      version = "~> 4.38.0"
     }
 
     null = {
@@ -31,13 +31,16 @@ terraform {
     }
 
     time = {
-      source = "hashicorp/time"
+      source  = "hashicorp/time"
       version = "0.9.1"
     }
   }
-  required_version = ">=1.0.0"
+  required_version = "1.3.4"
 }
 
+provider "aws" {
+  # Configuration options
+}
 provider "null" {
   # Configuration options
 }

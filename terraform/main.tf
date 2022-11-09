@@ -43,18 +43,18 @@ resource "null_resource" "kubectl" {
       kubectl create namespace istio-system
       kubectl create namespace istio-ingress
       kubectl label namespace istio-ingress istio-injection=enabled
-      sleep 20
+      sleep 45
       kubectl patch deployment keptn-keptn-ortelius-service --patch-file keptn-patch-image.yaml -n keptn
     EOF
   }
 }
 
-resource "time_sleep" "wait_35_seconds" {
-  create_duration = "35s"
+resource "time_sleep" "wait_45_seconds" {
+  create_duration = "45s"
 }
 
 resource "null_resource" "kind_container_images" {
-  depends_on = [time_sleep.wait_35_seconds]
+  depends_on = [time_sleep.wait_45_seconds]
   triggers = {
     key = uuid()
   }
@@ -83,7 +83,6 @@ provider "helm" {
     cluster_ca_certificate = kind_cluster.ortelius.cluster_ca_certificate
     client_certificate     = kind_cluster.ortelius.client_certificate
     client_key             = kind_cluster.ortelius.client_key
-
   }
 }
 
@@ -111,48 +110,48 @@ resource "helm_release" "keptn" {
 #  create_duration = "10s"
 #}
 
-resource "helm_release" "istio_base" {
-  name            = "istio"
-  repository      = "https://istio-release.storage.googleapis.com/charts"
-  chart           = "base"
-  timeout         = 120
-  cleanup_on_fail = true
-  force_update    = false
-  namespace       = "istio-system"
-  depends_on      = [kind_cluster.ortelius]
-}
-
-resource "time_sleep" "wait_20_seconds" {
-  create_duration = "20s"
-}
-
-resource "helm_release" "istio_istiod" {
-  name            = "istio"
-  repository      = "https://istio-release.storage.googleapis.com/charts"
-  chart           = "istiod"
-  #timeout         = 120
-  cleanup_on_fail = true
-  force_update    = false
-  namespace       = "istio-system"
-
-  set {
-    name  = "meshConfig.accessLogFile"
-    value = "/dev/stdout"
-  }
-  depends_on = [time_sleep.wait_20_seconds]
-}
-
-resource "time_sleep" "wait_30_seconds" {
-  create_duration = "30s"
-}
-
-resource "helm_release" "istio_ingress" {
-  name            = "istio-ingress"
-  repository      = "https://istio-release.storage.googleapis.com/charts"
-  chart           = "gateway"
-  #timeout         = 300
-  cleanup_on_fail = true
-  force_update    = true
-  namespace       = "istio-ingress"
-  depends_on      = [time_sleep.wait_30_seconds]
-}
+#resource "helm_release" "istio_base" {
+#  name            = "istio"
+#  repository      = "https://istio-release.storage.googleapis.com/charts"
+#  chart           = "base"
+#  timeout         = 120
+#  cleanup_on_fail = true
+#  force_update    = false
+#  namespace       = "istio-system"
+#  depends_on      = [kind_cluster.ortelius]
+#}
+#
+#resource "time_sleep" "wait_20_seconds" {
+#  create_duration = "20s"
+#}
+#
+#resource "helm_release" "istio_istiod" {
+#  name            = "istio"
+#  repository      = "https://istio-release.storage.googleapis.com/charts"
+#  chart           = "istiod"
+#  #timeout         = 120
+#  cleanup_on_fail = true
+#  force_update    = false
+#  namespace       = "istio-system"
+#
+#  set {
+#    name  = "meshConfig.accessLogFile"
+#    value = "/dev/stdout"
+#  }
+#  depends_on = [time_sleep.wait_20_seconds]
+#}
+#
+#resource "time_sleep" "wait_30_seconds" {
+#  create_duration = "30s"
+#}
+#
+#resource "helm_release" "istio_ingress" {
+#  name            = "istio-ingress"
+#  repository      = "https://istio-release.storage.googleapis.com/charts"
+#  chart           = "gateway"
+#  #timeout         = 300
+#  cleanup_on_fail = true
+#  force_update    = true
+#  namespace       = "istio-ingress"
+#  depends_on      = [time_sleep.wait_30_seconds]
+#}
