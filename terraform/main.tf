@@ -46,19 +46,18 @@ resource "null_resource" "kubectl" {
   }
 }
 
-resource "time_sleep" "wait_45_seconds" {
-  create_duration = "45s"
+resource "time_sleep" "wait_40_seconds" {
+  create_duration = "40s"
 }
 
 resource "null_resource" "kind_container_images" {
-  depends_on = [time_sleep.wait_45_seconds]
+  depends_on = [time_sleep.wait_40_seconds]
   triggers = {
     key = uuid()
   }
 
   provisioner "local-exec" {
     command = <<EOF
-      kind load docker-image --name ortelius-in-a-box --nodes ortelius-in-a-box-control-plane,ortelius-in-a-box-worker quay.io/ortelius/ortelius
       kind load docker-image --name ortelius-in-a-box --nodes ortelius-in-a-box-control-plane,ortelius-in-a-box-worker ghcr.io/ortelius/keptn-ortelius-service:0.0.2-dev
       kind load docker-image --name ortelius-in-a-box --nodes ortelius-in-a-box-control-plane,ortelius-in-a-box-worker docker.io/istio/base:1.16-2022-11-02T13-31-52
     EOF
