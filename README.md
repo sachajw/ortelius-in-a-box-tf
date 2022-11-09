@@ -150,9 +150,10 @@ kubens argocd
 ```
 #### Combine Kubens & Kubectx with Fuzzy Finder
 - Download [here](https://github.com/junegunn/fzf)
+- Download [here](https://github.com/ahmetb/kubectx)
+
  ![kubectx with fuzzy finder!](images/k8s/kubens-kubectx-fuzzyfinder.jpg "kubectx with fuzzy finder")
 
-- Download [here](https://github.com/ahmetb/kubectx)
 #### imagpullsecret-patcher
 
 A simple Kubernetes client-go application that creates and patches imagePullSecrets to service accounts in all Kubernetes namespaces to allow cluster-wide authenticated access to private container registry.
