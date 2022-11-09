@@ -244,7 +244,7 @@ terraform plan
 terraform apply
 ```
 - You should see something like this in Docker Desktop
-![ortelius Docker nodes!](images/docker/ortelius-nodes-docker.jpg "ortelius Docker nodes")
+![ortelius docker nodes!](images/docker/ortelius-nodes-docker.jpg "ortelius docker nodes")
 
 ### Helpful tips
 #### Logs
