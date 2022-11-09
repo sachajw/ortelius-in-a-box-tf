@@ -168,6 +168,20 @@ Octant is a tool for developers to understand how applications run on a Kubernet
 ### Helm
 - Install Helm [here](https://helm.sh/)
 - Also known as the package manager for Kubernetes
+#### Helm Dashboard
+- GitHub page [here](https://github.com/komodorio/helm-dashboard)
+#### Install
+```
+helm plugin install https://github.com/komodorio/helm-dashboard.git
+```
+#### Update
+```
+helm plugin update dashboard
+```
+#### Uninstall
+```
+helm plugin uninstall dashboard
+```
 #### Please make sure you add the following Helm packages
 ```
 helm repo add argo https://argoproj.github.io/argo-helm
