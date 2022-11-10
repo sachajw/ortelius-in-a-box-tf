@@ -1,0 +1,29 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: default-egress
+spec:
+  hosts:
+    - "*"
+  gateways:
+    - egress
+    - mesh
+  http:
+    - match:
+        - gateways:
+            - mesh
+          port: 80
+      route:
+        - destination:
+            host: egress.default.svc.cluster.local
+            port:
+              number: 80
+    - match:
+        - gateways:
+            - egress
+          port: 80
+      route:
+        - destination:
+            host: "*"
+            port:
+              number: 80
