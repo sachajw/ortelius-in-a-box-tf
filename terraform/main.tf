@@ -50,7 +50,7 @@ resource "time_sleep" "wait_40_seconds" {
   create_duration = "40s"
 }
 
-resource "null_resource" "kind_container_images" {
+resource "null_resource" "kind_copy_container_images" {
   depends_on = [time_sleep.wait_40_seconds]
   triggers = {
     key = uuid()
