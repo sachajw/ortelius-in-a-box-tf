@@ -106,41 +106,41 @@ resource "helm_release" "keptn" {
 #  create_duration = "10s"
 #}
 
-#resource "helm_release" "istio_base" {
-#  name            = "istio"
-#  repository      = "https://istio-release.storage.googleapis.com/charts"
-#  chart           = "base"
-#  timeout         = 120
-#  cleanup_on_fail = true
-#  force_update    = false
-#  namespace       = "istio-system"
-#  depends_on      = [kind_cluster.ortelius]
-#}
-#
-#resource "time_sleep" "wait_20_seconds" {
-#  create_duration = "20s"
-#}
-#
-#resource "helm_release" "istio_istiod" {
-#  name            = "istio"
-#  repository      = "https://istio-release.storage.googleapis.com/charts"
-#  chart           = "istiod"
-#  #timeout         = 120
-#  cleanup_on_fail = true
-#  force_update    = false
-#  namespace       = "istio-system"
-#
-#  set {
-#    name  = "meshConfig.accessLogFile"
-#    value = "/dev/stdout"
-#  }
-#  depends_on = [time_sleep.wait_20_seconds]
-#}
-#
+resource "helm_release" "istio_base" {
+  name            = "istio"
+  repository      = "https://istio-release.storage.googleapis.com/charts"
+  chart           = "base"
+  timeout         = 120
+  cleanup_on_fail = true
+  force_update    = false
+  namespace       = "istio-system"
+  depends_on      = [kind_cluster.ortelius]
+}
+
+resource "time_sleep" "wait_15_seconds" {
+  create_duration = "15s"
+}
+
+resource "helm_release" "istio_istiod" {
+  name       = "istio"
+  repository = "https://istio-release.storage.googleapis.com/charts"
+  chart      = "istiod"
+  #timeout         = 120
+  cleanup_on_fail = true
+  force_update    = false
+  namespace       = "istio-system"
+
+  set {
+    name  = "meshConfig.accessLogFile"
+    value = "/dev/stdout"
+  }
+  depends_on = [time_sleep.wait_15_seconds]
+}
+
 #resource "time_sleep" "wait_30_seconds" {
 #  create_duration = "30s"
 #}
-#
+
 #resource "helm_release" "istio_ingress" {
 #  name            = "istio-ingress"
 #  repository      = "https://istio-release.storage.googleapis.com/charts"
