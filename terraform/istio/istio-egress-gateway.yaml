@@ -1,19 +1,16 @@
-apiVersion: install.istio.io/v1alpha1
-kind: IstioOperator
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: egress
+  namespace: default
 spec:
-  meshConfig:
-    accessLogFile: /dev/stdout
-    extensionProviders:
-    - name: otel
-      envoyOtelAls:
-        service: opentelemetry-collector.istio-system.svc.cluster.local
-        port: 4317
-  components:
-    egressGateways:
-    - name: istio-egressgateway
-      enabled: true
-      k8s:
-        resources:
-          requests:
-            cpu: 10m
-            memory: 40Mi
+  selector:
+    gateway-name: egress
+    gateway-type: egress
+  servers:
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+      hosts:
+        - "*"
