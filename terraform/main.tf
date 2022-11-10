@@ -107,25 +107,26 @@ resource "helm_release" "keptn" {
 #}
 
 resource "helm_release" "istio_base" {
-  name            = "istio"
-  repository      = "https://istio-release.storage.googleapis.com/charts"
-  chart           = "base"
-  timeout         = 120
-  cleanup_on_fail = true
-  force_update    = false
-  namespace       = "istio-system"
-  depends_on      = [kind_cluster.ortelius]
+  name             = "istio"
+  repository       = "https://istio-release.storage.googleapis.com/charts"
+  chart            = "base"
+  version          = "1.15.3"
+  cleanup_on_fail  = true
+  force_update     = false
+  create_namespace = true
+  namespace        = "istio-system"
+  depends_on       = [kind_cluster.ortelius]
 }
 
-resource "time_sleep" "wait_15_seconds" {
-  create_duration = "15s"
+resource "time_sleep" "wait_10_seconds" {
+  create_duration = "10s"
 }
 
 resource "helm_release" "istio_istiod" {
-  name       = "istio"
-  repository = "https://istio-release.storage.googleapis.com/charts"
-  chart      = "istiod"
-  #timeout         = 120
+  name            = "istio"
+  repository      = "https://istio-release.storage.googleapis.com/charts"
+  chart           = "istiod"
+  version         = "1.15.3"
   cleanup_on_fail = true
   force_update    = false
   namespace       = "istio-system"
@@ -134,20 +135,20 @@ resource "helm_release" "istio_istiod" {
     name  = "meshConfig.accessLogFile"
     value = "/dev/stdout"
   }
-  depends_on = [time_sleep.wait_15_seconds]
+  depends_on = [time_sleep.wait_20_seconds]
 }
 
-#resource "time_sleep" "wait_30_seconds" {
-#  create_duration = "30s"
-#}
+resource "time_sleep" "wait_20_seconds" {
+  create_duration = "20s"
+}
 
-#resource "helm_release" "istio_ingress" {
-#  name            = "istio-ingress"
-#  repository      = "https://istio-release.storage.googleapis.com/charts"
-#  chart           = "gateway"
-#  #timeout         = 300
-#  cleanup_on_fail = true
-#  force_update    = true
-#  namespace       = "istio-ingress"
-#  depends_on      = [time_sleep.wait_30_seconds]
-#}
+resource "helm_release" "istio_ingress" {
+  name            = "istio-ingress"
+  repository      = "https://istio-release.storage.googleapis.com/charts"
+  chart           = "gateway"
+  version         = "1.15.3"
+  cleanup_on_fail = true
+  force_update    = false
+  namespace       = "istio-ingress"
+  depends_on      = [time_sleep.wait_20_seconds]
+}
