@@ -58,6 +58,7 @@ resource "null_resource" "kind_copy_container_images" {
 
   provisioner "local-exec" {
     command = <<EOF
+      kind load docker-image --name ortelius-in-a-box --nodes ortelius-in-a-box-control-plane,ortelius-in-a-box-worker quay.io/ortelius/ortelius
       kind load docker-image --name ortelius-in-a-box --nodes ortelius-in-a-box-control-plane,ortelius-in-a-box-worker ghcr.io/ortelius/keptn-ortelius-service:0.0.2-dev
       kind load docker-image --name ortelius-in-a-box --nodes ortelius-in-a-box-control-plane,ortelius-in-a-box-worker docker.io/istio/base:1.16-2022-11-02T13-31-52
     EOF
@@ -94,13 +95,13 @@ resource "helm_release" "argocd" {
 }
 
 resource "helm_release" "ortelius" {
-  name       = "ortelius"
-  repository = "https://ortelius.github.io/ortelius-charts/index.yaml"
-  chart      = "ortelius-charts"
-  namespace  = "ortelius"
-  #version          = "5.6.2"
+  name             = "ortelius"
+  repository       = "https://ortelius.github.io/ortelius-charts/"
+  chart            = "ortelius"
+  namespace        = "ortelius"
   create_namespace = true
   depends_on       = [kind_cluster.ortelius]
+  timeout          = 600
 }
 
 resource "helm_release" "keptn" {
@@ -119,6 +120,7 @@ resource "helm_release" "istio_banzaicloud" {
   chart            = "istio"
   create_namespace = true
   depends_on       = [kind_cluster.ortelius]
+  timeout          = 600
 }
 
 #resource "time_sleep" "wait_10_seconds" {
