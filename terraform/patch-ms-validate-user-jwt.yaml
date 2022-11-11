@@ -7,16 +7,19 @@ spec:
       tier: backend
       track: stable
   template:
-    containers:
-      - name:
-        image:
-        imagePullPolicy:
-        env:
-        ports:
-        volumeMounts:
-          - name: jwt-volume
-            mountPath: /app/keys
-        volumes:
-          - name: jwt-volume
-            secret:
-              secretName: jwtkeys
+    metadata:
+      labels:
+        app:  ""
+        tier: backend
+        track: stable
+    spec:
+      containers:
+        - name: ""
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: jwt-volume
+              mountPath: /app/keys
+      volumes:
+        - name: jwt-volume
+          secret:
+            secretName: jwtkeys
