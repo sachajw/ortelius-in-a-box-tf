@@ -99,6 +99,7 @@ resource "helm_release" "ortelius" {
   repository       = "https://ortelius.github.io/ortelius-charts/"
   chart            = "ortelius"
   namespace        = "ortelius"
+  force_update     = true
   create_namespace = true
   depends_on       = [kind_cluster.ortelius]
   timeout          = 600
@@ -118,6 +119,7 @@ resource "helm_release" "istio_banzaicloud" {
   name             = "banzaicloud"
   repository       = "https://kubernetes-charts.banzaicloud.com"
   chart            = "istio"
+  force_update     = true
   create_namespace = true
   depends_on       = [kind_cluster.ortelius]
   timeout          = 600
