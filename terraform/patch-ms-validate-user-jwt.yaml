@@ -1,9 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
-volumeMounts:
-            - name: jwt-volume
-              mountPath: /app/keys
-volumes:
-  - name: jwt-volume
-    secret:
-      secretName: jwtkeys
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      tier: backend
+      track: stable
+  template:
+    containers:
+      - name:
+        image:
+        imagePullPolicy:
+        env:
+        ports:
+        volumeMounts:
+          - name: jwt-volume
+            mountPath: /app/keys
+        volumes:
+          - name: jwt-volume
+            secret:
+              secretName: jwtkeys
