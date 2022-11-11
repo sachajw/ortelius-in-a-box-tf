@@ -97,16 +97,16 @@ resource "helm_release" "argocd" {
   depends_on       = [kind_cluster.ortelius]
 }
 
-resource "helm_release" "ortelius" {
-  name             = "ortelius"
-  repository       = "https://ortelius.github.io/ortelius-charts/"
-  chart            = "ortelius"
-  namespace        = "ortelius"
-  force_update     = true
-  create_namespace = false
-  depends_on       = [kind_cluster.ortelius]
-  timeout          = 600
-}
+#resource "helm_release" "ortelius" {
+#  name             = "ortelius"
+#  repository       = "https://ortelius.github.io/ortelius-charts/"
+#  chart            = "ortelius"
+#  namespace        = "ortelius"
+#  force_update     = true
+#  create_namespace = false
+#  depends_on       = [kind_cluster.ortelius]
+#  timeout          = 600
+#}
 
 resource "helm_release" "keptn" {
   name             = "keptn"
