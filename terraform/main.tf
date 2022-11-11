@@ -43,8 +43,8 @@ resource "null_resource" "kubectl" {
       kubectl create namespace ortelius
       kubectl create secret generic pgcred --from-literal=DBUserName=postgres --from-literal=DBPassword=postgres --from-literal=DBHost=localhost --from-literal=DBPort=5432 --from-literal=DBName=postgres -n ortelius
       sleep 45
-      kubectl patch deployment keptn-keptn-ortelius-service --patch-file keptn-patch-image.yaml -n keptn
-      kubectl patch deployment ms-validate-user --patch-file ms-validate-user-patch-image.yaml -n ortelius
+      kubectl patch deployment keptn-keptn-ortelius-service --patch-file patch-keptn-image.yaml -n keptn
+      kubectl patch deployment ms-validate-user --patch-file patch-ms-validate-user-jwt.yaml -n ortelius
     EOF
   }
 }
