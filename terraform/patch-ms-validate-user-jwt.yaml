@@ -7,11 +7,6 @@ spec:
       tier: backend
       track: stable
   template:
-    metadata:
-      labels:
-        app:  ""
-        tier: backend
-        track: stable
     spec:
       containers:
         - name: ""
