@@ -40,9 +40,6 @@ resource "null_resource" "kubectl" {
 
   provisioner "local-exec" {
     command = <<EOF
-      kubectl create namespace istio-system
-      kubectl create namespace istio-ingress
-      kubectl label namespace istio-ingress istio-injection=enabled
       sleep 45
       kubectl patch deployment keptn-keptn-ortelius-service --patch-file keptn-patch-image.yaml -n keptn
     EOF
@@ -82,6 +79,7 @@ provider "helm" {
     cluster_ca_certificate = kind_cluster.ortelius.cluster_ca_certificate
     client_certificate     = kind_cluster.ortelius.client_certificate
     client_key             = kind_cluster.ortelius.client_key
+    config_path            = "~/.kube/config"
   }
 }
 
@@ -96,7 +94,7 @@ resource "helm_release" "argocd" {
 }
 
 resource "helm_release" "ortelius" {
-  name       = "argocd"
+  name       = "ortelius"
   repository = "https://ortelius.github.io/ortelius-charts/index.yaml"
   chart      = "ortelius-charts"
   namespace  = "ortelius"
@@ -122,7 +120,6 @@ resource "helm_release" "istio_banzaicloud" {
   create_namespace = true
   depends_on       = [kind_cluster.ortelius]
 }
-
 
 #resource "time_sleep" "wait_10_seconds" {
 #  create_duration = "10s"
