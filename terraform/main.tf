@@ -95,6 +95,16 @@ resource "helm_release" "argocd" {
   depends_on       = [kind_cluster.ortelius]
 }
 
+resource "helm_release" "ortelius" {
+  name       = "argocd"
+  repository = "https://ortelius.github.io/ortelius-charts/index.yaml"
+  chart      = "ortelius-charts"
+  namespace  = "ortelius"
+  #version          = "5.6.2"
+  create_namespace = true
+  depends_on       = [kind_cluster.ortelius]
+}
+
 resource "helm_release" "keptn" {
   name             = "keptn"
   repository       = "https://ortelius.github.io/keptn-ortelius-service"
@@ -105,53 +115,15 @@ resource "helm_release" "keptn" {
   depends_on       = [kind_cluster.ortelius]
 }
 
-#resource "time_sleep" "wait_10_seconds" {
-#  create_duration = "10s"
-#}
-
-resource "helm_release" "istio_base" {
-  name             = "istio"
-  repository       = "https://istio-release.storage.googleapis.com/charts"
-  chart            = "base"
-  version          = "1.15.3"
-  cleanup_on_fail  = true
-  force_update     = false
+resource "helm_release" "istio_banzaicloud" {
+  name             = "banzaicloud"
+  repository       = "https://kubernetes-charts.banzaicloud.com"
+  chart            = "istio"
   create_namespace = true
-  namespace        = "istio-system"
   depends_on       = [kind_cluster.ortelius]
 }
 
-resource "time_sleep" "wait_10_seconds" {
-  create_duration = "10s"
-}
 
-resource "helm_release" "istio_istiod" {
-  name            = "istio"
-  repository      = "https://istio-release.storage.googleapis.com/charts"
-  chart           = "istiod"
-  version         = "1.15.3"
-  cleanup_on_fail = true
-  force_update    = false
-  namespace       = "istio-system"
-
-  set {
-    name  = "meshConfig.accessLogFile"
-    value = "/dev/stdout"
-  }
-  depends_on = [time_sleep.wait_20_seconds]
-}
-
-resource "time_sleep" "wait_20_seconds" {
-  create_duration = "20s"
-}
-
-resource "helm_release" "istio_ingress" {
-  name            = "istio-ingress"
-  repository      = "https://istio-release.storage.googleapis.com/charts"
-  chart           = "gateway"
-  version         = "1.15.3"
-  cleanup_on_fail = true
-  force_update    = false
-  namespace       = "istio-ingress"
-  depends_on      = [time_sleep.wait_20_seconds]
-}
+#resource "time_sleep" "wait_10_seconds" {
+#  create_duration = "10s"
+#}
