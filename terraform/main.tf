@@ -41,7 +41,7 @@ resource "null_resource" "kubectl" {
   provisioner "local-exec" {
     command = <<EOF
       kubectl create namespace ortelius
-      kubectl create secret generic pgcred --from-literal=DBUserName=admin --from-literal=DBPassword=admin --from-literal=DBHost=orteliusdb -n ortelius
+      kubectl create secret generic pgcred --from-literal=DBUserName=postgres --from-literal=DBPassword=postgres --from-literal=DBHost=localhost --from-literal=DBPort=5432 --from-literal=DBName=postgres -n ortelius
       sleep 45
       kubectl patch deployment keptn-keptn-ortelius-service --patch-file keptn-patch-image.yaml -n keptn
     EOF
