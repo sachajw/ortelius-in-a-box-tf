@@ -106,7 +106,7 @@ resource "helm_release" "istio_base" {
   depends_on       = [kind_cluster.ortelius]
 
   values = [
-    file("istio/manifests/base/values.yaml"),
+    file("istio/charts/manifests/base/values.yaml"),
   ]
 }
 
@@ -118,7 +118,7 @@ resource "helm_release" "istio_istiod" {
   create_namespace = false
 
   values = [
-    file("istio/manifests/istio-contorl/istio-discovery/values.yaml"),
+    file("istio/charts/manifests/istio-contorl/istio-discovery/values.yaml"),
   ]
 
   set {
@@ -135,7 +135,7 @@ resource "helm_release" "istio_egress" {
   depends_on       = [kind_cluster.ortelius]
 
   values = [
-    file("istio/manifests/gateways/istio-egress/values.yaml"),
+    file("istio/charts/manifests/gateways/istio-egress/values.yaml"),
   ]
 }
 
@@ -147,7 +147,7 @@ resource "helm_release" "istio_ingress" {
   depends_on       = [kind_cluster.ortelius]
 
   values = [
-    file("istio/manifests/gateways/istio-ress/values.yaml"),
+    file("istio/charts/manifests/gateways/istio-ingress/values.yaml"),
   ]
 }
 
