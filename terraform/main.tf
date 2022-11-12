@@ -40,6 +40,7 @@ resource "null_resource" "kubectl_ortelius" {
 
   provisioner "local-exec" {
     command = <<EOF
+      kubectl create namespace ortelius
       kubectl create secret generic pgcred --from-literal=DBUserName=postgres --from-literal=DBPassword=postgres --from-literal=DBHost=localhost --from-literal=DBPort=5432 --from-literal=DBName=postgres -n ortelius
       sleep 45
       kubectl apply -f deployment-ms-validate-user.yaml
@@ -104,7 +105,7 @@ resource "helm_release" "ortelius" {
   #  repository       = "https://ortelius.github.io/ortelius-charts/"
   chart            = "ortelius"
   namespace        = "ortelius"
-  create_namespace = true
+  create_namespace = false
   #  force_update     = true
   depends_on = [kind_cluster.ortelius]
   timeout    = 900
