@@ -151,18 +151,6 @@ resource "helm_release" "istio_ingress" {
   ]
 }
 
-resource "helm_release" "istio_egress" {
-  name             = "istio"
-  chart            = "istio-egress"
-  namespace        = "istio-system"
-  create_namespace = false
-  depends_on       = [kind_cluster.ortelius]
-
-  values = [
-    file("istio/manifests/gateways/istio-egress/values.yaml"),
-  ]
-}
-
 resource "helm_release" "istio_operator_banzaicloud" {
   name             = "banzaicloud"
   chart            = "istio-operator"
