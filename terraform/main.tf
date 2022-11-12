@@ -32,21 +32,21 @@ resource "kind_cluster" "ortelius" {
   }
 }
 
-#resource "null_resource" "kubectl" {
-#  depends_on = [kind_cluster.ortelius]
-#  triggers = {
-#    key = uuid()
-#  }
-#
-#  provisioner "local-exec" {
-#    command = <<EOF
-#      kubectl create namespace ortelius
-#      sleep 45
-#      kubectl patch deployment keptn-keptn-ortelius-service --patch-file patch-keptn-image.yaml -n keptn
-#      kubectl patch deployment ms-validate-user --patch-file patch-ms-validate-user-jwt.yaml -n ortelius
-#    EOF
-#  }
-#}
+resource "null_resource" "kubectl" {
+  depends_on = [kind_cluster.ortelius]
+  triggers = {
+    key = uuid()
+  }
+
+  provisioner "local-exec" {
+    command = <<EOF
+      kubectl create namespace ortelius
+      sleep 45
+      kubectl patch deployment keptn-keptn-ortelius-service --patch-file patch-keptn-image.yaml -n keptn
+      kubectl patch deployment ms-validate-user --patch-file patch-ms-validate-user-jwt.yaml -n ortelius
+    EOF
+  }
+}
 
 resource "time_sleep" "wait_40_seconds" {
   create_duration = "40s"
