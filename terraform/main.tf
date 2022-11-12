@@ -100,6 +100,19 @@ resource "helm_release" "argocd" {
   ]
 }
 
+resource "helm_release" "istio_banzaicloud" {
+  name             = "banzaicloud"
+  chart            = "istio-operator"
+  namespace        = "istio-system"
+  create_namespace = true
+  depends_on       = [kind_cluster.ortelius]
+  timeout          = 900
+
+  values = [
+    file("istio-operator/values.yaml"),
+  ]
+}
+
 resource "helm_release" "ortelius" {
   name = "ortelius"
   #  repository       = "https://ortelius.github.io/ortelius-charts/"
@@ -122,17 +135,8 @@ resource "helm_release" "keptn" {
   namespace        = "keptn"
   create_namespace = true
   depends_on       = [kind_cluster.ortelius]
-}
-
-resource "helm_release" "istio_banzaicloud" {
-  name             = "banzaicloud"
-  chart            = "istio-operator"
-  namespace        = "istio-system"
-  create_namespace = true
-  depends_on       = [kind_cluster.ortelius]
-  timeout          = 900
 
   values = [
-    file("istio-operator/values.yaml"),
+    file("keptn-ortelius-service/values.yaml"),
   ]
 }
