@@ -28,12 +28,12 @@ dockerrepo: quay.io/ortelius/ms-validate-user
 dockersha: 9d17b931bca9
 dockertag: deploy-v10.0.0.68-g6b08a2a
 dropzone: /tmp/tdm.1766.9
-environment: aks-cluster
+environment: ortelius-in-a-box
 gitcommit: 6b08a2a
 gitrepo: ortelius/ortelius-ms-validate-user
 gittag: deploy
 giturl: https://github.com/ortelius/ortelius-ms-validate-user.git
-kubectl_context: cluster2-aks-admin
+kubectl_context: ortelius-in-a-box
 server_hostname: localhost
 server_name: localhost
 image:
