@@ -125,7 +125,7 @@ resource "helm_release" "istio_gateway" {
   repository       = "https://istio-release.storage.googleapis.com/charts"
   namespace        = "istio-system"
   create_namespace = false
-  depends_on       = [helm_release.istio_istiod]
+  depends_on       = [helm_release.istio_base]
 }
 
 resource "helm_release" "istio_egress" {
@@ -134,7 +134,7 @@ resource "helm_release" "istio_egress" {
   repository       = "https://istio-release.storage.googleapis.com/charts"
   namespace        = "istio-system"
   create_namespace = false
-  depends_on       = [helm_release.istio_gateway]
+  depends_on       = [helm_release.istio_base]
 }
 
 resource "helm_release" "istio_ingress" {
@@ -143,7 +143,7 @@ resource "helm_release" "istio_ingress" {
   repository       = "https://istio-release.storage.googleapis.com/charts"
   namespace        = "istio-system"
   create_namespace = false
-  depends_on       = [helm_release.istio_egress]
+  depends_on       = [helm_release.istio_bases]
 }
 
 resource "helm_release" "istio_operator_banzaicloud" {
