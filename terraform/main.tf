@@ -101,25 +101,18 @@ resource "helm_release" "argocd" {
 resource "helm_release" "istio_base" {
   name             = "istio"
   chart            = "base"
+  repository       = "https://istio-release.storage.googleapis.com/charts"
   namespace        = "istio-system"
   create_namespace = true
   depends_on       = [kind_cluster.ortelius]
-
-  values = [
-    file("istio/charts/manifests/base/values.yaml"),
-  ]
 }
 
 resource "helm_release" "istio_istiod" {
   name             = "istio"
-  repository       = "https://istio-release.storage.googleapis.com/charts"
   chart            = "istiod"
+  repository       = "https://istio-release.storage.googleapis.com/charts"
   namespace        = "istio-system"
   create_namespace = false
-
-  values = [
-    file("istio/charts/manifests/istio-contorl/istio-discovery/values.yaml"),
-  ]
 
   set {
     name  = "meshConfig.accessLogFile"
@@ -129,51 +122,31 @@ resource "helm_release" "istio_istiod" {
 
 resource "helm_release" "istio_egress" {
   name             = "istio"
-  chart            = "istio-egress"
+  chart            = "istio-egressgateway"
+  repository       = "https://istio-release.storage.googleapis.com/charts"
   namespace        = "istio-system"
   create_namespace = false
   depends_on       = [kind_cluster.ortelius]
-
-  values = [
-    file("istio/charts/manifests/gateways/istio-egress/values.yaml"),
-  ]
 }
 
 resource "helm_release" "istio_ingress" {
   name             = "istio"
-  chart            = "istio-ingress"
+  chart            = "istio-ingressgateway"
+  repository       = "https://istio-release.storage.googleapis.com/charts"
   namespace        = "istio-system"
   create_namespace = false
   depends_on       = [kind_cluster.ortelius]
-
-  values = [
-    file("istio/charts/manifests/gateways/istio-ingress/values.yaml"),
-  ]
 }
 
 resource "helm_release" "istio_operator_banzaicloud" {
   name             = "banzaicloud"
   chart            = "istio-operator"
   namespace        = "istio-system"
-  create_namespace = true
+  create_namespace = false
   depends_on       = [kind_cluster.ortelius]
-  timeout          = 600
 
   values = [
     file("istio-operator/values.yaml"),
-  ]
-}
-
-resource "helm_release" "ortelius" {
-  name             = "ortelius"
-  chart            = "ortelius"
-  namespace        = "ortelius"
-  create_namespace = false
-  depends_on       = [kind_cluster.ortelius]
-  timeout          = 600
-
-  values = [
-    file("ortelius/values.yaml"),
   ]
 }
 
@@ -187,5 +160,18 @@ resource "helm_release" "keptn" {
 
   values = [
     file("keptn-ortelius-service/values.yaml"),
+  ]
+}
+
+resource "helm_release" "ortelius" {
+  name             = "ortelius"
+  chart            = "ortelius"
+  namespace        = "ortelius"
+  create_namespace = false
+  depends_on       = [kind_cluster.ortelius]
+  timeout          = 600
+
+  values = [
+    file("ortelius/values.yaml"),
   ]
 }
