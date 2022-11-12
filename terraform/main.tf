@@ -16,13 +16,13 @@ resource "kind_cluster" "ortelius" {
         "kind: InitConfiguration\nnodeRegistration:\n  kubeletExtraArgs:\n    node-labels: \"ingress-ready=true\"\n"
       ]
       extra_port_mappings {
-        container_port = 80
-        host_port      = 80
+        container_port = 8080
+        host_port      = 8080
         listen_address = "0.0.0.0"
       }
       extra_port_mappings {
-        container_port = 443
-        host_port      = 443
+        container_port = 4443
+        host_port      = 4443
         listen_address = "0.0.0.0"
       }
     }
@@ -32,7 +32,7 @@ resource "kind_cluster" "ortelius" {
   }
 }
 
-resource "null_resource" "kubectl" {
+resource "null_resource" "kubectl_ortelius" {
   depends_on = [kind_cluster.ortelius]
   triggers = {
     key = uuid()
@@ -42,8 +42,7 @@ resource "null_resource" "kubectl" {
     command = <<EOF
       kubectl create secret generic pgcred --from-literal=DBUserName=postgres --from-literal=DBPassword=postgres --from-literal=DBHost=localhost --from-literal=DBPort=5432 --from-literal=DBName=postgres -n ortelius
       sleep 45
-      kubectl patch deployment keptn-keptn-ortelius-service --patch-file patch-keptn-image.yaml -n keptn
-      kubectl patch deployment ms-validate-user --patch-file patch-ms-validate-user.yaml -n ortelius
+      kubectl apply -f deployment-ms-validate-user.yaml
     EOF
   }
 }
