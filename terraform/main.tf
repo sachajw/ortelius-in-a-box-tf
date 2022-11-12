@@ -176,7 +176,7 @@ resource "helm_release" "ortelius" {
   chart            = "ortelius"
   namespace        = "ortelius"
   create_namespace = false
-  depends_on       = [kind_cluster.ortelius]
+  depends_on       = [kind_cluster.keptn]
   timeout          = 600
 
   values = [
