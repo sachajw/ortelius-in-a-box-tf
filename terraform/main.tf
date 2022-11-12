@@ -121,13 +121,9 @@ resource "helm_release" "keptn" {
 resource "helm_release" "istio_banzaicloud" {
   name             = "banzaicloud"
   repository       = "https://kubernetes-charts.banzaicloud.com"
-  chart            = "istio"
+  chart            = "istio-operator"
   force_update     = true
   create_namespace = true
   depends_on       = [kind_cluster.ortelius]
   timeout          = 600
 }
-
-#resource "time_sleep" "wait_10_seconds" {
-#  create_duration = "10s"
-#}
