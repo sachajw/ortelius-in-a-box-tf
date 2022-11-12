@@ -106,7 +106,7 @@ resource "helm_release" "istio_banzaicloud" {
   namespace        = "istio-system"
   create_namespace = true
   depends_on       = [kind_cluster.ortelius]
-  timeout          = 900
+  timeout          = 600
 
   values = [
     file("istio-operator/values.yaml"),
@@ -121,7 +121,7 @@ resource "helm_release" "ortelius" {
   create_namespace = false
   #  force_update     = true
   depends_on = [kind_cluster.ortelius]
-  timeout    = 900
+  timeout    = 600
 
   values = [
     file("ortelius/values.yaml"),
