@@ -111,6 +111,7 @@ resource "helm_release" "istio_istiod" {
   repository       = "https://istio-release.storage.googleapis.com/charts"
   namespace        = "istio-system"
   create_namespace = false
+  depends_on       = [helm_release.istio_base]
 
   set {
     name  = "meshConfig.accessLogFile"
@@ -124,7 +125,7 @@ resource "helm_release" "istio_gateway" {
   repository       = "https://istio-release.storage.googleapis.com/charts"
   namespace        = "istio-system"
   create_namespace = false
-  depends_on       = [kind_cluster.ortelius]
+  depends_on       = [helm_release.istiod]
 }
 
 resource "helm_release" "istio_egress" {
@@ -133,7 +134,7 @@ resource "helm_release" "istio_egress" {
   repository       = "https://istio-release.storage.googleapis.com/charts"
   namespace        = "istio-system"
   create_namespace = false
-  depends_on       = [kind_cluster.ortelius]
+  depends_on       = [helm_release.istio_gateway]
 }
 
 resource "helm_release" "istio_ingress" {
@@ -142,7 +143,7 @@ resource "helm_release" "istio_ingress" {
   repository       = "https://istio-release.storage.googleapis.com/charts"
   namespace        = "istio-system"
   create_namespace = false
-  depends_on       = [kind_cluster.ortelius]
+  depends_on       = [helm_release.istio_egress]
 }
 
 resource "helm_release" "istio_operator_banzaicloud" {
@@ -150,7 +151,7 @@ resource "helm_release" "istio_operator_banzaicloud" {
   chart            = "istio-operator"
   namespace        = "istio-system"
   create_namespace = false
-  depends_on       = [kind_cluster.ortelius]
+  depends_on       = [helm_release.istio_base]
 
   values = [
     file("istio-operator/values.yaml"),
