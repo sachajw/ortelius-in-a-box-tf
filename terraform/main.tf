@@ -99,7 +99,7 @@ resource "helm_release" "argocd" {
   ]
 }
 
-resource "helm_release" "istio_banzaicloud" {
+resource "helm_release" "istio_operator_banzaicloud" {
   name             = "banzaicloud"
   chart            = "istio-operator"
   namespace        = "istio-system"
