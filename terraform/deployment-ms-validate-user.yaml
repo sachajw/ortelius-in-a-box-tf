@@ -15,6 +15,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ms-validate-user
+  namespace: ortelius
 spec:
   replicas: 1
   selector:
