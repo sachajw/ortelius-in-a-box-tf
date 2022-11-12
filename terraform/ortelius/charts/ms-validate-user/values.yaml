@@ -40,3 +40,10 @@ image:
   repository: quay.io/ortelius/ms-validate-user
   tag: main-v10.0.1-g0be399
   sha: sha256:14802a13fc100b9a8dc7690eb88a23c1f2401887fce373c25113cd72c36770cd
+  volumeMounts:
+      - name: jwt-volume
+        mountPath: /app/keys
+volumes:
+  - name: jwt-volume
+    secret:
+      secretName: jwtkeys
