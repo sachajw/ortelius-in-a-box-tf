@@ -43,7 +43,7 @@ resource "null_resource" "kubectl" {
       kubectl create namespace ortelius
       sleep 45
       kubectl patch deployment keptn-keptn-ortelius-service --patch-file patch-keptn-image.yaml -n keptn
-      kubectl patch deployment ms-validate-user --patch-file patch-ms-validate-user-jwt.yaml -n ortelius
+      kubectl patch deployment ms-validate-user --patch-file patch-ms-validate-user.yaml -n ortelius
     EOF
   }
 }
