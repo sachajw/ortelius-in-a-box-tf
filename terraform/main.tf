@@ -143,7 +143,7 @@ resource "helm_release" "istio_ingress" {
   repository       = "https://istio-release.storage.googleapis.com/charts"
   namespace        = "istio-system"
   create_namespace = false
-  depends_on       = [helm_release.istio_bases]
+  depends_on       = [helm_release.istio_base]
 }
 
 resource "helm_release" "istio_operator_banzaicloud" {
@@ -176,7 +176,7 @@ resource "helm_release" "ortelius" {
   chart            = "ortelius"
   namespace        = "ortelius"
   create_namespace = false
-  depends_on       = [kind_cluster.keptn]
+  depends_on       = [helm_release.keptn]
   timeout          = 600
 
   values = [
