@@ -88,13 +88,17 @@ provider "helm" {
 }
 
 resource "helm_release" "argocd" {
-  name             = "argocd"
-  repository       = "https://argoproj.github.io/argo-helm"
-  chart            = "argo-cd"
-  namespace        = "argocd"
-  version          = "5.6.2"
+  name = "argocd"
+  #repository       = "https://argoproj.github.io/argo-helm"
+  chart     = "argo-cd"
+  namespace = "argocd"
+  #version          = "5.6.2"
   create_namespace = true
   depends_on       = [kind_cluster.ortelius]
+
+  values = [
+    file("argo-cd/values.yaml"),
+  ]
 }
 
 #resource "helm_release" "ortelius" {

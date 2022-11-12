@@ -1,0 +1,81 @@
+DockerRepo: quay.io/ortelius/ms-compitem-crud
+DockerSha: f1639b6517cf
+DockerTag: deploy-v10.0.0.104-g58a578d
+image:
+  repository: quay.io/ortelius/ms-compitem-crud
+  tag: main-v10.0.1-gb29e56
+  sha: sha256:63940e0e911ffd12a801d4ac5b9b68e1d6c6c5b7e5afaffd179cf558966dab7b
+---
+DockerRepo: quay.io/ortelius/ms-dep-pkg-cud
+DockerSha: d464014a0b25
+DockerTag: deploy-v10.0.0.86-g960945e
+image:
+  repository: quay.io/ortelius/ms-dep-pkg-cud
+  tag: main-v10.0.1-gc189d0
+  sha: sha256:0c92c32ff85c820463b769b69af8772b941359d1a11477c1535f68885a72462a
+---
+DockerRepo: quay.io/ortelius/ms-dep-pkg-r
+DockerSha: 3bfe40bf649b
+DockerTag: deploy-v10.0.0.97-gfac8f41
+image:
+  repository: quay.io/ortelius/ms-dep-pkg-r
+  tag: main-v10.0.1-gb5d5e0
+  sha: sha256:894f8688340542e6b8146e66552535ccb87e06eefd399ca302bb847b586d02ef
+---
+replicaCount: 1
+image:
+  repository: quay.io/ortelius/ms-scorecard
+  tag: main-v10.0.38-g992c83
+  sha: sha256:501c70837c30076a9d22d528db8f14a6b45e06ea66f6186da100eae859121414
+  pullPolicy: Always
+---
+DockerRepo: quay.io/ortelius/ms-textfile-crud
+DockerSha: 2e1fad49558a
+DockerTag: deploy-v10.0.0.62-g104a226
+image:
+  repository: quay.io/ortelius/ms-textfile-crud
+  tag: main-v10.0.1-gc3969e
+  sha: sha256:f44b00ad9f7877e3a154af77cf9768aabfe5dbdc1840525ed7ba87eab529af4f
+---
+BuildNumber: 0
+Chart: chart/ms-validate-user
+ChartNamespace: ortelius
+CustomAction: GLOBAL.HelmChart
+DockerRepo: quay.io/ortelius/ms-validate-user
+DockerSha: 9d17b931bca9
+DockerTag: deploy-v10.0.0.68-g6b08a2a
+EXT: sh
+GitBranch: deploy
+GitCommit: 6b08a2a
+GitRepo: ortelius/ortelius-ms-validate-user
+GitTag: deploy
+GitUrl: https://github.com/ortelius/ortelius-ms-validate-user.git
+RE_PHYSICAL_HOSTNAME: localhost
+RE_PHYSICAL_SERVER: localhost
+aks:
+  admin: true
+  cluster: cluster2-aks
+  resourcegroup: cluster1-rg
+application: ortelius;10_0_0
+builddate: Fri Jul 22 16:58:33 2022
+buildid: 438da77b-4f61-414e-ac63-0d105c07072d
+buildurl: https://console.cloud.google.com/cloud-build/builds/438da77b-4f61-414e-ac63-0d105c07072d?project=eighth-physics-169321
+chart: chart/ms-validate-user
+chartnamespace: ortelius
+component: ms-validate-user;deploy;v10_0_0_68_g6b08a2a
+dockerrepo: quay.io/ortelius/ms-validate-user
+dockersha: 9d17b931bca9
+dockertag: deploy-v10.0.0.68-g6b08a2a
+dropzone: /tmp/tdm.1766.9
+environment: aks-cluster
+gitcommit: 6b08a2a
+gitrepo: ortelius/ortelius-ms-validate-user
+gittag: deploy
+giturl: https://github.com/ortelius/ortelius-ms-validate-user.git
+kubectl_context: cluster2-aks-admin
+server_hostname: localhost
+server_name: localhost
+image:
+  repository: quay.io/ortelius/ms-validate-user
+  tag: main-v10.0.1-g0be399
+  sha: sha256:14802a13fc100b9a8dc7690eb88a23c1f2401887fce373c25113cd72c36770cd
