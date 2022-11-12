@@ -1,5 +1,5 @@
 image:
-  repository: ghcr.io/ortelius/keptn-ortelius-service:0.0.2-dev # Container Image Name
+  repository: ghcr.io/ortelius/keptn-ortelius-service #bradmccoydev/keptn-ortelius-service # Container Image Name
   pullPolicy: IfNotPresent                   # Kubernetes Image Pull Policy
   tag: ""                                    # Container Tag
 service:

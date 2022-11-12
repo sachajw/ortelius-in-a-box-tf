@@ -89,9 +89,9 @@ provider "helm" {
 resource "helm_release" "argocd" {
   name = "argocd"
   #repository       = "https://argoproj.github.io/argo-helm"
-  chart     = "argo-cd"
-  namespace = "argocd"
+  chart = "argo-cd"
   #version          = "5.6.2"
+  namespace        = "argocd"
   create_namespace = true
   depends_on       = [kind_cluster.ortelius]
 
@@ -108,7 +108,7 @@ resource "helm_release" "ortelius" {
   #  force_update     = true
   create_namespace = true
   depends_on       = [kind_cluster.ortelius]
-  #  timeout          = 600
+  timeout          = 900
 
   values = [
     file("ortelius/values.yaml"),
@@ -120,7 +120,6 @@ resource "helm_release" "keptn" {
   repository       = "https://ortelius.github.io/keptn-ortelius-service"
   chart            = "keptn-ortelius-service"
   namespace        = "keptn"
-  version          = "0.0.1"
   create_namespace = true
   depends_on       = [kind_cluster.ortelius]
 }
@@ -128,9 +127,10 @@ resource "helm_release" "keptn" {
 resource "helm_release" "istio_banzaicloud" {
   name             = "banzaicloud"
   chart            = "istio-operator"
+  namespace        = "istio-system"
   create_namespace = true
   depends_on       = [kind_cluster.ortelius]
-  timeout          = 600
+  timeout          = 900
 
   values = [
     file("istio-operator/values.yaml"),
