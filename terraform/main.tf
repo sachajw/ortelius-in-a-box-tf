@@ -76,7 +76,6 @@ provider "kubectl" {
 }
 
 provider "helm" {
-  #debug = true
   kubernetes {
     host                   = kind_cluster.ortelius.endpoint
     cluster_ca_certificate = kind_cluster.ortelius.cluster_ca_certificate
@@ -96,6 +95,71 @@ resource "helm_release" "argocd" {
 
   values = [
     file("argo-cd/values.yaml"),
+  ]
+}
+
+resource "helm_release" "istio_base" {
+  name             = "istio"
+  chart            = "base"
+  namespace        = "istio-system"
+  create_namespace = true
+  depends_on       = [kind_cluster.ortelius]
+
+  values = [
+    file("istio/manifests/base/values.yaml"),
+  ]
+}
+
+resource "helm_release" "istio_istiod" {
+  name             = "istio"
+  repository       = "https://istio-release.storage.googleapis.com/charts"
+  chart            = "istiod"
+  namespace        = "istio-system"
+  create_namespace = false
+
+  values = [
+    file("istio/manifests/istio-contorl/istio-discovery/values.yaml"),
+  ]
+
+  set {
+    name  = "meshConfig.accessLogFile"
+    value = "/dev/stdout"
+  }
+}
+
+resource "helm_release" "istio_egress" {
+  name             = "istio"
+  chart            = "istio-egress"
+  namespace        = "istio-system"
+  create_namespace = false
+  depends_on       = [kind_cluster.ortelius]
+
+  values = [
+    file("istio/manifests/gateways/istio-egress/values.yaml"),
+  ]
+}
+
+resource "helm_release" "istio_ingress" {
+  name             = "istio"
+  chart            = "istio-ingress"
+  namespace        = "istio-system"
+  create_namespace = false
+  depends_on       = [kind_cluster.ortelius]
+
+  values = [
+    file("istio/manifests/gateways/istio-ress/values.yaml"),
+  ]
+}
+
+resource "helm_release" "istio_egress" {
+  name             = "istio"
+  chart            = "istio-egress"
+  namespace        = "istio-system"
+  create_namespace = false
+  depends_on       = [kind_cluster.ortelius]
+
+  values = [
+    file("istio/manifests/gateways/istio-egress/values.yaml"),
   ]
 }
 

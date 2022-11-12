@@ -32,6 +32,10 @@ No modules.
 | Name | Type |
 |------|------|
 | [helm_release.argocd](https://registry.terraform.io/providers/hashicorp/helm/2.7.1/docs/resources/release) | resource |
+| [helm_release.istio_base](https://registry.terraform.io/providers/hashicorp/helm/2.7.1/docs/resources/release) | resource |
+| [helm_release.istio_egress](https://registry.terraform.io/providers/hashicorp/helm/2.7.1/docs/resources/release) | resource |
+| [helm_release.istio_ingress](https://registry.terraform.io/providers/hashicorp/helm/2.7.1/docs/resources/release) | resource |
+| [helm_release.istio_istiod](https://registry.terraform.io/providers/hashicorp/helm/2.7.1/docs/resources/release) | resource |
 | [helm_release.istio_operator_banzaicloud](https://registry.terraform.io/providers/hashicorp/helm/2.7.1/docs/resources/release) | resource |
 | [helm_release.keptn](https://registry.terraform.io/providers/hashicorp/helm/2.7.1/docs/resources/release) | resource |
 | [helm_release.ortelius](https://registry.terraform.io/providers/hashicorp/helm/2.7.1/docs/resources/release) | resource |
