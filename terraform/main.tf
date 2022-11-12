@@ -42,18 +42,16 @@ resource "null_resource" "kubectl_ortelius" {
     command = <<EOF
       kubectl create namespace ortelius
       kubectl create secret generic pgcred --from-literal=DBUserName=postgres --from-literal=DBPassword=postgres --from-literal=DBHost=localhost --from-literal=DBPort=5432 --from-literal=DBName=postgres -n ortelius
-      sleep 45
-      kubectl apply -f deployment-ms-validate-user.yaml
     EOF
   }
 }
 
-resource "time_sleep" "wait_40_seconds" {
-  create_duration = "40s"
+resource "time_sleep" "wait_45_seconds" {
+  create_duration = "45s"
 }
 
 resource "null_resource" "kind_copy_container_images" {
-  depends_on = [time_sleep.wait_40_seconds]
+  depends_on = [time_sleep.wait_45_seconds]
   triggers = {
     key = uuid()
   }
@@ -120,9 +118,18 @@ resource "helm_release" "istio_istiod" {
   }
 }
 
+resource "helm_release" "istio_gateway" {
+  name             = "gateway"
+  chart            = "gateway"
+  repository       = "https://istio-release.storage.googleapis.com/charts"
+  namespace        = "istio-system"
+  create_namespace = false
+  depends_on       = [kind_cluster.ortelius]
+}
+
 resource "helm_release" "istio_egress" {
-  name             = "istio"
-  chart            = "istio-egressgateway"
+  name             = "istio-egress"
+  chart            = "gateway"
   repository       = "https://istio-release.storage.googleapis.com/charts"
   namespace        = "istio-system"
   create_namespace = false
@@ -130,8 +137,8 @@ resource "helm_release" "istio_egress" {
 }
 
 resource "helm_release" "istio_ingress" {
-  name             = "istio"
-  chart            = "istio-ingressgateway"
+  name             = "istio-ingress"
+  chart            = "gateway"
   repository       = "https://istio-release.storage.googleapis.com/charts"
   namespace        = "istio-system"
   create_namespace = false

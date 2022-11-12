@@ -34,6 +34,7 @@ No modules.
 | [helm_release.argocd](https://registry.terraform.io/providers/hashicorp/helm/2.7.1/docs/resources/release) | resource |
 | [helm_release.istio_base](https://registry.terraform.io/providers/hashicorp/helm/2.7.1/docs/resources/release) | resource |
 | [helm_release.istio_egress](https://registry.terraform.io/providers/hashicorp/helm/2.7.1/docs/resources/release) | resource |
+| [helm_release.istio_gateway](https://registry.terraform.io/providers/hashicorp/helm/2.7.1/docs/resources/release) | resource |
 | [helm_release.istio_ingress](https://registry.terraform.io/providers/hashicorp/helm/2.7.1/docs/resources/release) | resource |
 | [helm_release.istio_istiod](https://registry.terraform.io/providers/hashicorp/helm/2.7.1/docs/resources/release) | resource |
 | [helm_release.istio_operator_banzaicloud](https://registry.terraform.io/providers/hashicorp/helm/2.7.1/docs/resources/release) | resource |
@@ -42,7 +43,7 @@ No modules.
 | [kind_cluster.ortelius](https://registry.terraform.io/providers/tehcyx/kind/latest/docs/resources/cluster) | resource |
 | [null_resource.kind_copy_container_images](https://registry.terraform.io/providers/hashicorp/null/3.2.0/docs/resources/resource) | resource |
 | [null_resource.kubectl_ortelius](https://registry.terraform.io/providers/hashicorp/null/3.2.0/docs/resources/resource) | resource |
-| [time_sleep.wait_40_seconds](https://registry.terraform.io/providers/hashicorp/time/0.9.1/docs/resources/sleep) | resource |
+| [time_sleep.wait_45_seconds](https://registry.terraform.io/providers/hashicorp/time/0.9.1/docs/resources/sleep) | resource |
 
 ## Inputs
 
