@@ -16,13 +16,13 @@ resource "kind_cluster" "ortelius" {
         "kind: InitConfiguration\nnodeRegistration:\n  kubeletExtraArgs:\n    node-labels: \"ingress-ready=true\"\n"
       ]
       extra_port_mappings {
-        container_port = 8080
-        host_port      = 8080
+        container_port = 80
+        host_port      = 80
         listen_address = "0.0.0.0"
       }
       extra_port_mappings {
-        container_port = 4443
-        host_port      = 4443
+        container_port = 443
+        host_port      = 443
         listen_address = "0.0.0.0"
       }
     }
