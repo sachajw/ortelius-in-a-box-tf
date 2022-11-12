@@ -40,7 +40,6 @@ resource "null_resource" "kubectl" {
 
   provisioner "local-exec" {
     command = <<EOF
-      kubectl create namespace ortelius
       sleep 45
       kubectl patch deployment keptn-keptn-ortelius-service --patch-file patch-keptn-image.yaml -n keptn
       kubectl patch deployment ms-validate-user --patch-file patch-ms-validate-user.yaml -n ortelius
@@ -103,12 +102,12 @@ resource "helm_release" "argocd" {
 resource "helm_release" "ortelius" {
   name = "ortelius"
   #  repository       = "https://ortelius.github.io/ortelius-charts/"
-  chart     = "ortelius"
-  namespace = "ortelius"
-  #  force_update     = true
+  chart            = "ortelius"
+  namespace        = "ortelius"
   create_namespace = true
-  depends_on       = [kind_cluster.ortelius]
-  timeout          = 900
+  #  force_update     = true
+  depends_on = [kind_cluster.ortelius]
+  timeout    = 900
 
   values = [
     file("ortelius/values.yaml"),
