@@ -110,10 +110,10 @@ resource "helm_release" "keptn" {
 }
 
 resource "helm_release" "kube_arangodb" {
-  name  = "kube-arangodb"
-  chart = "kube-arangodb"
-  #namespace        = ""
-  create_namespace = false
+  name             = "kube-arangodb"
+  chart            = "kube-arangodb"
+  namespace        = "arangodb"
+  create_namespace = true
   depends_on       = [kind_cluster.ortelius]
   #timeout          = 600
 
