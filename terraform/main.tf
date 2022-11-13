@@ -118,22 +118,22 @@ resource "helm_release" "kube_arangodb" {
   #timeout          = 600
 
   values = [
-    file("kube-arangodb/values.yaml"),
-  ]
-}
-
-resource "helm_release" "kube_arangodb_crd" {
-  name  = "kube-arangodb_crd"
-  chart = "kube-arangodb_crd"
-  #namespace        = ""
-  create_namespace = false
-  depends_on       = [kind_cluster.ortelius]
-  #timeout          = 600
-
-  values = [
     file("kube-arangodb/manifests/arango-all.yaml"),
   ]
 }
+
+#resource "helm_release" "kube_arangodb_crd" {
+#  name  = "kube-arangodb_crd"
+#  chart = "kube-arangodb_crd"
+#  #namespace        = ""
+#  create_namespace = false
+#  depends_on       = [kind_cluster.ortelius]
+#  #timeout          = 600
+#
+#  values = [
+#    file("kube-arangodb/manifests/arango-all.yaml"),
+#  ]
+#}
 
 #resource "helm_release" "ortelius" {
 #  name             = "ortelius"
