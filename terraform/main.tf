@@ -131,7 +131,7 @@ resource "helm_release" "kube_arangodb_crd" {
   #timeout          = 600
 
   values = [
-    file("kube-arangodb/values.yaml"),
+    file("kube-arangodb/manifests/arango-all.yaml"),
   ]
 }
 
