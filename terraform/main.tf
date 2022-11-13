@@ -192,12 +192,16 @@ resource "helm_release" "istio_operator_banzaicloud" {
 }
 
 resource "helm_release" "istio_istiod" {
-  name             = "istio"
-  chart            = "https://istio-release.storage.googleapis.com/charts/istiod-1.12.0-alpha.0.tgz"
+  name             = "istiod"
+  chart            = "istiod"
   namespace        = "istio-system"
   create_namespace = false
   timeout          = 600
   depends_on       = [helm_release.istio_base]
+
+  values = [
+    file("istiod/values.yaml"),
+  ]
 
   set {
     name  = "meshConfig.accessLogFile"
