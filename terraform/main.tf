@@ -169,12 +169,9 @@ resource "helm_release" "kube_arangodb" {
 #}
 
 resource "helm_release" "istio_base" {
-  metadata = {
-    chart       = "base"
-    app_version = "1.16.0-rc.0"
-    namespace   = "istio-system"
-  }
-
+  chart            = "base"
+  app_version      = "1.16.0-rc.0"
+  namespace        = "istio-system"
   create_namespace = true
   timeout          = 600
   depends_on       = [kind_cluster.ortelius]
@@ -199,12 +196,9 @@ resource "helm_release" "istio_operator_banzaicloud" {
 }
 
 resource "helm_release" "istio_istiod" {
-  metadata = {
-    chart       = "istiod"
-    app_version = "1.16.0-rc.0"
-    namespace   = "istio-system"
-  }
-
+  chart            = "istiod"
+  app_version      = "1.16.0-rc.0"
+  namespace        = "istio-system"
   force_update     = true
   create_namespace = false
   timeout          = 600
