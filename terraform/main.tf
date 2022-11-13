@@ -109,6 +109,7 @@ resource "helm_release" "keptn" {
 resource "helm_release" "kube_arangodb" {
   name             = "kube-arangodb"
   chart            = "kube-arangodb"
+  version          = "1.2.20"
   namespace        = "arangodb"
   create_namespace = true
   depends_on       = [kind_cluster.ortelius]
