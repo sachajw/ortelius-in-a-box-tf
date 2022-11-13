@@ -169,6 +169,7 @@ resource "helm_release" "kube_arangodb" {
 #}
 
 resource "helm_release" "istio_base" {
+  name             = "base"
   chart            = "base"
   app_version      = "1.16.0-rc.0"
   namespace        = "istio-system"
@@ -196,6 +197,7 @@ resource "helm_release" "istio_operator_banzaicloud" {
 }
 
 resource "helm_release" "istio_istiod" {
+  name             = "istiod"
   chart            = "istiod"
   app_version      = "1.16.0-rc.0"
   namespace        = "istio-system"
