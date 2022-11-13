@@ -116,35 +116,36 @@ resource "helm_release" "kube_arangodb" {
   #timeout          = 600
 
   values = [
-    file("kube-arangodb/chart/kube-arangodb/values.yaml"),
+    file("kube-arangodb/values.yaml"),
   ]
 }
 
 #resource "helm_release" "kube_arangodb_crd" {
 #  name             = "kube-arangodb_crd"
 #  chart            = "kube-arangodb_crd"
+#  version          = "1.2.20"
 #  namespace        = "arangodb"
 #  create_namespace = false
 #  depends_on       = [helm_release.kube_arangodb]
 #  #timeout          = 600
 #
 #  values = [
-#    file("kube-arangodb/chart/kube-arangodb-crd/values.yaml"),
+#    file("kube-arangodb-crd/values.yaml"),
 #  ]
 #}
 
-resource "helm_release" "kube_arangodb_ingress_proxy" {
-  name             = "arangodb-ingress-proxy"
-  chart            = "arangodb-ingress-proxy"
-  namespace        = "arangodb"
-  create_namespace = false
-  depends_on       = [helm_release.kube_arangodb]
-  #timeout          = 600
-
-  values = [
-    file("kube-arangodb/chart/arangodb-ingress-proxy/values.yaml"),
-  ]
-}
+#resource "helm_release" "kube_arangodb_ingress_proxy" {
+#  name             = "arangodb-ingress-proxy"
+#  chart            = "arangodb-ingress-proxy"
+#  namespace        = "arangodb"
+#  create_namespace = false
+#  depends_on       = [helm_release.kube_arangodb]
+#  #timeout          = 600
+#
+#  values = [
+#    file("kube-arangodb/chart/arangodb-ingress-proxy/values.yaml"),
+#  ]
+#}
 
 #resource "helm_release" "ortelius" {
 #  name             = "ortelius"
