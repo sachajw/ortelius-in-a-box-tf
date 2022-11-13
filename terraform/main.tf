@@ -200,6 +200,7 @@ resource "helm_release" "istio_istiod" {
   namespace        = "istio-system"
   create_namespace = false
   force_update     = true
+  cleanup_on_fail  = true
   timeout          = 600
   depends_on       = [helm_release.istio_base]
 
