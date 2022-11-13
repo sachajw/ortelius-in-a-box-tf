@@ -122,7 +122,6 @@ resource "helm_release" "kube_arangodb" {
 
 resource "null_resource" "kubectl_arangodb_crd" {
   depends_on = [helm_release.kube_arangodb]
-  timeout    = 600
   provisioner "local-exec" {
     command = <<EOF
     kubectl create -f https://operatorhub.io/install/kube-arangodb.yaml
