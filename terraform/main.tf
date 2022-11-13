@@ -113,7 +113,7 @@ resource "helm_release" "kube_arangodb" {
   namespace        = "arangodb"
   create_namespace = true
   depends_on       = [kind_cluster.ortelius]
-  #timeout          = 600
+  timeout          = 600
 
   values = [
     file("kube-arangodb/values.yaml"),
@@ -122,7 +122,7 @@ resource "helm_release" "kube_arangodb" {
 
 resource "null_resource" "kubectl_arangodb_crd" {
   depends_on = [helm_release.kube_arangodb]
-
+  timeout    = 600
   provisioner "local-exec" {
     command = <<EOF
     kubectl create -f https://operatorhub.io/install/kube-arangodb.yaml
@@ -177,6 +177,7 @@ resource "helm_release" "istio_base" {
   repository       = "https://istio-release.storage.googleapis.com/charts"
   namespace        = "istio-system"
   create_namespace = true
+  timeout          = 600
   depends_on       = [kind_cluster.ortelius]
 }
 
@@ -185,6 +186,7 @@ resource "helm_release" "istio_operator_banzaicloud" {
   chart            = "istio-operator"
   namespace        = "istio-system"
   create_namespace = false
+  timeout          = 600
   depends_on       = [helm_release.istio_base]
 
   values = [
@@ -198,6 +200,7 @@ resource "helm_release" "istio_istiod" {
   repository       = "https://istio-release.storage.googleapis.com/charts"
   namespace        = "istio-system"
   create_namespace = false
+  timeout          = 600
   depends_on       = [helm_release.istio_base]
 
   set {
@@ -213,6 +216,7 @@ resource "helm_release" "istio_gateway" {
   namespace        = "istio-system"
   create_namespace = false
   depends_on       = [helm_release.istio_istiod]
+  timeout          = 600
 }
 
 resource "helm_release" "istio_egress" {
@@ -222,6 +226,7 @@ resource "helm_release" "istio_egress" {
   namespace        = "istio-system"
   create_namespace = false
   depends_on       = [helm_release.istio_gateway]
+  timeout          = 600
 }
 
 resource "helm_release" "istio_ingress" {
@@ -231,4 +236,5 @@ resource "helm_release" "istio_ingress" {
   namespace        = "istio-system"
   create_namespace = false
   depends_on       = [helm_release.istio_gateway]
+  timeout          = 600
 }
