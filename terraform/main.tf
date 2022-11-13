@@ -96,6 +96,58 @@ resource "helm_release" "argocd" {
   ]
 }
 
+resource "helm_release" "keptn" {
+  name             = "keptn"
+  repository       = "https://ortelius.github.io/keptn-ortelius-service"
+  chart            = "keptn-ortelius-service"
+  namespace        = "keptn"
+  create_namespace = true
+  depends_on       = [kind_cluster.ortelius]
+
+  values = [
+    file("keptn-ortelius-service/values.yaml"),
+  ]
+}
+
+resource "helm_release" "kube_arangodb" {
+  name  = "kube-arangodb"
+  chart = "kube-arangodb"
+  #namespace        = ""
+  create_namespace = false
+  depends_on       = [kind_cluster.ortelius]
+  #timeout          = 600
+
+  values = [
+    file("kube-arangodb/values.yaml"),
+  ]
+}
+
+resource "helm_release" "kube_arangodb_crd" {
+  name  = "kube-arangodb_crd"
+  chart = "kube-arangodb_crd"
+  #namespace        = ""
+  create_namespace = false
+  depends_on       = [kind_cluster.ortelius]
+  #timeout          = 600
+
+  values = [
+    file("kube-arangodb/values.yaml"),
+  ]
+}
+
+#resource "helm_release" "ortelius" {
+#  name             = "ortelius"
+#  chart            = "ortelius"
+#  namespace        = "ortelius"
+#  create_namespace = false
+#  depends_on       = [helm_release.keptn]
+#  timeout          = 600
+#
+#  values = [
+#    file("ortelius/values.yaml"),
+#  ]
+#}
+
 resource "helm_release" "istio_base" {
   name             = "istio"
   chart            = "base"
@@ -137,7 +189,7 @@ resource "helm_release" "istio_gateway" {
   repository       = "https://istio-release.storage.googleapis.com/charts"
   namespace        = "istio-system"
   create_namespace = false
-  depends_on       = [helm_release.istio_base]
+  depends_on       = [helm_release.istio_istiod]
 }
 
 resource "helm_release" "istio_egress" {
@@ -156,30 +208,4 @@ resource "helm_release" "istio_ingress" {
   namespace        = "istio-system"
   create_namespace = false
   depends_on       = [helm_release.istio_gateway]
-}
-
-resource "helm_release" "keptn" {
-  name             = "keptn"
-  repository       = "https://ortelius.github.io/keptn-ortelius-service"
-  chart            = "keptn-ortelius-service"
-  namespace        = "keptn"
-  create_namespace = true
-  depends_on       = [kind_cluster.ortelius]
-
-  values = [
-    file("keptn-ortelius-service/values.yaml"),
-  ]
-}
-
-resource "helm_release" "ortelius" {
-  name             = "ortelius"
-  chart            = "ortelius"
-  namespace        = "ortelius"
-  create_namespace = false
-  depends_on       = [helm_release.keptn]
-  timeout          = 600
-
-  values = [
-    file("ortelius/values.yaml"),
-  ]
 }
