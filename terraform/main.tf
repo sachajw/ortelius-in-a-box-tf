@@ -83,7 +83,6 @@ provider "helm" {
 resource "helm_release" "argocd" {
   name             = "argocd"
   chart            = "argo-cd"
-  version          = "5.6.2"
   namespace        = "argocd"
   create_namespace = true
   depends_on       = [kind_cluster.ortelius]
@@ -109,7 +108,6 @@ resource "helm_release" "keptn" {
 resource "helm_release" "kube_arangodb" {
   name             = "kube-arangodb"
   chart            = "kube-arangodb"
-  version          = "1.2.20"
   namespace        = "arangodb"
   create_namespace = true
   depends_on       = [kind_cluster.ortelius]
@@ -197,6 +195,7 @@ resource "helm_release" "istio_istiod" {
   name             = "istio"
   chart            = "istiod"
   repository       = "https://istio-release.storage.googleapis.com/charts"
+  debug            = true
   namespace        = "istio-system"
   create_namespace = false
   force_update     = true
