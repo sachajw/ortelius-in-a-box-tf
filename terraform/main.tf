@@ -169,13 +169,17 @@ resource "helm_release" "kube_arangodb" {
 #}
 
 resource "helm_release" "istio_base" {
-  name             = "istio"
   chart            = "base"
-  repository       = "https://istio-release.storage.googleapis.com/charts"
+  appVersion       = "1.16.0-rc.0"
   namespace        = "istio-system"
   create_namespace = true
   timeout          = 600
   depends_on       = [kind_cluster.ortelius]
+
+  values = [
+    file("base/values.yaml"),
+  ]
+
 }
 
 resource "helm_release" "istio_operator_banzaicloud" {
@@ -192,9 +196,10 @@ resource "helm_release" "istio_operator_banzaicloud" {
 }
 
 resource "helm_release" "istio_istiod" {
-  name             = "istiod"
   chart            = "istiod"
+  appVersion       = "1.16.0-rc.0"
   namespace        = "istio-system"
+  force_update     = true
   create_namespace = false
   timeout          = 600
   depends_on       = [helm_release.istio_base]
