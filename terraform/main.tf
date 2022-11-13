@@ -79,7 +79,7 @@ provider "helm" {
     cluster_ca_certificate = kind_cluster.ortelius.cluster_ca_certificate
     client_certificate     = kind_cluster.ortelius.client_certificate
     client_key             = kind_cluster.ortelius.client_key
-    config_path            = "~/.kube/config"
+    config_path            = pathexpand(var.kind_cluster_config_path)
   }
 }
 
