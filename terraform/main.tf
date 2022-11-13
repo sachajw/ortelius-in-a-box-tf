@@ -34,9 +34,6 @@ resource "kind_cluster" "ortelius" {
 
 resource "null_resource" "kubectl_ortelius" {
   depends_on = [kind_cluster.ortelius]
-  triggers = {
-    key = uuid()
-  }
 
   provisioner "local-exec" {
     command = <<EOF
