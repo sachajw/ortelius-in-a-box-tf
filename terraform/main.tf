@@ -217,6 +217,11 @@ resource "helm_release" "istio_gateway" {
   create_namespace = false
   depends_on       = [helm_release.istio_istiod]
   timeout          = 600
+
+  values = [
+    file("gateway/values.yaml"),
+  ]
+
 }
 
 resource "helm_release" "istio_egress" {
