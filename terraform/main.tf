@@ -192,16 +192,17 @@ resource "helm_release" "istio_operator_banzaicloud" {
 }
 
 resource "helm_release" "istio_istiod" {
-  name             = "istio"
-  chart            = "istiod"
-  repository       = "https://istio-release.storage.googleapis.com/charts"
-  debug            = true
-  namespace        = "istio-system"
-  create_namespace = false
-  force_update     = true
-  cleanup_on_fail  = true
-  timeout          = 600
-  depends_on       = [helm_release.istio_base]
+  name              = "istio"
+  chart             = "istiod"
+  repository        = "https://istio-release.storage.googleapis.com/charts"
+  namespace         = "istio-system"
+  dependency_update = true
+  replace           = true
+  create_namespace  = false
+  force_update      = true
+  cleanup_on_fail   = true
+  timeout           = 600
+  depends_on        = [helm_release.istio_base]
 
   set {
     name  = "meshConfig.accessLogFile"
