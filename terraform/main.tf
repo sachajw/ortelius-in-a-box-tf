@@ -212,7 +212,6 @@ resource "helm_release" "istio_istiod" {
 resource "helm_release" "istio_gateway" {
   name             = "gateway"
   chart            = "gateway"
-  repository       = "https://istio-release.storage.googleapis.com/charts"
   namespace        = "istio-system"
   create_namespace = false
   depends_on       = [helm_release.istio_istiod]
