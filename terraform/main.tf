@@ -170,7 +170,7 @@ resource "helm_release" "kube_arangodb" {
 
 resource "helm_release" "istio_base" {
   chart            = "base"
-  appVersion       = "1.16.0-rc.0"
+  app_version      = "1.16.0-rc.0"
   namespace        = "istio-system"
   create_namespace = true
   timeout          = 600
@@ -197,7 +197,7 @@ resource "helm_release" "istio_operator_banzaicloud" {
 
 resource "helm_release" "istio_istiod" {
   chart            = "istiod"
-  appVersion       = "1.16.0-rc.0"
+  app_version      = "1.16.0-rc.0"
   namespace        = "istio-system"
   force_update     = true
   create_namespace = false
