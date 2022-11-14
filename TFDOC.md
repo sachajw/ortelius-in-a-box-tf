@@ -7,6 +7,7 @@
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | 1.3.4 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 4.38.0 |
+| <a name="requirement_flux"></a> [flux](#requirement\_flux) | 0.20.0 |
 | <a name="requirement_helm"></a> [helm](#requirement\_helm) | 2.7.1 |
 | <a name="requirement_kind"></a> [kind](#requirement\_kind) | ~> 0.0.15 |
 | <a name="requirement_kubectl"></a> [kubectl](#requirement\_kubectl) | ~> 1.14.0 |

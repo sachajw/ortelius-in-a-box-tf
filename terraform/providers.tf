@@ -20,6 +20,11 @@ terraform {
       version = "2.7.1"
     }
 
+    flux = {
+      source  = "fluxcd/flux"
+      version = "0.20.0"
+    }
+
     aws = {
       source  = "hashicorp/aws"
       version = "~> 4.38.0"
@@ -47,5 +52,9 @@ provider "null" {
 }
 
 provider "time" {
+  # Configuration options
+}
+
+provider "flux" {
   # Configuration options
 }
