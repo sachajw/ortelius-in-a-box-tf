@@ -207,7 +207,7 @@ resource "helm_release" "istio_ingress" {
   chart            = ".istio/gateway/ingress"
   namespace        = "istio-system"
   create_namespace = false
-  depends_on       = [helm_release.istio_gateway]
+  depends_on       = [helm_release.istio_istiod]
   timeout          = 600
 
   values = [
@@ -215,9 +215,9 @@ resource "helm_release" "istio_ingress" {
   ]
 }
 
-resource "helm_release" "istio_gateway" {
-  name             = "gateway"
-  chart            = "./istio/gateway"
+resource "helm_release" "istio_egress" {
+  name             = "istio-egress"
+  chart            = "./istio/gateway/egress"
   namespace        = "istio-system"
   create_namespace = false
   depends_on       = [helm_release.istio_istiod]
@@ -226,15 +226,17 @@ resource "helm_release" "istio_gateway" {
   values = [
     file("istio/gateway/values.yaml"),
   ]
-
 }
 
-resource "helm_release" "istio_egress" {
-  name             = "istio-egress"
+resource "helm_release" "istio_gateway" {
+  name             = "gateway"
   chart            = "./istio/gateway"
-  repository       = "https://istio-release.storage.googleapis.com/charts"
   namespace        = "istio-system"
   create_namespace = false
-  depends_on       = [helm_release.istio_gateway]
-  timeout          = 600
+  depends_on       = [helm_release.istio_egress]
+  #timeout          = 600
+
+  values = [
+    file("istio/gateway/values.yaml"),
+  ]
 }
