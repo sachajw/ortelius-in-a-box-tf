@@ -172,7 +172,7 @@ resource "helm_release" "istio_base" {
 
 resource "helm_release" "istio_operator_banzaicloud" {
   name             = "banzaicloud"
-  chart            = "./istio-operator"
+  chart            = ".istio/istio-operator"
   namespace        = "istio-system"
   create_namespace = false
   timeout          = 600
@@ -185,7 +185,7 @@ resource "helm_release" "istio_operator_banzaicloud" {
 
 resource "helm_release" "istio_istiod" {
   name             = "istiod"
-  chart            = ".istio/istiod"
+  chart            = "./istio/istiod"
   namespace        = "istio-system"
   force_update     = true
   create_namespace = false
@@ -204,7 +204,7 @@ resource "helm_release" "istio_istiod" {
 
 resource "helm_release" "istio_gateway" {
   name             = "gateway"
-  chart            = ".istio/gateway"
+  chart            = "./istio/gateway"
   namespace        = "istio-system"
   create_namespace = false
   depends_on       = [helm_release.istio_istiod]
