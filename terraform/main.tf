@@ -81,18 +81,6 @@ provider "helm" {
   }
 }
 
-#resource "helm_release" "terrakube" {
-#  name             = "terrakube"
-#  chart            = "terrakube"
-#  namespace        = "terrakube"
-#  create_namespace = true
-#  depends_on       = [kind_cluster.ortelius]
-#
-#  values = [
-#    file("terrakube/values.yaml"),
-#  ]
-#}
-
 resource "helm_release" "argocd" {
   name             = "argocd"
   chart            = "argo-cd"
@@ -126,9 +114,9 @@ resource "helm_release" "kube_arangodb" {
   depends_on       = [kind_cluster.ortelius]
   #timeout          = 600
 
-  #  values = [
-  #    file("arangodb/kube-arangodb/values.yaml"),
-  #  ]
+  values = [
+    file("arangodb/kube-arangodb/values.yaml"),
+  ]
 }
 
 #resource "helm_release" "kube_arangodb_ingress_proxy" {
@@ -158,7 +146,7 @@ resource "helm_release" "ortelius" {
 }
 
 resource "helm_release" "istio_base" {
-  name             = "charts"
+  name             = "base"
   chart            = "./istio/base"
   namespace        = "istio-system"
   create_namespace = true
@@ -179,7 +167,7 @@ resource "helm_release" "istio_operator_banzaicloud" {
   depends_on       = [helm_release.istio_base]
 
   values = [
-    file("istio/istio-operator/values.yaml"),
+    file("./istio-operator/values.yaml"),
   ]
 }
 
@@ -224,7 +212,7 @@ resource "helm_release" "istio_egress" {
   #timeout          = 600
 
   values = [
-    file("istio/gateway/values.yaml"),
+    file("istio/gateway/egress/egress.yaml"),
   ]
 }
 
@@ -240,3 +228,15 @@ resource "helm_release" "istio_gateway" {
     file("istio/gateway/values.yaml"),
   ]
 }
+
+#resource "helm_release" "terrakube" {
+#  name             = "terrakube"
+#  chart            = "terrakube"
+#  namespace        = "terrakube"
+#  create_namespace = true
+#  depends_on       = [kind_cluster.ortelius]
+#
+#  values = [
+#    file("terrakube/values.yaml"),
+#  ]
+#}
