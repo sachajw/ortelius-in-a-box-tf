@@ -125,6 +125,7 @@ resource "helm_release" "kube_arangodb" {
   create_namespace = true
   depends_on       = [kind_cluster.ortelius]
   #timeout          = 600
+
   #  values = [
   #    file("arangodb/kube-arangodb/values.yaml"),
   #  ]
@@ -171,7 +172,7 @@ resource "helm_release" "istio_base" {
 
 resource "helm_release" "istio_operator_banzaicloud" {
   name             = "banzaicloud"
-  chart            = "istio-operator"
+  chart            = "./istio-operator"
   namespace        = "istio-system"
   create_namespace = false
   timeout          = 600
@@ -184,7 +185,7 @@ resource "helm_release" "istio_operator_banzaicloud" {
 
 resource "helm_release" "istio_istiod" {
   name             = "istiod"
-  chart            = "istiod"
+  chart            = ".istio/istiod"
   namespace        = "istio-system"
   force_update     = true
   create_namespace = false
@@ -203,7 +204,7 @@ resource "helm_release" "istio_istiod" {
 
 resource "helm_release" "istio_gateway" {
   name             = "gateway"
-  chart            = "gateway"
+  chart            = ".istio/gateway"
   namespace        = "istio-system"
   create_namespace = false
   depends_on       = [helm_release.istio_istiod]
@@ -217,7 +218,7 @@ resource "helm_release" "istio_gateway" {
 
 resource "helm_release" "istio_egress" {
   name             = "istio-egress"
-  chart            = "gateway"
+  chart            = "./istio/gateway"
   repository       = "https://istio-release.storage.googleapis.com/charts"
   namespace        = "istio-system"
   create_namespace = false
@@ -227,7 +228,7 @@ resource "helm_release" "istio_egress" {
 
 resource "helm_release" "istio_ingress" {
   name             = "istio-ingress"
-  chart            = "gateway"
+  chart            = "./istio/gateway"
   repository       = "https://istio-release.storage.googleapis.com/charts"
   namespace        = "istio-system"
   create_namespace = false
