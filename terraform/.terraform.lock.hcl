@@ -1,6 +1,28 @@
 # This file is maintained automatically by "terraform init".
 # Manual edits may be lost in future updates.
 
+provider "registry.terraform.io/fluxcd/flux" {
+  version     = "0.20.0"
+  constraints = "0.20.0"
+  hashes = [
+    "h1:S6X2P4NxMtJaL9RB9RKihOE7ixQDbjski48NXgQlhyc=",
+    "zh:08c0801436a4a5757ea31cc542ff6caa710bc6332ad3b8431b12bd9bd54e766a",
+    "zh:3f0f0304d9927104655573e4b35725a903499e809a2a17b8763ac4169a2c3dee",
+    "zh:74ad237b172722ca52f127a8eb414db1f698b218cd04f030d55fc4d7fe12b923",
+    "zh:9dcce40340b1a003f630704adf26f6be69b3aacd44239f549ea277ad693333bf",
+    "zh:a6004b1cb28a243804fc2de26e94e631147438b7a96b9fa6adc4ae5bc02f1d22",
+    "zh:b2af56aa961864cca10b6af8a94735a5dc0d7ddf8325fba0c79757f9536922b5",
+    "zh:bcca7b5cc85d31bf28a6837f764ae4bef8996d1d7deba019b86b96d9d2e95885",
+    "zh:bd3bb0bb04f4d209bcba8bf457a9c3348afd3457e0214e6d80486b1604570c09",
+    "zh:c11c0bdf199aa4fb3f717abdc2fc8cfb696a20e40e30a9e08de12300a16184c8",
+    "zh:ddaa2d3d0954ca9324483682fae41eaf7f0d3b6a38c5309df1ca7be1c71136c1",
+    "zh:e3725999b7c60c33a7d13ebf4dfa1839a4832dd9a2049eafadfd04f496e25f95",
+    "zh:eb8b80efb66ad7240bdd5c9a14079d17cc81cc2bf0391a2e211f7b2c5641ca05",
+    "zh:ed6abbcbc59ee4fe4c24f35702201a559156b20495ded36e3845983c0a1e0e48",
+    "zh:fa6748272c2f9aa14bb6b61ca46fa035a21c0bbb2d2e00b69e1b17630d606c5f",
+  ]
+}
+
 provider "registry.terraform.io/gavinbunney/kubectl" {
   version     = "1.14.0"
   constraints = "~> 1.14.0"
