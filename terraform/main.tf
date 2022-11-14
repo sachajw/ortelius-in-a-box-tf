@@ -120,16 +120,14 @@ resource "helm_release" "keptn" {
 
 resource "helm_release" "kube_arangodb" {
   name             = "arangodb"
-  chart            = "kube-arangodb"
-  repository       = "https://github.com/arangodb/kube-arangodb/releases/download/1.2.3/kube-arangodb-crd-1.2.3.tgz"
+  chart            = "./arangodb/kube-arangodb"
   namespace        = "arangodb"
   create_namespace = true
   depends_on       = [kind_cluster.ortelius]
   #timeout          = 600
-
-  values = [
-    file("arangodb/kube-arangodb/values.yaml"),
-  ]
+  #  values = [
+  #    file("arangodb/kube-arangodb/values.yaml"),
+  #  ]
 }
 
 #resource "helm_release" "kube_arangodb_ingress_proxy" {
