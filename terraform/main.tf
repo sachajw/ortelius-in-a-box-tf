@@ -80,17 +80,17 @@ provider "helm" {
   }
 }
 
-resource "helm_release" "terrakube" {
-  name             = "terrakube"
-  chart            = "terrakube"
-  namespace        = "terrakube"
-  create_namespace = true
-  depends_on       = [kind_cluster.ortelius]
-
-  values = [
-    file("terrakube/values.yaml"),
-  ]
-}
+#resource "helm_release" "terrakube" {
+#  name             = "terrakube"
+#  chart            = "terrakube"
+#  namespace        = "terrakube"
+#  create_namespace = true
+#  depends_on       = [kind_cluster.ortelius]
+#
+#  values = [
+#    file("terrakube/values.yaml"),
+#  ]
+#}
 
 resource "helm_release" "argocd" {
   name             = "argocd"
