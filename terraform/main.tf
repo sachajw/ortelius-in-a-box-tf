@@ -144,18 +144,18 @@ resource "helm_release" "kube_arangodb" {
 #  ]
 #}
 
-#resource "helm_release" "ortelius" {
-#  name             = "ortelius"
-#  chart            = "ortelius"
-#  namespace        = "ortelius"
-#  create_namespace = false
-#  depends_on       = [helm_release.keptn]
-#  timeout          = 600
-#
-#  values = [
-#    file("ortelius/values.yaml"),
-#  ]
-#}
+resource "helm_release" "ortelius" {
+  name             = "ortelius"
+  chart            = "./ortelius/charts"
+  namespace        = "ortelius"
+  create_namespace = false
+  depends_on       = [helm_release.keptn]
+  timeout          = 600
+
+  values = [
+    file("ortelius/values.yaml"),
+  ]
+}
 
 resource "helm_release" "istio_base" {
   name             = "charts"
@@ -202,6 +202,19 @@ resource "helm_release" "istio_istiod" {
   }
 }
 
+resource "helm_release" "istio_ingress" {
+  name             = "istio-ingressgateway"
+  chart            = ".istio/gateway/ingress"
+  namespace        = "istio-system"
+  create_namespace = false
+  depends_on       = [helm_release.istio_gateway]
+  timeout          = 600
+
+  values = [
+    file("istio/gateway/ingress/ingress.yaml"),
+  ]
+}
+
 resource "helm_release" "istio_gateway" {
   name             = "gateway"
   chart            = "./istio/gateway"
@@ -214,19 +227,6 @@ resource "helm_release" "istio_gateway" {
     file("istio/gateway/values.yaml"),
   ]
 
-}
-
-resource "helm_release" "istio_ingress" {
-  name             = "istio-ingressgateway"
-  chart            = ".istio/gateway/ingress"
-  namespace        = "istio-system"
-  create_namespace = false
-  depends_on       = [helm_release.istio_gateway]
-  timeout          = 600
-
-  values = [
-    file("istio/gateway/ingress/ingress.yaml"),
-  ]
 }
 
 resource "helm_release" "istio_egress" {
