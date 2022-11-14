@@ -194,7 +194,7 @@ resource "helm_release" "istio_ingress" {
   name             = "istio-ingressgateway"
   chart            = "gateway"
   repository       = "https://istio-release.storage.googleapis.com/charts"
-  helm_release     = "istio-ingressgateway"
+  release          = "istio-ingressgateway"
   namespace        = "istio-system"
   create_namespace = false
   depends_on       = [helm_release.istio_istiod]
