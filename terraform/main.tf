@@ -71,6 +71,7 @@ provider "kubectl" {
 }
 
 provider "helm" {
+  debug = true
   kubernetes {
     host                   = kind_cluster.ortelius.endpoint
     cluster_ca_certificate = kind_cluster.ortelius.cluster_ca_certificate
@@ -106,8 +107,8 @@ resource "helm_release" "argocd" {
 
 resource "helm_release" "keptn" {
   name             = "keptn"
-  repository       = "https://ortelius.github.io/keptn-ortelius-service"
   chart            = "keptn-ortelius-service"
+  repository       = "https://ortelius.github.io/keptn-ortelius-service"
   namespace        = "keptn"
   create_namespace = true
   depends_on       = [kind_cluster.ortelius]
@@ -118,7 +119,7 @@ resource "helm_release" "keptn" {
 }
 
 resource "helm_release" "kube_arangodb" {
-  name             = "kube-arangodb"
+  name             = "arangodb"
   chart            = "kube-arangodb"
   namespace        = "arangodb"
   create_namespace = true
@@ -182,18 +183,18 @@ resource "helm_release" "kube_arangodb" {
 #}
 
 resource "helm_release" "istio_base" {
-  name             = "base"
-  chart            = "base"
-  repository       = "https://istio-release.storage.googleapis.com/charts"
+  name  = "istio"
+  chart = "base"
+  #repository       = "https://istio-release.storage.googleapis.com/charts"
   namespace        = "istio-system"
   create_namespace = true
   verify           = true
   timeout          = 600
   depends_on       = [kind_cluster.ortelius]
 
-  #  values = [
-  #    file("istio/base/values.yaml"),
-  #  ]
+  values = [
+    file("istio/base/values.yaml"),
+  ]
 }
 
 resource "helm_release" "istio_operator_banzaicloud" {
