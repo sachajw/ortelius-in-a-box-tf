@@ -121,9 +121,9 @@ resource "helm_release" "keptn" {
 resource "helm_release" "kube_arangodb" {
   name             = "arangodb"
   chart            = "kube-arangodb"
+  repository       = "https://github.com/arangodb/kube-arangodb/releases/download/1.2.3/kube-arangodb-crd-1.2.3.tgz"
   namespace        = "arangodb"
   create_namespace = true
-  verify           = true
   depends_on       = [kind_cluster.ortelius]
   #timeout          = 600
 
@@ -131,30 +131,6 @@ resource "helm_release" "kube_arangodb" {
     file("arangodb/kube-arangodb/values.yaml"),
   ]
 }
-
-#resource "null_resource" "kubectl_arangodb_crd" {
-#  depends_on = [helm_release.kube_arangodb]
-#  provisioner "local-exec" {
-#    command = <<EOF
-#    kubectl create -f https://operatorhub.io/install/kube-arangodb.yaml
-#
-#    EOF
-#  }
-#}
-
-#resource "helm_release" "kube_arangodb_crd" {
-#  name             = "kube-arangodb_crd"
-#  chart            = "kube-arangodb_crd"
-#  version          = "1.2.20"
-#  namespace        = "arangodb"
-#  create_namespace = false
-#  depends_on       = [helm_release.kube_arangodb]
-#  #timeout          = 600
-#
-#  values = [
-#    file("kube-arangodb-crd/values.yaml"),
-#  ]
-#}
 
 #resource "helm_release" "kube_arangodb_ingress_proxy" {
 #  name             = "arangodb-ingress-proxy"
@@ -183,9 +159,9 @@ resource "helm_release" "kube_arangodb" {
 #}
 
 resource "helm_release" "istio_base" {
-  name  = "istio"
-  chart = "base"
-  #repository       = "https://istio-release.storage.googleapis.com/charts"
+  name             = "charts"
+  chart            = "base"
+  repository       = "https://istio-release.storage.googleapis.com/charts"
   namespace        = "istio-system"
   create_namespace = true
   verify           = true
