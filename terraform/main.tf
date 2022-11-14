@@ -158,11 +158,9 @@ resource "helm_release" "kube_arangodb" {
 
 resource "helm_release" "istio_base" {
   name             = "charts"
-  chart            = "base"
-  repository       = "https://istio-release.storage.googleapis.com/charts"
+  chart            = "./istio/base"
   namespace        = "istio-system"
   create_namespace = true
-  verify           = true
   timeout          = 600
   depends_on       = [kind_cluster.ortelius]
 
