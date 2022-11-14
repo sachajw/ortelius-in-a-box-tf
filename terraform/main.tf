@@ -160,14 +160,14 @@ resource "helm_release" "istio_base" {
 
 resource "helm_release" "istio_operator_banzaicloud" {
   name             = "banzaicloud"
-  chart            = ".istio/istio-operator"
+  chart            = "./istio-operator"
   namespace        = "istio-system"
   create_namespace = false
   timeout          = 600
   depends_on       = [helm_release.istio_base]
 
   values = [
-    file("./istio-operator/values.yaml"),
+    file("istio-operator/values.yaml"),
   ]
 }
 
