@@ -122,6 +122,7 @@ resource "helm_release" "kube_arangodb" {
   chart            = "kube-arangodb"
   namespace        = "arangodb"
   create_namespace = true
+  verify           = true
   depends_on       = [kind_cluster.ortelius]
   #timeout          = 600
 
@@ -183,15 +184,16 @@ resource "helm_release" "kube_arangodb" {
 resource "helm_release" "istio_base" {
   name             = "base"
   chart            = "base"
+  repository       = "https://istio-release.storage.googleapis.com/charts"
   namespace        = "istio-system"
   create_namespace = true
+  verify           = true
   timeout          = 600
   depends_on       = [kind_cluster.ortelius]
 
-  values = [
-    file("istio/base/values.yaml"),
-  ]
-
+  #  values = [
+  #    file("istio/base/values.yaml"),
+  #  ]
 }
 
 resource "helm_release" "istio_operator_banzaicloud" {
