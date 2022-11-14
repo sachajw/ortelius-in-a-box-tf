@@ -80,18 +80,6 @@ provider "helm" {
   }
 }
 
-resource "helm_release" "kyverno" {
-  name             = "kyverno"
-  chart            = "kyverno"
-  namespace        = "kyverno"
-  create_namespace = true
-  depends_on       = [kind_cluster.ortelius]
-
-  values = [
-    file("kyverno/values.yaml"),
-  ]
-}
-
 resource "helm_release" "argocd" {
   name             = "argocd"
   chart            = "argo-cd"
