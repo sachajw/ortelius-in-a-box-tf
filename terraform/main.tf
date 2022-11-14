@@ -114,7 +114,7 @@ resource "helm_release" "kube_arangodb" {
   timeout          = 600
 
   values = [
-    file("kube-arangodb/values.yaml"),
+    file("arangodb/kube-arangodb/values.yaml"),
   ]
 }
 
@@ -177,7 +177,7 @@ resource "helm_release" "istio_base" {
   depends_on       = [kind_cluster.ortelius]
 
   values = [
-    file("base/values.yaml"),
+    file("istio/base/values.yaml"),
   ]
 
 }
@@ -191,7 +191,7 @@ resource "helm_release" "istio_operator_banzaicloud" {
   depends_on       = [helm_release.istio_base]
 
   values = [
-    file("istio-operator/values.yaml"),
+    file("istio/istio-operator/values.yaml"),
   ]
 }
 
@@ -205,7 +205,7 @@ resource "helm_release" "istio_istiod" {
   depends_on       = [helm_release.istio_base]
 
   values = [
-    file("istiod/values.yaml"),
+    file("istio/istiod/values.yaml"),
   ]
 
   set {
@@ -223,7 +223,7 @@ resource "helm_release" "istio_gateway" {
   #timeout          = 600
 
   values = [
-    file("gateway/values.yaml"),
+    file("istio/gateway/values.yaml"),
   ]
 
 }
