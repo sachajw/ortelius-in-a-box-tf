@@ -222,7 +222,7 @@ resource "helm_release" "istio_gateway" {
   chart            = "./istio/gateway"
   namespace        = "istio-system"
   create_namespace = false
-  depends_on       = [helm_release.istio_egress]
+  depends_on       = [helm_release.istio_ingress]
   #timeout          = 600
 
   values = [
