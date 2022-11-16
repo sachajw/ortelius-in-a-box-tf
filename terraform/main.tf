@@ -191,19 +191,19 @@ resource "helm_release" "istio_istiod" {
   }
 }
 
-resource "helm_release" "istio_ingress" {
-  name             = "istio-ingressgateway"
-  chart            = "gateway"
-  repository       = "https://istio-release.storage.googleapis.com/charts"
-  namespace        = "istio-system"
-  create_namespace = false
-  depends_on       = [helm_release.istio_istiod]
-  #  timeout          = 600
+#resource "helm_release" "istio_ingress" {
+#  name             = "istio-ingressgateway"
+#  chart            = "gateway"
+#  repository       = "https://istio-release.storage.googleapis.com/charts"
+#  namespace        = "istio-system"
+#  create_namespace = false
+#  depends_on       = [helm_release.istio_istiod]
+#  timeout          = 600
 
-  #  values = [
-  #    file("istio/istio-ingress-gateway/values.yaml"),
-  #  ]
-}
+#  values = [
+#    file("istio/istio-ingress-gateway/values.yaml"),
+#  ]
+#}
 
 #resource "helm_release" "istio_egress" {
 #  name             = "istio-egress"
