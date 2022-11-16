@@ -57,7 +57,6 @@ resource "null_resource" "kind_copy_container_images" {
     command = <<EOF
       kind load docker-image --name ortelius-in-a-box --nodes ortelius-in-a-box-control-plane,ortelius-in-a-box-worker quay.io/ortelius/ortelius
       kind load docker-image --name ortelius-in-a-box --nodes ortelius-in-a-box-control-plane,ortelius-in-a-box-worker ghcr.io/ortelius/keptn-ortelius-service:0.0.2-dev
-      kind load docker-image --name ortelius-in-a-box --nodes ortelius-in-a-box-control-plane,ortelius-in-a-box-worker docker.io/istio/base:1.16-2022-11-02T13-31-52
     EOF
   }
 }
@@ -119,19 +118,6 @@ resource "helm_release" "kube_arangodb" {
   ]
 }
 
-#resource "helm_release" "kube_arangodb_ingress_proxy" {
-#  name             = "arangodb-ingress-proxy"
-#  chart            = "arangodb-ingress-proxy"
-#  namespace        = "arangodb"
-#  create_namespace = false
-#  depends_on       = [helm_release.kube_arangodb]
-#  #timeout          = 600
-#
-#  values = [
-#    file("kube-arangodb/chart/arangodb-ingress-proxy/values.yaml"),
-#  ]
-#}
-
 resource "helm_release" "ortelius" {
   name             = "ortelius"
   chart            = "./ortelius"
@@ -144,3 +130,16 @@ resource "helm_release" "ortelius" {
     file("ortelius/values.yaml"),
   ]
 }
+
+#resource "helm_release" "kube_arangodb_ingress_proxy" {
+#  name             = "arangodb-ingress-proxy"
+#  chart            = "arangodb-ingress-proxy"
+#  namespace        = "arangodb"
+#  create_namespace = false
+#  depends_on       = [helm_release.kube_arangodb]
+#  #timeout          = 600
+#
+#  values = [
+#    file("kube-arangodb/chart/arangodb-ingress-proxy/values.yaml"),
+#  ]
+#}
