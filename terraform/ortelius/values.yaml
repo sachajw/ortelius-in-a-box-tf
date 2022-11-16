@@ -44,13 +44,6 @@ service:
   port: 80
   type: ClusterIP
 tolerations: []
-volumeMounts:
-  - name: jwt-volume
-    mountPath: /opt/deployhub/keys
-volumes:
-  - name: jwt-volume
-    secret:
-      secretName: jwtkeys
 ---
 affinity: {}
 fullnameOverride: ''

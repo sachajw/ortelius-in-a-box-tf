@@ -13,7 +13,7 @@ resource "kind_cluster" "ortelius" {
     node {
       role = "control-plane"
       kubeadm_config_patches = [
-        "kind: InitConfiguration\nnodeRegistration:\n  kubeletExtraArgs:\n    node-labels: \"istio-injection=enabled\"\n"
+        "kind: InitConfiguration\nnodeRegistration:\n  kubeletExtraArgs:\n    node-labels: \"ingress-ready-true\"\n"
       ]
       extra_port_mappings {
         container_port = 80
@@ -144,100 +144,3 @@ resource "helm_release" "ortelius" {
     file("ortelius/values.yaml"),
   ]
 }
-
-resource "helm_release" "istio_base" {
-  name             = "base"
-  chart            = "./istio/base"
-  namespace        = "istio-system"
-  create_namespace = true
-  timeout          = 600
-  depends_on       = [kind_cluster.ortelius]
-
-  values = [
-    file("istio/base/values.yaml"),
-  ]
-}
-
-resource "helm_release" "istio_operator_banzaicloud" {
-  name             = "banzaicloud"
-  chart            = "./istio-operator"
-  namespace        = "istio-system"
-  create_namespace = false
-  timeout          = 600
-  depends_on       = [helm_release.istio_base]
-
-  values = [
-    file("istio-operator/values.yaml"),
-  ]
-}
-
-resource "helm_release" "istio_istiod" {
-  name             = "istiod"
-  chart            = "./istio/istiod"
-  namespace        = "istio-system"
-  force_update     = true
-  create_namespace = false
-  timeout          = 600
-  depends_on       = [helm_release.istio_base]
-
-  values = [
-    file("istio/istiod/values.yaml"),
-  ]
-
-  set {
-    name  = "meshConfig.accessLogFile"
-    value = "/dev/stdout"
-  }
-}
-
-#resource "helm_release" "istio_ingress" {
-#  name             = "istio-ingressgateway"
-#  chart            = "gateway"
-#  repository       = "https://istio-release.storage.googleapis.com/charts"
-#  namespace        = "istio-system"
-#  create_namespace = false
-#  depends_on       = [helm_release.istio_istiod]
-#  timeout          = 600
-
-#  values = [
-#    file("istio/istio-ingress-gateway/values.yaml"),
-#  ]
-#}
-
-#resource "helm_release" "istio_egress" {
-#  name             = "istio-egress"
-#  chart            = "./istio/gateway/egress"
-#  namespace        = "istio-system"
-#  create_namespace = false
-#  depends_on       = [helm_release.istio_istiod]
-#  #timeout          = 600
-#
-#  values = [
-#    file("istio/gateway/egress/egress.yaml"),
-#  ]
-#}
-
-#resource "helm_release" "istio_gateway" {
-#  name             = "gateway"
-#  chart            = "./istio/gateway"
-#  namespace        = "istio-system"
-#  create_namespace = false
-#  depends_on       = [helm_release.istio_istiod]
-#  #timeout          = 600
-#
-#  values = [
-#    file("istio/gateway/values.yaml"),
-#  ]
-#}
-
-#resource "helm_release" "terrakube" {
-#  name             = "terrakube"
-#  chart            = "terrakube"
-#  namespace        = "terrakube"
-#  create_namespace = true
-#  depends_on       = [kind_cluster.ortelius]
-#
-#  values = [
-#    file("terrakube/values.yaml"),
-#  ]
-#}
