@@ -12,9 +12,11 @@ resource "kind_cluster" "ortelius" {
 
     node {
       role = "control-plane"
+
       kubeadm_config_patches = [
-        "kind: InitConfiguration\nnodeRegistration:\n  kubeletExtraArgs:\n    node-labels: \"ingress-ready=true\"\n \"kubernetes.io/os=linux\"\n"
+        "kind: InitConfiguration\nnodeRegistration:\n  kubeletExtraArgs:\n    node-labels: \"kubernetes.io/os=linux\"\n"
       ]
+
       extra_port_mappings {
         container_port = 80
         host_port      = 80
@@ -26,6 +28,7 @@ resource "kind_cluster" "ortelius" {
         listen_address = "0.0.0.0"
       }
     }
+
     node {
       role = "worker"
     }
