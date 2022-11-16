@@ -13,7 +13,6 @@ controller:
   watchIngressWithoutClass: true
 
   nodeSelector:
-    ingress-ready: "true"
     kubernetes.io/os: "linux"
   tolerations:
     - key: "node-role.kubernetes.io/master"

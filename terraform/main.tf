@@ -124,18 +124,18 @@ resource "helm_release" "kube_arangodb" {
   ]
 }
 # ortelius
-resource "helm_release" "ortelius" {
-  name             = "ortelius"
-  chart            = "./ortelius"
-  namespace        = "ortelius"
-  create_namespace = true
-  depends_on       = [helm_release.keptn]
-  timeout          = 600
-
-  values = [
-    file("ortelius/values.yaml"),
-  ]
-}
+#resource "helm_release" "ortelius" {
+#  name             = "ortelius"
+#  chart            = "./ortelius"
+#  namespace        = "ortelius"
+#  create_namespace = true
+#  depends_on       = [helm_release.keptn]
+#  timeout          = 600
+#
+#  values = [
+#    file("ortelius/values.yaml"),
+#  ]
+#}
 
 # nginx ingress
 resource "helm_release" "ingress_nginx" {
