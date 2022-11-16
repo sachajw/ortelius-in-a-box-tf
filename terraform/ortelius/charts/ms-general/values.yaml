@@ -20,6 +20,3 @@ service:
   port: 80
   type: ClusterIP
 tolerations: []
-jwt:
-  privateKey: ""
-  publicKey: ""

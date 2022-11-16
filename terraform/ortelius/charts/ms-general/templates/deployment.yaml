@@ -39,7 +39,7 @@ spec:
             - name: jwtkeys
               valueFrom:
                 secretKeyRef:
-                name: privatekey
+                name: jwt
                 key: privatekey
           ports:
             - name: http
