@@ -14,7 +14,7 @@ RE_PHYSICAL_SERVER: localhost
 aks:
   admin: true
   certificate: /root/.ssh/aks.pem
-  cluster: ortelius-in-a-box
+  cluster: cluster2-aks
   resourcegroup: cluster1-rg
 application: ortelius-devops;10_0_23
 builddate: Wed Jan 26 14:56:03 UTC 2022
@@ -28,13 +28,13 @@ dockerrepo: quay.io/ortelius/ms-validate-user
 dockersha: 6082bcd28da4ba62ecbc743ebe03ffe23f7ab0819e61c27ce2e76114cc2148d8
 dockertag: deploy-v10.0.0.43-gac2ab89
 dropzone: /tmp/tdm.1503.4
-environment: ortelius-in-a-box
+environment: aks-cluster
 gitcommit: ac2ab89
 gitrepo: ortelius/ortelius-ms-validate-user
 gittag: deploy
 giturl: git@github.com:ortelius/ortelius-ms-validate-user.git
 image:
   pullPolicy: Always
-kubectl_context: ortelius-in-a-box
+kubectl_context: cluster2-aks-admin
 server_hostname: localhost
 server_name: localhost

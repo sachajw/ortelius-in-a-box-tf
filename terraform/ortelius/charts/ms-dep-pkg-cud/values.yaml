@@ -3,5 +3,5 @@ DockerSha: d464014a0b25
 DockerTag: deploy-v10.0.0.86-g960945e
 image:
   repository: quay.io/ortelius/ms-dep-pkg-cud
-  tag: main-v10.0.1-gc189d0
-  sha: sha256:0c92c32ff85c820463b769b69af8772b941359d1a11477c1535f68885a72462a
+  tag: main-v10.0.2-geffaa5
+  sha: sha256:b5a13b55c5497493bcca919e0dc039e2585e2f73fc827fef2c85e34ee0e647a8

@@ -3,5 +3,5 @@ DockerSha: 2e1fad49558a
 DockerTag: deploy-v10.0.0.62-g104a226
 image:
   repository: quay.io/ortelius/ms-textfile-crud
-  tag: main-v10.0.1-gc3969e
-  sha: sha256:f44b00ad9f7877e3a154af77cf9768aabfe5dbdc1840525ed7ba87eab529af4f
+  tag: main-v10.0.9-gec05e7
+  sha: sha256:4f6039be082664bab8034aba96e78250db915af448f9dc9e383f2b35348c02c4

@@ -132,18 +132,18 @@ resource "helm_release" "kube_arangodb" {
 #  ]
 #}
 
-#resource "helm_release" "ortelius" {
-#  name             = "ortelius"
-#  chart            = "./ortelius"
-#  namespace        = "ortelius"
-#  create_namespace = false
-#  depends_on       = [helm_release.keptn]
-#  timeout          = 600
-#
-#  values = [
-#    file("ortelius/values.yaml"),
-#  ]
-#}
+resource "helm_release" "ortelius" {
+  name             = "ortelius"
+  chart            = "./ortelius"
+  namespace        = "ortelius"
+  create_namespace = false
+  depends_on       = [helm_release.keptn]
+  timeout          = 600
+
+  values = [
+    file("ortelius/values.yaml"),
+  ]
+}
 
 resource "helm_release" "istio_base" {
   name             = "base"
