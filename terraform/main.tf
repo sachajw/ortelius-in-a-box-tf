@@ -146,7 +146,7 @@ resource "helm_release" "ingress_nginx" {
 
   values = [file("nginx-ingress-values.yaml")]
 
-  depends_on = [kind_cluster.default]
+  depends_on = [kind_cluster.ortelius]
 }
 
 resource "null_resource" "wait_for_ingress_nginx" {
