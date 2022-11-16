@@ -241,29 +241,3 @@ resource "helm_release" "istio_istiod" {
 #    file("terrakube/values.yaml"),
 #  ]
 #}
-
-resource "helm_release" "kasten_grafana" {
-  name             = "kasten-grafana"
-  chart            = "k10"
-  namespace        = "kasten-grafana"
-  create_namespace = true
-  depends_on       = [kind_cluster.ortelius]
-}
-
-resource "helm_release" "kasten" {
-  name             = "kasten"
-  chart            = "k10"
-  namespace        = "kasten"
-  create_namespace = true
-  force_update     = true
-  depends_on       = [kind_cluster.ortelius]
-
-  values = [
-    file("k10/values.yaml"),
-  ]
-
-  set {
-    name  = "scc.create"
-    value = true
-  }
-}
