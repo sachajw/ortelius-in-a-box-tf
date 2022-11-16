@@ -218,18 +218,18 @@ resource "helm_release" "istio_istiod" {
 #  ]
 #}
 
-resource "helm_release" "istio_gateway" {
-  name             = "gateway"
-  chart            = "./istio/gateway"
-  namespace        = "istio-system"
-  create_namespace = false
-  depends_on       = [helm_release.istio_istiod]
-  #timeout          = 600
-
-  values = [
-    file("istio/gateway/values.yaml"),
-  ]
-}
+#resource "helm_release" "istio_gateway" {
+#  name             = "gateway"
+#  chart            = "./istio/gateway"
+#  namespace        = "istio-system"
+#  create_namespace = false
+#  depends_on       = [helm_release.istio_istiod]
+#  #timeout          = 600
+#
+#  values = [
+#    file("istio/gateway/values.yaml"),
+#  ]
+#}
 
 #resource "helm_release" "terrakube" {
 #  name             = "terrakube"
@@ -244,10 +244,19 @@ resource "helm_release" "istio_gateway" {
 #}
 
 resource "helm_release" "kasten" {
+  name             = "kasten-grafana"
+  chart            = "k10"
+  namespace        = "kasten-grafana"
+  create_namespace = true
+  depends_on       = [kind_cluster.ortelius]
+}
+
+resource "helm_release" "kasten" {
   name             = "kasten"
   chart            = "k10"
   namespace        = "kasten"
   create_namespace = true
+  force_update     = true
   depends_on       = [kind_cluster.ortelius]
 
   values = [
