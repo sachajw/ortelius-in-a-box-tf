@@ -33,17 +33,21 @@ No modules.
 | Name | Type |
 |------|------|
 | [helm_release.argocd](https://registry.terraform.io/providers/hashicorp/helm/2.7.1/docs/resources/release) | resource |
+| [helm_release.ingress_nginx](https://registry.terraform.io/providers/hashicorp/helm/2.7.1/docs/resources/release) | resource |
 | [helm_release.keptn](https://registry.terraform.io/providers/hashicorp/helm/2.7.1/docs/resources/release) | resource |
 | [helm_release.kube_arangodb](https://registry.terraform.io/providers/hashicorp/helm/2.7.1/docs/resources/release) | resource |
 | [helm_release.ortelius](https://registry.terraform.io/providers/hashicorp/helm/2.7.1/docs/resources/release) | resource |
 | [kind_cluster.ortelius](https://registry.terraform.io/providers/tehcyx/kind/latest/docs/resources/cluster) | resource |
 | [null_resource.kind_copy_container_images](https://registry.terraform.io/providers/hashicorp/null/3.2.0/docs/resources/resource) | resource |
+| [null_resource.wait_for_ingress_nginx](https://registry.terraform.io/providers/hashicorp/null/3.2.0/docs/resources/resource) | resource |
 | [time_sleep.wait_45_seconds](https://registry.terraform.io/providers/hashicorp/time/0.9.1/docs/resources/sleep) | resource |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_ingress_nginx_helm_version"></a> [ingress\_nginx\_helm\_version](#input\_ingress\_nginx\_helm\_version) | The Helm version for the nginx ingress controller. | `string` | `"4.3.0"` | no |
+| <a name="input_ingress_nginx_namespace"></a> [ingress\_nginx\_namespace](#input\_ingress\_nginx\_namespace) | The nginx ingress namespace | `string` | `"ingress-nginx"` | no |
 | <a name="input_kind_cluster_config_path"></a> [kind\_cluster\_config\_path](#input\_kind\_cluster\_config\_path) | Cluster's kubeconfig location | `string` | `"~/.kube/config"` | no |
 | <a name="input_kind_cluster_name"></a> [kind\_cluster\_name](#input\_kind\_cluster\_name) | The name of the cluster. | `string` | `"ortelius-in-a-box"` | no |
 
