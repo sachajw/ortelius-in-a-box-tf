@@ -165,7 +165,7 @@ resource "null_resource" "wait_for_ingress_nginx" {
       kubectl wait --namespace ${helm_release.ingress_nginx.namespace} \
         --for=condition=ready pod \
         --selector=app.kubernetes.io/component=controller \
-        --timeout=90s
+        --timeout=180s
     EOF
   }
 
