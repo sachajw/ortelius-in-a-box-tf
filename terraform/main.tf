@@ -251,7 +251,7 @@ resource "helm_release" "kasten" {
   depends_on       = [kind_cluster.ortelius]
 
   values = [
-    file("kasten/values.yaml"),
+    file("k10/values.yaml"),
   ]
 
   set {
