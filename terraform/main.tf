@@ -39,6 +39,7 @@ resource "null_resource" "kubectl_ortelius" {
     command = <<EOF
       kubectl create namespace ortelius
       kubectl create secret generic pgcred --from-literal=DBUserName=postgres --from-literal=DBPassword=postgres --from-literal=DBHost=localhost --from-literal=DBPort=5432 --from-literal=DBName=postgres -n ortelius
+      kubectl create secret generic jwtkeys --from-file=ssh-privatekey=/path/to/.ssh/id_rsa --from-file=ssh-publickey=/path/to/.ssh/id_rsa.pub
     EOF
   }
 }
