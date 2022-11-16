@@ -37,7 +37,6 @@ resource "null_resource" "kubectl_ortelius" {
 
   provisioner "local-exec" {
     command = <<EOF
-      kubectl create namespace ortelius
       kubectl create secret generic pgcred --from-literal=DBUserName=postgres --from-literal=DBPassword=postgres --from-literal=DBHost=localhost --from-literal=DBPort=5432 --from-literal=DBName=postgres -n ortelius
       kubectl create secret generic jwtkeys --from-file=privatekey=jwt.pri --from-file=publickey=jwt.pub -n ortelius
     EOF
@@ -137,7 +136,7 @@ resource "helm_release" "ortelius" {
   name             = "ortelius"
   chart            = "./ortelius"
   namespace        = "ortelius"
-  create_namespace = false
+  create_namespace = true
   depends_on       = [helm_release.keptn]
   timeout          = 600
 
@@ -243,7 +242,7 @@ resource "helm_release" "istio_istiod" {
 #  ]
 #}
 
-resource "helm_release" "kasten" {
+resource "helm_release" "kasten_grafana" {
   name             = "kasten-grafana"
   chart            = "k10"
   namespace        = "kasten-grafana"
