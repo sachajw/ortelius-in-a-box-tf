@@ -125,8 +125,7 @@ resource "helm_release" "kube_arangodb" {
 }
 # ortelius
 resource "helm_release" "ortelius" {
-  name = "ortelius"
-  #  chart            = "./ortelius"
+  name             = "ortelius"
   chart            = "ortelius"
   repository       = "https://ortelius.github.io/ortelius-charts/"
   namespace        = "ortelius"
@@ -137,6 +136,18 @@ resource "helm_release" "ortelius" {
   #  values = [
   #    file("ortelius/values.yaml"),
   #  ]
+}
+
+# mizu
+resource "helm_release" "mizu" {
+  name             = "mizu"
+  chart            = "up9mizu"
+  repository       = "https://static.up9.com/mizu/helm"
+  namespace        = "mizu"
+  create_namespace = true
+  atomic           = true
+  depends_on       = [kind_cluster.ortelius]
+  timeout          = 600
 }
 
 # nginx ingress
