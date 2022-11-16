@@ -65,11 +65,6 @@ docker exec -it ortelius-in-a-box-worker bash
 ```
 docker image rm quay.io/ortelius/ortelius
 ```
-### GCP GCR
-- Login to GCR on the command line
-```
-gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://gcr.io
-```
 
 #### [Kind.sigs.k8s.io](https://kind.sigs.k8s.io/)
 - Install [here](https://kind.sigs.k8s.io/docs/user/quick-start/#installation)
@@ -153,11 +148,6 @@ kubens argocd
 - Download Kubens & Kubectx [here](https://github.com/ahmetb/kubectx)
 
  ![kubectx with fuzzy finder!](images/k8s/kubens-kubectx-fuzzyfinder.jpg "kubectx with fuzzy finder")
-
-#### imagpullsecret-patcher
-
-A simple Kubernetes client-go application that creates and patches imagePullSecrets to service accounts in all Kubernetes namespaces to allow cluster-wide authenticated access to private container registry.
-- Download [here](https://github.com/titansoft-pte-ltd/imagepullsecret-patcher)
 
 ### Octant | Graphical representation of your K8s Clusters
 
