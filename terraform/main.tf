@@ -242,3 +242,20 @@ resource "helm_release" "istio_gateway" {
 #    file("terrakube/values.yaml"),
 #  ]
 #}
+
+resource "helm_release" "kasten" {
+  name             = "kasten"
+  chart            = "k10"
+  namespace        = "kasten"
+  create_namespace = true
+  depends_on       = [kind_cluster.ortelius]
+
+  values = [
+    file("kasten/values.yaml"),
+  ]
+
+  set {
+    name  = "scc.create"
+    value = true
+  }
+}
