@@ -133,7 +133,6 @@ resource "helm_release" "ortelius" {
   depends_on       = [null_resource.kind_copy_container_images]
   timeout          = 600
 
-  values = [file("values.yaml")]
   #values = [file("ortelius/values.yaml")]
 }
 
