@@ -40,6 +40,7 @@ No modules.
 | [helm_release.ortelius](https://registry.terraform.io/providers/hashicorp/helm/2.7.1/docs/resources/release) | resource |
 | [kind_cluster.ortelius](https://registry.terraform.io/providers/tehcyx/kind/latest/docs/resources/cluster) | resource |
 | [null_resource.kind_copy_container_images](https://registry.terraform.io/providers/hashicorp/null/3.2.0/docs/resources/resource) | resource |
+| [null_resource.kubectl_mock_services](https://registry.terraform.io/providers/hashicorp/null/3.2.0/docs/resources/resource) | resource |
 | [null_resource.wait_for_ingress_nginx](https://registry.terraform.io/providers/hashicorp/null/3.2.0/docs/resources/resource) | resource |
 | [time_sleep.wait_45_seconds](https://registry.terraform.io/providers/hashicorp/time/0.9.1/docs/resources/sleep) | resource |
 
