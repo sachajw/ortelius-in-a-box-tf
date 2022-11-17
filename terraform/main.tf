@@ -35,36 +35,6 @@ resource "kind_cluster" "ortelius" {
   }
 }
 
-#resource "null_resource" "kubectl_mock_services" {
-#  depends_on = [kind_cluster.ortelius]
-#
-#  provisioner "local-exec" {
-#    command = <<EOF
-#      kubectl create secret generic pgcred --from-literal=DBUserName=postgres --from-literal=DBPassword=postgres --from-literal=DBHost=localhost --from-literal=DBPort=5432 --from-literal=DBName=postgres -n ortelius
-#      kubectl create secret generic jwtkeys --from-file=privatekey=jwt.pri --from-file=publickey=jwt.pub -n ortelius
-#    EOF
-#  }
-#}
-
-#resource "time_sleep" "wait_45_seconds" {
-#  create_duration = "45s"
-#}
-#
-#resource "null_resource" "kind_copy_container_images" {
-#  depends_on  = [kind_cluster.ortelius]
-#  #depends_on = [time_sleep.wait_45_seconds]
-#  triggers = {
-#    key = uuid()
-#  }
-#
-#  provisioner "local-exec" {
-#    command = <<EOF
-#      kind load docker-image --name ortelius-in-a-box --nodes ortelius-in-a-box-control-plane,ortelius-in-a-box-worker quay.io/ortelius/ortelius
-#      kind load docker-image --name ortelius-in-a-box --nodes ortelius-in-a-box-control-plane,ortelius-in-a-box-worker ghcr.io/ortelius/keptn-ortelius-service:0.0.2-dev
-#    EOF
-#  }
-#}
-
 provider "kubectl" {
   host                   = kind_cluster.ortelius.endpoint
   cluster_ca_certificate = kind_cluster.ortelius.cluster_ca_certificate
