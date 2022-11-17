@@ -17,6 +17,105 @@
 # ----------------------------------------------------------
 
 # [START gke_release_kubernetes_manifests_microservices_demo]
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ms-demo-ingress
+spec:
+  rules:
+  - http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: emailservice
+            port:
+              number: 8080
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: checkoutservice
+            port:
+              number: 5050
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: recommendationservice
+            port:
+              number: 8080
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: frontend
+            port:
+              number: 8080
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: frontend-external
+            port:
+              number: 8080
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: paymentservice
+            port:
+              number: 50051
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: productcatalogservice
+            port:
+              number: 3550
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: cartservice
+            port:
+              number: 7070
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: cartservice
+            port:
+              number: 7070
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: currencyservice
+            port:
+              number: 7000
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: shippingservice
+            port:
+              number: 50051
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: redis-cart
+            port:
+              number: 6379
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: adservice
+            port:
+              number: 9555
 ---
 apiVersion: apps/v1
 kind: Deployment
