@@ -105,9 +105,7 @@ resource "helm_release" "keptn" {
   create_namespace = true
   depends_on       = [kind_cluster.ortelius]
 
-  values = [
-    file("keptn-ortelius-service/values.yaml"),
-  ]
+  values = [file("keptn-ortelius-service/values.yaml")]
 }
 
 # arangodb
