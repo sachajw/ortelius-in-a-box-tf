@@ -128,6 +128,7 @@ resource "helm_release" "ortelius" {
   repository       = "https://ortelius.github.io/ortelius-charts/"
   namespace        = "ortelius"
   create_namespace = true
+  depends_on       = [kind_cluster.ortelius]
   #depends_on       = [null_resource.kind_copy_container_images]
 
   #values = [file("ortelius/values.yaml")]
