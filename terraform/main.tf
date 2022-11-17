@@ -130,10 +130,10 @@ resource "helm_release" "ortelius" {
   repository       = "https://ortelius.github.io/ortelius-charts/"
   namespace        = "ortelius"
   create_namespace = true
-  depends_on       = [helm_release.keptn]
+  depends_on       = [null_resource.kind_copy_container_images]
   timeout          = 600
 
-  values = [file("nginx-ingress-values.yaml")]
+  values = [file("values.yaml")]
   #values = [file("ortelius/values.yaml")]
 }
 
