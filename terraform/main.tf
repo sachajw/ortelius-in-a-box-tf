@@ -35,16 +35,16 @@ resource "kind_cluster" "ortelius" {
   }
 }
 
-resource "null_resource" "kubectl_mock_services" {
-  depends_on = [kind_cluster.ortelius]
-
-  provisioner "local-exec" {
-    command = <<EOF
-      kubectl create secret generic pgcred --from-literal=DBUserName=postgres --from-literal=DBPassword=postgres --from-literal=DBHost=localhost --from-literal=DBPort=5432 --from-literal=DBName=postgres -n ortelius
-      kubectl create secret generic jwtkeys --from-file=privatekey=jwt.pri --from-file=publickey=jwt.pub -n ortelius
-    EOF
-  }
-}
+#resource "null_resource" "kubectl_mock_services" {
+#  depends_on = [kind_cluster.ortelius]
+#
+#  provisioner "local-exec" {
+#    command = <<EOF
+#      kubectl create secret generic pgcred --from-literal=DBUserName=postgres --from-literal=DBPassword=postgres --from-literal=DBHost=localhost --from-literal=DBPort=5432 --from-literal=DBName=postgres -n ortelius
+#      kubectl create secret generic jwtkeys --from-file=privatekey=jwt.pri --from-file=publickey=jwt.pub -n ortelius
+#    EOF
+#  }
+#}
 
 resource "time_sleep" "wait_45_seconds" {
   create_duration = "45s"
@@ -133,9 +133,8 @@ resource "helm_release" "ortelius" {
   depends_on       = [helm_release.keptn]
   timeout          = 600
 
-  #  values = [
-  #    file("ortelius/values.yaml"),
-  #  ]
+  values = [file("nginx-ingress-values.yaml")]
+  #values = [file("ortelius/values.yaml")]
 }
 
 # mizu
