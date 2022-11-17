@@ -115,7 +115,6 @@ resource "helm_release" "kube_arangodb" {
   namespace        = "arangodb"
   create_namespace = true
   depends_on       = [kind_cluster.ortelius]
-  #timeout          = 600
 
   values = [
     file("arangodb/kube-arangodb/values.yaml"),
@@ -129,7 +128,6 @@ resource "helm_release" "ortelius" {
   namespace        = "ortelius"
   create_namespace = true
   depends_on       = [null_resource.kind_copy_container_images]
-  timeout          = 600
 
   #values = [file("ortelius/values.yaml")]
 }
@@ -166,17 +164,3 @@ resource "null_resource" "wait_for_ingress_nginx" {
 
   depends_on = [helm_release.ingress_nginx]
 }
-
-
-#resource "helm_release" "kube_arangodb_ingress_proxy" {
-#  name             = "arangodb-ingress-proxy"
-#  chart            = "arangodb-ingress-proxy"
-#  namespace        = "arangodb"
-#  create_namespace = false
-#  depends_on       = [helm_release.kube_arangodb]
-#  #timeout          = 600
-#
-#  values = [
-#    file("kube-arangodb/chart/arangodb-ingress-proxy/values.yaml"),
-#  ]
-#}
