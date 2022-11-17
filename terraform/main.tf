@@ -46,23 +46,24 @@ resource "kind_cluster" "ortelius" {
 #  }
 #}
 
-resource "time_sleep" "wait_45_seconds" {
-  create_duration = "45s"
-}
-
-resource "null_resource" "kind_copy_container_images" {
-  depends_on = [time_sleep.wait_45_seconds]
-  triggers = {
-    key = uuid()
-  }
-
-  provisioner "local-exec" {
-    command = <<EOF
-      kind load docker-image --name ortelius-in-a-box --nodes ortelius-in-a-box-control-plane,ortelius-in-a-box-worker quay.io/ortelius/ortelius
-      kind load docker-image --name ortelius-in-a-box --nodes ortelius-in-a-box-control-plane,ortelius-in-a-box-worker ghcr.io/ortelius/keptn-ortelius-service:0.0.2-dev
-    EOF
-  }
-}
+#resource "time_sleep" "wait_45_seconds" {
+#  create_duration = "45s"
+#}
+#
+#resource "null_resource" "kind_copy_container_images" {
+#  depends_on  = [kind_cluster.ortelius]
+#  #depends_on = [time_sleep.wait_45_seconds]
+#  triggers = {
+#    key = uuid()
+#  }
+#
+#  provisioner "local-exec" {
+#    command = <<EOF
+#      kind load docker-image --name ortelius-in-a-box --nodes ortelius-in-a-box-control-plane,ortelius-in-a-box-worker quay.io/ortelius/ortelius
+#      kind load docker-image --name ortelius-in-a-box --nodes ortelius-in-a-box-control-plane,ortelius-in-a-box-worker ghcr.io/ortelius/keptn-ortelius-service:0.0.2-dev
+#    EOF
+#  }
+#}
 
 provider "kubectl" {
   host                   = kind_cluster.ortelius.endpoint
@@ -127,7 +128,7 @@ resource "helm_release" "ortelius" {
   repository       = "https://ortelius.github.io/ortelius-charts/"
   namespace        = "ortelius"
   create_namespace = true
-  depends_on       = [null_resource.kind_copy_container_images]
+  #depends_on       = [null_resource.kind_copy_container_images]
 
   #values = [file("ortelius/values.yaml")]
 }

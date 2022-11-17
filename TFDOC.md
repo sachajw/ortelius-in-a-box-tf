@@ -22,7 +22,6 @@
 | <a name="provider_helm"></a> [helm](#provider\_helm) | 2.7.1 |
 | <a name="provider_kind"></a> [kind](#provider\_kind) | 0.0.15 |
 | <a name="provider_null"></a> [null](#provider\_null) | 3.2.0 |
-| <a name="provider_time"></a> [time](#provider\_time) | 0.9.1 |
 
 ## Modules
 
@@ -38,9 +37,7 @@ No modules.
 | [helm_release.kube_arangodb](https://registry.terraform.io/providers/hashicorp/helm/2.7.1/docs/resources/release) | resource |
 | [helm_release.ortelius](https://registry.terraform.io/providers/hashicorp/helm/2.7.1/docs/resources/release) | resource |
 | [kind_cluster.ortelius](https://registry.terraform.io/providers/tehcyx/kind/latest/docs/resources/cluster) | resource |
-| [null_resource.kind_copy_container_images](https://registry.terraform.io/providers/hashicorp/null/3.2.0/docs/resources/resource) | resource |
 | [null_resource.wait_for_ingress_nginx](https://registry.terraform.io/providers/hashicorp/null/3.2.0/docs/resources/resource) | resource |
-| [time_sleep.wait_45_seconds](https://registry.terraform.io/providers/hashicorp/time/0.9.1/docs/resources/sleep) | resource |
 
 ## Inputs
 
