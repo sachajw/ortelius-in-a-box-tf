@@ -137,18 +137,6 @@ resource "helm_release" "ortelius" {
   #values = [file("ortelius/values.yaml")]
 }
 
-# mizu
-resource "helm_release" "mizu" {
-  name             = "mizu"
-  chart            = "up9mizu"
-  repository       = "https://static.up9.com/mizu/helm"
-  namespace        = "mizu"
-  create_namespace = true
-  atomic           = true
-  depends_on       = [kind_cluster.ortelius]
-  timeout          = 600
-}
-
 # nginx ingress
 resource "helm_release" "ingress_nginx" {
   name       = "ingress-nginx"
