@@ -92,20 +92,6 @@ resource "helm_release" "kube_arangodb" {
   ]
 }
 
-resource "helm_release" "kiali" {
-  name             = "kiali"
-  chart            = "kiali-server"
-  repository       = "https://kiali.org/helm-charts"
-  namespace        = "kiali"
-  create_namespace = true
-  depends_on       = [kind_cluster.ortelius]
-
-  set {
-    name  = auth.strategy
-    value = anonymous
-  }
-}
-
 # ortelius
 #resource "helm_release" "ortelius" {
 #  name             = "ortelius"
