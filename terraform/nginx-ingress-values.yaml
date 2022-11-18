@@ -9,8 +9,13 @@ controller:
     enabled: true
   terminationGracePeriodSeconds: 0
   service:
-    type: "NodePort"
+    type: "LoadBalancer"
   watchIngressWithoutClass: true
+
+status:
+  loadBalancer:
+    ingress:
+    - ip: 127.0.0.1
 
   nodeSelector:
     kubernetes.io/os: "linux"
