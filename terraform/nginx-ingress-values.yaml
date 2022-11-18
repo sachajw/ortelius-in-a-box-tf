@@ -10,12 +10,9 @@ controller:
   terminationGracePeriodSeconds: 0
   service:
     type: "LoadBalancer"
+    externalIPs:
+    - 192.168.0.71
   watchIngressWithoutClass: true
-
-status:
-  loadBalancer:
-    ingress:
-    - ip: 127.0.0.1
 
   nodeSelector:
     kubernetes.io/os: "linux"
@@ -27,4 +24,4 @@ status:
   publishService:
     enabled: false
   extraArgs:
-    publish-status-address: "localhost"
+    publish-status-address: "192.168.0.71"
