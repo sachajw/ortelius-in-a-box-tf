@@ -3,7 +3,6 @@ kind: Ingress
 metadata:
   name: boutique-ingress
   annotations:
-    spec.ingressClasssName: nginx
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:

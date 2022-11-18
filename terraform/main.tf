@@ -120,6 +120,11 @@ resource "helm_release" "ingress_nginx" {
     value = true
   }
 
+  set {
+    name  = "spec.ingressClassName"
+    value = "nginx"
+  }
+
   depends_on = [kind_cluster.ortelius]
 }
 
