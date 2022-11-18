@@ -110,7 +110,7 @@ resource "helm_release" "nginx_ingress" {
   name             = "nginx-ingress"
   repository       = "https://helm.nginx.com/stable"
   chart            = "nginx-ingress"
-  namespace        = var.ingress_nginx_namespace
+  namespace        = var.nginx_ingress_namespace
   create_namespace = true
 
   values = [file("nginx-ingress-values.yaml")]
