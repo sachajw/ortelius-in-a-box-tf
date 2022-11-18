@@ -106,11 +106,11 @@ resource "helm_release" "kube_arangodb" {
 #}
 
 # nginx ingress
-resource "helm_release" "nginx_ingress" {
-  name             = "nginx-ingress"
+resource "helm_release" "ingress_nginx" {
+  name             = "ingress-nginx"
   repository       = "https://kubernetes.github.io/ingress-nginx"
   chart            = "ingress-nginx"
-  namespace        = var.nginx_ingress_namespace
+  namespace        = var.ingress_nginx_namespace
   create_namespace = true
 
   values = [file("nginx-ingress-values.yaml")]
@@ -121,4 +121,22 @@ resource "helm_release" "nginx_ingress" {
   }
 
   depends_on = [kind_cluster.ortelius]
+}
+
+resource "null_resource" "wait_for_ingress_nginx" {
+  triggers = {
+    key = uuid()
+  }
+
+  provisioner "local-exec" {
+    command = <<EOF
+      printf "\nWaiting for the nginx ingress controller...\n"
+      kubectl wait --namespace ${helm_release.ingress_nginx.namespace} \
+        --for=condition=ready pod \
+        --selector=app.kubernetes.io/component=controller \
+        --timeout=180s
+    EOF
+  }
+
+  depends_on = [helm_release.ingress_nginx]
 }

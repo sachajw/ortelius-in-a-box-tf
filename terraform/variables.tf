@@ -15,8 +15,8 @@ variable "kind_cluster_config_path" {
 #  description = "The Helm version for the nginx ingress controller."
 #  default     = "4.3.0"
 #}
-variable "nginx_ingress_namespace" {
+variable "ingress_nginx_namespace" {
   type        = string
   description = "The nginx ingress namespace"
-  default     = "nginx-ingress"
+  default     = "ingress-nginx"
 }

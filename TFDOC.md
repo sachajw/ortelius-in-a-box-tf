@@ -21,6 +21,7 @@
 |------|---------|
 | <a name="provider_helm"></a> [helm](#provider\_helm) | 2.7.1 |
 | <a name="provider_kind"></a> [kind](#provider\_kind) | 0.0.15 |
+| <a name="provider_null"></a> [null](#provider\_null) | 3.2.0 |
 
 ## Modules
 
@@ -31,18 +32,19 @@ No modules.
 | Name | Type |
 |------|------|
 | [helm_release.argocd](https://registry.terraform.io/providers/hashicorp/helm/2.7.1/docs/resources/release) | resource |
+| [helm_release.ingress_nginx](https://registry.terraform.io/providers/hashicorp/helm/2.7.1/docs/resources/release) | resource |
 | [helm_release.keptn](https://registry.terraform.io/providers/hashicorp/helm/2.7.1/docs/resources/release) | resource |
 | [helm_release.kube_arangodb](https://registry.terraform.io/providers/hashicorp/helm/2.7.1/docs/resources/release) | resource |
-| [helm_release.nginx_ingress](https://registry.terraform.io/providers/hashicorp/helm/2.7.1/docs/resources/release) | resource |
 | [kind_cluster.ortelius](https://registry.terraform.io/providers/tehcyx/kind/latest/docs/resources/cluster) | resource |
+| [null_resource.wait_for_ingress_nginx](https://registry.terraform.io/providers/hashicorp/null/3.2.0/docs/resources/resource) | resource |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_ingress_nginx_namespace"></a> [ingress\_nginx\_namespace](#input\_ingress\_nginx\_namespace) | The nginx ingress namespace | `string` | `"ingress-nginx"` | no |
 | <a name="input_kind_cluster_config_path"></a> [kind\_cluster\_config\_path](#input\_kind\_cluster\_config\_path) | Cluster's kubeconfig location | `string` | `"~/.kube/config"` | no |
 | <a name="input_kind_cluster_name"></a> [kind\_cluster\_name](#input\_kind\_cluster\_name) | The name of the cluster. | `string` | `"ortelius-in-a-box"` | no |
-| <a name="input_nginx_ingress_namespace"></a> [nginx\_ingress\_namespace](#input\_nginx\_ingress\_namespace) | The nginx ingress namespace | `string` | `"nginx-ingress"` | no |
 
 ## Outputs
 
