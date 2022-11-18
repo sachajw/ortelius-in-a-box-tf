@@ -5,7 +5,7 @@
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | 1.3.4 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~>1.3.4 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 4.38.0 |
 | <a name="requirement_flux"></a> [flux](#requirement\_flux) | 0.20.0 |
 | <a name="requirement_helm"></a> [helm](#requirement\_helm) | 2.7.1 |
