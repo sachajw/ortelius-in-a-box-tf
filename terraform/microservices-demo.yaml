@@ -1,25 +1,12 @@
 apiVersion: networking.k8s.io/v1
-kind: IngressClass
-metadata:
-  labels:
-    app.kubernetes.io/component: controller
-  name: nginx-ingress-class
-  annotations:
-    ingressclass.kubernetes.io/is-default-class: "true"
-spec:
-  controller: k8s.io/ingress-nginx
----
-apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: frontend-ingress
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
-  ingressClassName: nginx-ingress
   rules:
-    - host: "*.lair.pangarabbit.com"
-      http:
+    - http:
         paths:
           - pathType: Prefix
             path: "/"
@@ -442,6 +429,8 @@ metadata:
   name: frontend-external
 spec:
   type: LoadBalancer
+  externalIPs:
+  - 192.168.0.71
   selector:
     app: frontend
   ports:
