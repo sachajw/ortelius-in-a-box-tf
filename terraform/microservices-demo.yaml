@@ -1,8 +1,9 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: frontend-ingress
+  name: boutique-ingress
   annotations:
+    spec.ingressClasssName: nginx
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
