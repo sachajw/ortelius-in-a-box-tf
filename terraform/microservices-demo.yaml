@@ -82,7 +82,7 @@ spec:
             port:
               number: 7070
       - pathType: Prefix
-        path: "/"
+        path: "/cart"
         backend:
           service:
             name: cartservice
@@ -96,7 +96,7 @@ spec:
             port:
               number: 7000
       - pathType: Prefix
-        path: "/"
+        path: "/setCurrency"
         backend:
           service:
             name: shippingservice
@@ -116,6 +116,13 @@ spec:
             name: adservice
             port:
               number: 9555
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: loadgenerator
+            port:
+              number: 80
 ---
 apiVersion: apps/v1
 kind: Deployment
