@@ -108,7 +108,7 @@ resource "helm_release" "kube_arangodb" {
 # nginx ingress
 resource "helm_release" "nginx_ingress" {
   name             = "nginx-ingress"
-  repository       = "https://github.com/kubernetes/ingress-nginx"
+  repository       = "https://kubernetes.github.io/ingress-nginx"
   chart            = "ingress-nginx"
   namespace        = var.nginx_ingress_namespace
   create_namespace = true
