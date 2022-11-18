@@ -83,7 +83,7 @@ spec:
                 port:
                   number: 7070
           - pathType: Prefix
-            path: "/cart"
+            path: "/"
             backend:
               service:
                 name: cartservice
@@ -97,7 +97,7 @@ spec:
                 port:
                   number: 7000
           - pathType: Prefix
-            path: "/setCurrency"
+            path: "/"
             backend:
               service:
                 name: shippingservice
@@ -433,10 +433,9 @@ kind: Service
 metadata:
   name: frontend
 spec:
-  type: ExternalName
+  type: NodePort
   selector:
     app: frontend
-    externalName: frontend.default
   ports:
     - name: http
       port: 80
@@ -447,7 +446,7 @@ kind: Service
 metadata:
   name: frontend-external
 spec:
-  type: LoadBalancer
+  type:
   selector:
     app: frontend
   ports:
