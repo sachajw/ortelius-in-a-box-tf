@@ -63,7 +63,7 @@ controller:
   # -- Optionally change this to ClusterFirstWithHostNet in case you have 'hostNetwork: true'.
   # By default, while using host network, name resolution uses the host's DNS. If you wish nginx-controller
   # to keep resolving names inside the k8s network, use ClusterFirstWithHostNet.
-  dnsPolicy: ClusterFirstWithHostNet
+  dnsPolicy: ClusterFirst
 
   # -- Bare-metal considerations via the host network https://kubernetes.github.io/ingress-nginx/deploy/baremetal/#via-the-host-network
   # Ingress status was blank because there is no Service exposing the NGINX Ingress controller in a configuration using the host network, the default --publish-service flag used in standard cloud setups does not apply
@@ -86,13 +86,13 @@ controller:
   # -- Required for use with CNI based kubernetes installations (such as ones set up by kubeadm),
   # since CNI and hostport don't mix yet. Can be deprecated once https://github.com/kubernetes/kubernetes/issues/23920
   # is merged
-  hostNetwork: true
+  hostNetwork: false
 
   ## Use host ports 80 and 443
   ## Disabled by default
   hostPort:
     # -- Enable 'hostPort' or not
-    enabled: true
+    enabled: false
     ports:
       # -- 'hostPort' http port
       http: 80
@@ -110,7 +110,7 @@ controller:
     # -- Is this ingressClass enabled or not
     enabled: true
     # -- Is this the default ingressClass for the cluster
-    default: true
+    default: false
     # -- Controller-value of the controller that is processing this ingressClass
     controllerValue: "k8s.io/ingress-nginx"
 
@@ -207,14 +207,14 @@ controller:
 
   # -- The update strategy to apply to the Deployment or DaemonSet
   ##
-  updateStrategy:
-    rollingUpdate:
-      maxUnavailable: 1
-    type: RollingUpdate
+  updateStrategy: {}
+  #  rollingUpdate:
+  #    maxUnavailable: 1
+  #  type: RollingUpdate
 
   # -- `minReadySeconds` to avoid killing pods before we are ready
   ##
-  minReadySeconds: 10
+  minReadySeconds: 0
 
 
   # -- Node tolerations for server scheduling to nodes with taints
@@ -464,7 +464,7 @@ controller:
     externalIPs: []
 
     # -- Used by cloud providers to connect the resulting `LoadBalancer` to a pre-existing static IP according to https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer
-    loadBalancerIP: "192.168.0.71"
+    loadBalancerIP: ""
     loadBalancerSourceRanges: []
 
     enableHttp: true
@@ -526,7 +526,7 @@ controller:
       # -- Annotations are mandatory for the load balancer to come up. Varies with the cloud service.
       annotations: {}
 
-      loadBalancerIP: "192.168.0.71"
+      # loadBalancerIP: ""
 
       # -- Restrict access For LoadBalancer service. Defaults to 0.0.0.0/0.
       loadBalancerSourceRanges: []
@@ -538,7 +538,7 @@ controller:
 
   # shareProcessNamespace enables process namespace sharing within the pod.
   # This can be used for example to signal log rotation using `kill -USR1` from a sidecar.
-  shareProcessNamespace: true
+  shareProcessNamespace: false
 
   # -- Additional containers to be added to the controller pod.
   # See https://github.com/lemonldap-ng-controller/lemonldap-ng-controller as example.
@@ -623,11 +623,10 @@ controller:
     networkPolicyEnabled: false
 
     service:
-      annotations:
-        external-dns.alpha.kubernetes.io/hostname: nginx.external-dns-test.lair.pangarabbit.com.
+      annotations: {}
       # clusterIP: ""
-      externalIPs:
-        loadBalancerIP: "192.168.0.71"
+      externalIPs: []
+      # loadBalancerIP: ""
       loadBalancerSourceRanges: []
       servicePort: 443
       type: ClusterIP
@@ -681,18 +680,18 @@ controller:
     enabled: false
 
     service:
-      annotations:
+      annotations: {}
       # prometheus.io/scrape: "true"
       # prometheus.io/port: "10254"
-      external-dns.alpha.kubernetes.io/hostname: nginx.external-dns-test.lair.pangarabbit.com.
+
       # clusterIP: ""
 
       # -- List of IP addresses at which the stats-exporter service is available
       ## Ref: https://kubernetes.io/docs/user-guide/services/#external-ips
       ##
-      externalIPs:
+      externalIPs: []
 
-      loadBalancerIP: "192.168.0.71"
+      # loadBalancerIP: ""
       loadBalancerSourceRanges: []
       servicePort: 10254
       type: ClusterIP
@@ -778,7 +777,7 @@ revisionHistoryLimit: 10
 ##
 defaultBackend:
   ##
-  enabled: true
+  enabled: false
 
   name: defaultbackend
   image:
