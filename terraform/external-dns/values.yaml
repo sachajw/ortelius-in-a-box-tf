@@ -1,6 +1,8 @@
 # Default values for external-dns.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
+annotations:
+  kubernetes.io/os=linux
 
 image:
   repository: k8s.gcr.io/external-dns/external-dns
@@ -134,8 +136,8 @@ registry: noop
 provider: pihole
 
 extraArgs:
-        # Change this to the actual address of your Pi-hole web server
-        - --pihole-server=http://pihole.lair.pangarabbit.com
+  # Change this to the actual address of your Pi-hole web server
+  - --pihole-server=http://pihole.lair.pangarabbit.com
 
 deploymentStrategy:
   type: Recreate
