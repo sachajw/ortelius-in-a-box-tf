@@ -136,6 +136,7 @@ registry: noop
 provider: pihole
 
 extraArgs:
+  - --pihole-password=12Lzrfr11@!
   # Change this to the actual address of your Pi-hole web server
   - --pihole-server=http://pihole.lair.pangarabbit.com
 
