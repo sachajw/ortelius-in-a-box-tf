@@ -8,7 +8,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: nginx.external-dns-test.lair.pangarabbit.com
+  - host: boutique.local.gd
     http:
       paths:
         - pathType: Prefix
