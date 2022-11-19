@@ -76,7 +76,7 @@ resource "helm_release" "ingress_nginx" {
   create_namespace = true
   depends_on       = [kind_cluster.ortelius]
 
-  values = [file("nginx-ingress-values.yaml")]
+  values = [file("ingress-nginx/values.yaml")]
 }
 
 resource "null_resource" "wait_for_ingress_nginx" {
