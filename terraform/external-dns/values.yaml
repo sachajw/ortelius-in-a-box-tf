@@ -22,12 +22,21 @@ serviceAccount:
   annotations: {}
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
-  name: ""
+  name: "external-dns"
 
 rbac:
   # Specifies whether RBAC resources should be created
   create: true
-  additionalPermissions: []
+  additionalPermissions:
+  - apiGroups: [""]
+    resources: ["services","endpoints","pods"]
+    verbs: ["get","watch","list"]
+  - apiGroups: ["extensions","networking.k8s.io"]
+    resources: ["ingresses"]
+    verbs: ["get","watch","list"]
+  - apiGroups: [""]
+    resources: ["nodes"]
+    verbs: ["list","watch"]
 
 # Annotations to add to the Deployment
 deploymentAnnotations: {}
@@ -115,16 +124,18 @@ sources:
 
 policy: upsert-only
 
-registry: txt
-txtOwnerId: ""
-txtPrefix: ""
-txtSuffix: ""
+registry: noop
+#txtOwnerId: ""
+#txtPrefix: ""
+#txtSuffix: ""
 
-domainFilters: []
+#domainFilters: []
 
-provider: aws
+provider: pihole
 
-extraArgs: []
+extraArgs:
+        # Change this to the actual address of your Pi-hole web server
+        - --pihole-server=http://http://pihole.lair.pangarabbit.com
 
 deploymentStrategy:
   type: Recreate
