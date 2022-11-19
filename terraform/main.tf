@@ -127,17 +127,6 @@ resource "helm_release" "ingress_nginx" {
   depends_on       = [kind_cluster.ortelius]
 
   values = [file("nginx-ingress-values.yaml")]
-
-  set {
-    name  = ".controller.ingressClassResource.default"
-    value = true
-  }
-
-  set {
-    name  = "spec.ingressClassName"
-    value = "nginx"
-    type  = "string"
-  }
 }
 
 resource "null_resource" "wait_for_ingress_nginx" {
