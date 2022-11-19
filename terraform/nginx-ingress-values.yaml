@@ -92,7 +92,7 @@ controller:
   ## Disabled by default
   hostPort:
     # -- Enable 'hostPort' or not
-    enabled: false
+    enabled: true
     ports:
       # -- 'hostPort' http port
       http: 80
@@ -538,7 +538,7 @@ controller:
 
   # shareProcessNamespace enables process namespace sharing within the pod.
   # This can be used for example to signal log rotation using `kill -USR1` from a sidecar.
-  shareProcessNamespace: false
+  shareProcessNamespace: true
 
   # -- Additional containers to be added to the controller pod.
   # See https://github.com/lemonldap-ng-controller/lemonldap-ng-controller as example.
@@ -623,10 +623,11 @@ controller:
     networkPolicyEnabled: false
 
     service:
-      annotations: {}
+      annotations:
+        external-dns.alpha.kubernetes.io/hostname: nginx.external-dns-test.lair.pangarabbit.com.
       # clusterIP: ""
-      externalIPs: []
-      # loadBalancerIP: ""
+      externalIPs:
+        loadBalancerIP: "192.168.0.71"
       loadBalancerSourceRanges: []
       servicePort: 443
       type: ClusterIP
@@ -680,10 +681,10 @@ controller:
     enabled: false
 
     service:
-      annotations: {}
+      annotations:
       # prometheus.io/scrape: "true"
       # prometheus.io/port: "10254"
-
+      external-dns.alpha.kubernetes.io/hostname: nginx.external-dns-test.lair.pangarabbit.com.
       # clusterIP: ""
 
       # -- List of IP addresses at which the stats-exporter service is available

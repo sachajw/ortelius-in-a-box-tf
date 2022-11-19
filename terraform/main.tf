@@ -81,41 +81,41 @@ resource "helm_release" "argocd" {
 }
 
 # keptn-ortelius-service
-resource "helm_release" "keptn" {
-  name             = "keptn"
-  chart            = "keptn-ortelius-service"
-  repository       = "https://ortelius.github.io/keptn-ortelius-service"
-  namespace        = "keptn"
-  create_namespace = true
-  depends_on       = [kind_cluster.ortelius]
-
-  values = [file("keptn-ortelius-service/values.yaml")]
-}
+#resource "helm_release" "keptn" {
+#  name             = "keptn"
+#  chart            = "keptn-ortelius-service"
+#  repository       = "https://ortelius.github.io/keptn-ortelius-service"
+#  namespace        = "keptn"
+#  create_namespace = true
+#  depends_on       = [kind_cluster.ortelius]
+#
+#  values = [file("keptn-ortelius-service/values.yaml")]
+#}
 
 # arangodb
-resource "helm_release" "kube_arangodb" {
-  name             = "arangodb"
-  chart            = "./arangodb/kube-arangodb"
-  namespace        = "arangodb"
-  create_namespace = true
-  depends_on       = [kind_cluster.ortelius]
-
-  values = [
-    file("arangodb/kube-arangodb/values.yaml"),
-  ]
-}
+#resource "helm_release" "kube_arangodb" {
+#  name             = "arangodb"
+#  chart            = "./arangodb/kube-arangodb"
+#  namespace        = "arangodb"
+#  create_namespace = true
+#  depends_on       = [kind_cluster.ortelius]
+#
+#  values = [
+#    file("arangodb/kube-arangodb/values.yaml"),
+#  ]
+#}
 
 # ortelius
-resource "helm_release" "ortelius" {
-  name             = "ortelius"
-  chart            = "ortelius"
-  repository       = "https://ortelius.github.io/ortelius-charts/"
-  namespace        = "ortelius"
-  create_namespace = true
-  depends_on       = [kind_cluster.ortelius]
-
-  #values = [file("ortelius/values.yaml")]
-}
+#resource "helm_release" "ortelius" {
+#  name             = "ortelius"
+#  chart            = "ortelius"
+#  repository       = "https://ortelius.github.io/ortelius-charts/"
+#  namespace        = "ortelius"
+#  create_namespace = true
+#  depends_on       = [kind_cluster.ortelius]
+#
+#  #values = [file("ortelius/values.yaml")]
+#}
 
 # nginx ingress
 resource "helm_release" "ingress_nginx" {
