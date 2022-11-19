@@ -1,0 +1,18 @@
+# See the OWNERS file documentation:
+#  https://github.com/kubernetes/community/blob/HEAD/contributors/guide/owners.md
+
+approvers:
+  - raffo
+  - njuettner
+  - seanmalloy
+  - szuecs
+
+reviewers:
+  - njuettner
+  - raffo
+  - seanmalloy
+  - szuecs
+
+emeritus_approvers:
+  - hjacobs
+  - linki
