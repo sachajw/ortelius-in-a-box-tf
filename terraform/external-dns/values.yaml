@@ -135,7 +135,7 @@ provider: pihole
 
 extraArgs:
         # Change this to the actual address of your Pi-hole web server
-        - --pihole-server=http://http://pihole.lair.pangarabbit.com
+        - --pihole-server=http://pihole.lair.pangarabbit.com
 
 deploymentStrategy:
   type: Recreate
