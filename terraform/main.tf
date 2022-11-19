@@ -93,17 +93,16 @@ resource "helm_release" "kube_arangodb" {
 }
 
 # ortelius
-#resource "helm_release" "ortelius" {
-#  name             = "ortelius"
-#  chart            = "ortelius"
-#  repository       = "https://ortelius.github.io/ortelius-charts/"
-#  namespace        = "ortelius"
-#  create_namespace = true
-#  depends_on       = [kind_cluster.ortelius]
-#  #depends_on       = [null_resource.kind_copy_container_images]
-#
-#  #values = [file("ortelius/values.yaml")]
-#}
+resource "helm_release" "ortelius" {
+  name             = "ortelius"
+  chart            = "ortelius"
+  repository       = "https://ortelius.github.io/ortelius-charts/"
+  namespace        = "ortelius"
+  create_namespace = true
+  depends_on       = [kind_cluster.ortelius]
+
+  #values = [file("ortelius/values.yaml")]
+}
 
 # nginx ingress
 resource "helm_release" "ingress_nginx" {
@@ -112,6 +111,7 @@ resource "helm_release" "ingress_nginx" {
   chart            = "ingress-nginx"
   namespace        = var.ingress_nginx_namespace
   create_namespace = true
+  depends_on       = [kind_cluster.ortelius]
 
   values = [file("nginx-ingress-values.yaml")]
 
@@ -125,8 +125,6 @@ resource "helm_release" "ingress_nginx" {
     value = "nginx"
     type  = "string"
   }
-
-  depends_on = [kind_cluster.ortelius]
 }
 
 resource "null_resource" "wait_for_ingress_nginx" {
