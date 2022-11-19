@@ -1,8 +1,6 @@
 # Default values for external-dns.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
-annotations:
-  kubernetes.io/os=linux
 
 image:
   repository: k8s.gcr.io/external-dns/external-dns
@@ -24,21 +22,12 @@ serviceAccount:
   annotations: {}
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
-  name: "external-dns"
+  name: ""
 
 rbac:
   # Specifies whether RBAC resources should be created
-  create: true
-  additionalPermissions:
-  - apiGroups: [""]
-    resources: ["services","endpoints","pods"]
-    verbs: ["get","watch","list"]
-  - apiGroups: ["extensions","networking.k8s.io"]
-    resources: ["ingresses"]
-    verbs: ["get","watch","list"]
-  - apiGroups: [""]
-    resources: ["nodes"]
-    verbs: ["list","watch"]
+  create: false
+  additionalPermissions: []
 
 # Annotations to add to the Deployment
 deploymentAnnotations: {}
@@ -62,7 +51,7 @@ securityContext:
 
 # Defaults to `ClusterFirst`.
 # Valid values are: `ClusterFirstWithHostNet`, `ClusterFirst`, `Default` or `None`.
-dnsPolicy:
+dnsPolicy: ClusterFirstWithHostNet
 
 priorityClassName: ""
 
@@ -126,19 +115,16 @@ sources:
 
 policy: upsert-only
 
-registry: noop
-#txtOwnerId: ""
-#txtPrefix: ""
-#txtSuffix: ""
+registry: txt
+txtOwnerId: ""
+txtPrefix: ""
+txtSuffix: ""
 
-#domainFilters: []
+domainFilters: []
 
-provider: pihole
+provider: aws
 
-extraArgs:
-  - --pihole-password=12Lzrfr11@!
-  # Change this to the actual address of your Pi-hole web server
-  - --pihole-server=http://pihole.lair.pangarabbit.com
+extraArgs: []
 
 deploymentStrategy:
   type: Recreate
