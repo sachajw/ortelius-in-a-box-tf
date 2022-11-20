@@ -9,98 +9,91 @@ spec:
       http:
         paths:
           - pathType: Prefix
-            path: "/"
+            path: "/emailservice"
             backend:
               service:
                 name: emailservice
                 port:
                   number: 8080
           - pathType: Prefix
-            path: "/"
+            path: "/checkoutservice"
             backend:
               service:
                 name: checkoutservice
                 port:
                   number: 5050
           - pathType: Prefix
-            path: "/"
+            path: "/recommendationservice"
             backend:
               service:
                 name: recommendationservice
                 port:
                   number: 8080
           - pathType: Prefix
-            path: "/"
+            path: "/frontend"
             backend:
               service:
                 name: frontend
                 port:
                   number: 8080
           - pathType: Prefix
-            path: "/"
+            path: "/frontend-external"
             backend:
               service:
                 name: frontend-external
                 port:
                   number: 8080
           - pathType: Prefix
-            path: "/"
+            path: "/paymentservice"
             backend:
               service:
                 name: paymentservice
                 port:
                   number: 50051
           - pathType: Prefix
-            path: "/"
+            path: "/productcatalogservice"
             backend:
               service:
                 name: productcatalogservice
                 port:
                   number: 3550
           - pathType: Prefix
-            path: "/"
+            path: "/cartservice"
             backend:
               service:
                 name: cartservice
                 port:
                   number: 7070
           - pathType: Prefix
-            path: "/"
-            backend:
-              service:
-                name: cartservice
-                port:
-                  number: 7070
-          - pathType: Prefix
-            path: "/"
+            path: "/currencyservice"
             backend:
               service:
                 name: currencyservice
                 port:
                   number: 7000
           - pathType: Prefix
-            path: "/"
+            path: "/shippingservice"
             backend:
               service:
                 name: shippingservice
                 port:
                   number: 50051
           - pathType: Prefix
-            path: "/"
+            path: "/redis-cart"
             backend:
               service:
                 name: redis-cart
                 port:
                   number: 6379
           - pathType: Prefix
-            path: "/"
+            path: "/adservice"
             backend:
               service:
                 name: adservice
                 port:
                   number: 9555
           - pathType: Prefix
-            path: "/"
+            path: "/loadgenerator"
             backend:
               service:
                 name: loadgenerator
@@ -115,6 +108,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: emailservice
+  ingressClassName: nginx
 spec:
   selector:
     matchLabels:
@@ -183,6 +177,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: checkoutservice
+  ingressClassName: nginx
 spec:
   selector:
     matchLabels:
@@ -262,6 +257,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: recommendationservice
+  ingressClassName: nginx
 spec:
   selector:
     matchLabels:
@@ -334,6 +330,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: frontend
+  ingressClassName: nginx
 spec:
   selector:
     matchLabels:
@@ -342,8 +339,6 @@ spec:
     metadata:
       labels:
         app: frontend
-      annotations:
-        sidecar.istio.io/rewriteAppHTTPProbers: "true"
     spec:
       serviceAccountName: default
       securityContext:
@@ -433,8 +428,6 @@ metadata:
   name: frontend-external
 spec:
   type: LoadBalancer
-  externalIPs:
-    - 192.168.0.71
   selector:
     app: frontend
   ports:
@@ -446,6 +439,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: paymentservice
+  ingressClassName: nginx
 spec:
   selector:
     matchLabels:
@@ -514,6 +508,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: productcatalogservice
+  ingressClassName: nginx
 spec:
   selector:
     matchLabels:
@@ -582,6 +577,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: cartservice
+  ingressClassName: nginx
 spec:
   selector:
     matchLabels:
@@ -649,6 +645,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: loadgenerator
+  ingressClassName: nginx
 spec:
   selector:
     matchLabels:
@@ -658,8 +655,6 @@ spec:
     metadata:
       labels:
         app: loadgenerator
-      annotations:
-        sidecar.istio.io/rewriteAppHTTPProbers: "true"
     spec:
       serviceAccountName: default
       terminationGracePeriodSeconds: 5
@@ -719,6 +714,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: currencyservice
+  ingressClassName: nginx
 spec:
   selector:
     matchLabels:
@@ -788,6 +784,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: shippingservice
+  ingressClassName: nginx
 spec:
   selector:
     matchLabels:
@@ -856,6 +853,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: redis-cart
+  ingressClassName: nginx
 spec:
   selector:
     matchLabels:
@@ -921,6 +919,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: adservice
+  ingressClassName: nginx
 spec:
   selector:
     matchLabels:
