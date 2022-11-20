@@ -99,16 +99,15 @@ spec:
                 name: loadgenerator
                 port:
                   number: 80
-status:
-  loadBalancer:
-    ingress:
-      - ip: 192.168.0.71
+#status:
+#  loadBalancer:
+#    ingress:
+#      - ip: 192.168.0.71
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: emailservice
-  ingressClassName: nginx
 spec:
   selector:
     matchLabels:
@@ -177,7 +176,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: checkoutservice
-  ingressClassName: nginx
 spec:
   selector:
     matchLabels:
@@ -257,7 +255,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: recommendationservice
-  ingressClassName: nginx
 spec:
   selector:
     matchLabels:
@@ -330,7 +327,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: frontend
-  ingressClassName: nginx
 spec:
   selector:
     matchLabels:
@@ -439,7 +435,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: paymentservice
-  ingressClassName: nginx
 spec:
   selector:
     matchLabels:
@@ -508,7 +503,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: productcatalogservice
-  ingressClassName: nginx
 spec:
   selector:
     matchLabels:
@@ -645,7 +639,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: loadgenerator
-  ingressClassName: nginx
 spec:
   selector:
     matchLabels:
@@ -714,7 +707,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: currencyservice
-  ingressClassName: nginx
 spec:
   selector:
     matchLabels:
@@ -784,7 +776,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: shippingservice
-  ingressClassName: nginx
 spec:
   selector:
     matchLabels:
@@ -853,7 +844,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: redis-cart
-  ingressClassName: nginx
 spec:
   selector:
     matchLabels:
@@ -919,7 +909,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: adservice
-  ingressClassName: nginx
 spec:
   selector:
     matchLabels:
