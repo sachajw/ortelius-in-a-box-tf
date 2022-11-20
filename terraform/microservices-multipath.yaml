@@ -7,7 +7,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: boutique.local.gd
+    - host: local.gd
       http:
         paths:
           - pathType: Prefix
@@ -656,7 +656,7 @@ spec:
           image: busybox:latest
           env:
             - name: FRONTEND_ADDR
-              value: "frontend:80"
+              value: "boutique.local.dg:80"
       containers:
         - name: main
           securityContext:
@@ -669,7 +669,7 @@ spec:
           image: gcr.io/google-samples/microservices-demo/loadgenerator:v0.4.1
           env:
             - name: FRONTEND_ADDR
-              value: "frontend:80"
+              value: "boutique.local.gd:80"
             - name: USERS
               value: "10"
           resources:
