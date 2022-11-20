@@ -14,63 +14,87 @@ spec:
         - pathType: Prefix
           path: /emailservice
           backend:
-            serviceName: emailservice
-            servicePort: 8080
+            service:
+              name: emailservice
+              port:
+                number: 8080
         - pathType: Prefix
           path: /checkoutservice
           backend:
-            serviceName: checkoutservice
-            servicePort: 5050
+            service:
+              name: checkoutservice
+              port:
+                number: 5050
         - pathType: Prefix
           path: /recommendationservice
           backend:
-            serviceName: recommendationservice
-            servicePort: 8080
+            service:
+              name: recommendationservice
+              port:
+                number: 8080
         - pathType: Prefix
           path: /frontend
           backend:
-            serviceName: frontend
-            servicePort: 8080
+            service:
+              name: frontend
+              port:
+                number: 8080
         - pathType: Prefix
           path: /paymentservice
           backend:
-            serviceName: paymentservice
-            servicePort: 50051
+            service:
+              name: paymentservice
+              port:
+                number: 50051
         - pathType: Prefix
           path: /productcatalogservice
           backend:
-            serviceName: productcatalogservice
-            servicePort: 3550
+            service:
+              name: productcatalogservice
+              port:
+                number: 3550
         - pathType: Prefix
           path: /cartservice
           backend:
-            serviceName: cartservice
-            servicePort: 7070
+            service:
+              name: cartservice
+              port:
+                number: 7070
         - pathType: Prefix
           path: /currencyservice
           backend:
-            serviceName: currencyservice
-            serviceport: 7000
+            service:
+              name: currencyservice
+              port:
+                number: 7000
         - pathType: Prefix
           path: /shippingservice
           backend:
-            serviceName: shippingservice
-            serviceport: 50051
+            service:
+              name: shippingservice
+              port:
+                number: 50051
         - pathType: Prefix
           path: /redis-cart
           backend:
-            serviceName: redis-cart
-            servicePort: 6379
+            service:
+              name: redis-cart
+              port:
+                number: 6379
         - pathType: Prefix
           path: /adservice
           backend:
-            serviceName: adservice
-            servicePort: 9555
+            service:
+              name: adservice
+              port:
+                number: 9555
         - pathType: Prefix
           path: /loadgenerator
           backend:
-            serviceName: loadgenerator
-            servicePort: 80
+            service:
+              name: loadgenerator
+              port:
+                number: 80
 ---
 apiVersion: apps/v1
 kind: Deployment
