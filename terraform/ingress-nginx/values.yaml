@@ -208,9 +208,9 @@ controller:
   # -- The update strategy to apply to the Deployment or DaemonSet
   ##
   updateStrategy: {}
-  #  rollingUpdate:
-  #    maxUnavailable: 1
-  #  type: RollingUpdate
+  rollingUpdate:
+      maxUnavailable: 1
+  type: RollingUpdate
 
   # -- `minReadySeconds` to avoid killing pods before we are ready
   ##
