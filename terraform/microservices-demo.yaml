@@ -7,7 +7,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: "boutique.lair.pangarabbit.com"
+    - host: boutique.lair.pangarabbit.com
       http:
         paths:
           - pathType: Prefix
