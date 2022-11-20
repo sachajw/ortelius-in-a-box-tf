@@ -674,7 +674,7 @@ spec:
             - -exc
             - |
               echo "Init container pinging frontend: ${FRONTEND_ADDR}..."
-              STATUSCODE=$(wget --server-response http://frontend.default
+              STATUSCODE=$(wget --server-response http://boutique.local.gd
               if test $STATUSCODE -ne 200; then
                   echo "Error: Could not reach frontend - Status code: ${STATUSCODE}"
                   exit 1
