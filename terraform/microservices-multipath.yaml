@@ -11,63 +11,63 @@ spec:
       http:
         paths:
           - pathType: Prefix
-            path: "/frontend"
+            path: "/"
             backend:
               service:
                 name: emailservice
                 port:
                   number: 8080
           - pathType: Prefix
-            path: "/frontend"
+            path: "/"
             backend:
               service:
                 name: checkoutservice
                 port:
                   number: 5050
           - pathType: Prefix
-            path: "/frontend"
+            path: "/"
             backend:
               service:
                 name: recommendationservice
                 port:
                   number: 8080
           - pathType: Prefix
-            path: "/frontend"
+            path: "/"
             backend:
               service:
                 name: frontend
                 port:
                   number: 8080
           - pathType: Prefix
-            path: "/frontend"
+            path: "/"
             backend:
               service:
                 name: paymentservice
                 port:
                   number: 50051
           - pathType: Prefix
-            path: "/frontend/product"
+            path: "/"
             backend:
               service:
                 name: productcatalogservice
                 port:
                   number: 3550
           - pathType: Prefix
-            path: "/frontend/cart"
+            path: "/"
             backend:
               service:
                 name: cartservice
                 port:
                   number: 7070
           - pathType: Prefix
-            path: "/frontend"
+            path: "/"
             backend:
               service:
                 name: currencyservice
                 port:
                   number: 7000
           - pathType: Prefix
-            path: "/frontend"
+            path: "/"
             backend:
               service:
                 name: shippingservice
@@ -81,14 +81,14 @@ spec:
                 port:
                   number: 6379
           - pathType: Prefix
-            path: "/frontend"
+            path: "/"
             backend:
               service:
                 name: adservice
                 port:
                   number: 9555
           - pathType: Prefix
-            path: "/frontend"
+            path: "/"
             backend:
               service:
                 name: loadgenerator

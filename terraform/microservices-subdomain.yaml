@@ -674,7 +674,7 @@ spec:
             - -exc
             - |
               echo "Init container pinging frontend: ${FRONTEND_ADDR}..."
-              STATUSCODE=$(wget --server-response http://boutique.local.gd
+              STATUSCODE=$(wget --server-response http://${FRONTEND_ADDR} 2>&1 | awk '/^  HTTP/{print $2}')
               if test $STATUSCODE -ne 200; then
                   echo "Error: Could not reach frontend - Status code: ${STATUSCODE}"
                   exit 1
@@ -690,7 +690,7 @@ spec:
           image: busybox:latest
           env:
             - name: FRONTEND_ADDR
-              value: "frontend:80"
+              value: "boutique.local.gd:80"
       containers:
         - name: main
           securityContext:
@@ -703,7 +703,7 @@ spec:
           image: gcr.io/google-samples/microservices-demo/loadgenerator:v0.4.1
           env:
             - name: FRONTEND_ADDR
-              value: "frontend:80"
+              value: "boutique.local.gd:80"
             - name: USERS
               value: "10"
           resources:
