@@ -8,88 +8,121 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: boutique.lair.pangarabbit.com
+    - host: emailservice.local.gd
       http:
         paths:
         - pathType: Prefix
-          path: /emailservice
+          path: /
           backend:
             service:
               name: emailservice
               port:
                 number: 8080
+    - host: checkoutservice.boutique.lair.pangarabbit.com
+      http:
+        paths:
         - pathType: Prefix
-          path: /checkoutservice
+          path: /
           backend:
             service:
               name: checkoutservice
               port:
                 number: 5050
+    - host: recommendation.boutique.lair.pangarabbit.com
+      http:
+        paths:
         - pathType: Prefix
-          path: /recommendationservice
+          path: /
           backend:
             service:
               name: recommendationservice
               port:
                 number: 8080
+    - host: boutique.lair.pangarabbit.com
+      http:
+        paths:
         - pathType: Prefix
-          path: /frontend
+          path: /
           backend:
             service:
               name: frontend
               port:
                 number: 8080
+    - host: paymentservice.boutique.lair.pangarabbit.com
+      http:
+        paths:
         - pathType: Prefix
-          path: /paymentservice
+          path: /
           backend:
             service:
               name: paymentservice
               port:
                 number: 50051
+    - host: productcatalogservice.boutique.lair.pangarabbit.com
+      http:
+        paths:
         - pathType: Prefix
-          path: /productcatalogservice
+          path: /
           backend:
             service:
               name: productcatalogservice
               port:
                 number: 3550
+    - host: cartservice.boutique.lair.pangarabbit.com
+      http:
+        paths:
         - pathType: Prefix
-          path: /cartservice
+          path: /
           backend:
             service:
               name: cartservice
               port:
                 number: 7070
+    - host: currencyservice.boutique.lair.pangarabbit.com
+      http:
+        paths:
         - pathType: Prefix
-          path: /currencyservice
+          path: /
           backend:
             service:
               name: currencyservice
               port:
                 number: 7000
+    - host: shippingservice.boutique.lair.pangarabbit.com
+      http:
+        paths:
         - pathType: Prefix
-          path: /shippingservice
+          path: /
           backend:
             service:
               name: shippingservice
               port:
                 number: 50051
+    - host: redis-cart.boutique.lair.pangarabbit.com
+      http:
+        paths:
         - pathType: Prefix
-          path: /redis-cart
+          path: /
           backend:
             service:
               name: redis-cart
               port:
                 number: 6379
+    - host: adservice.boutique.lair.pangarabbit.com
+      http:
+        paths:
         - pathType: Prefix
-          path: /adservice
+          path: /
           backend:
             service:
               name: adservice
               port:
                 number: 9555
+    - host: loadgenerator.boutique.lair.pangarabbit.com
+      http:
+        paths:
         - pathType: Prefix
-          path: /loadgenerator
+          path: /
           backend:
             service:
               name: loadgenerator
@@ -641,7 +674,7 @@ spec:
             - -exc
             - |
               echo "Init container pinging frontend: ${FRONTEND_ADDR}..."
-              STATUSCODE=$(wget --server-response http://${FRONTEND_ADDR} 2>&1 | awk '/^  HTTP/{print $2}')
+              STATUSCODE=$(wget --server-response http://frontend.default
               if test $STATUSCODE -ne 200; then
                   echo "Error: Could not reach frontend - Status code: ${STATUSCODE}"
                   exit 1
