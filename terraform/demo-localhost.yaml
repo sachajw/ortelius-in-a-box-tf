@@ -10,7 +10,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: demo.localdev.me
+  - host: demo.local.gd
     http:
       paths:
       - backend:
