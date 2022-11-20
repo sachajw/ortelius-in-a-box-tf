@@ -46,14 +46,14 @@ spec:
                 port:
                   number: 50051
           - pathType: Prefix
-            path: "/"
+            path: "/product"
             backend:
               service:
                 name: productcatalogservice
                 port:
                   number: 3550
           - pathType: Prefix
-            path: "/"
+            path: "/cart"
             backend:
               service:
                 name: cartservice
