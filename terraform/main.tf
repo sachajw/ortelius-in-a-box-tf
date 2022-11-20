@@ -54,19 +54,6 @@ provider "helm" {
   }
 }
 
-# k8s external DNS
-resource "helm_release" "k8s_external_dns" {
-  name             = "external-dns"
-  chart            = "external-dns"
-  namespace        = "external-dns"
-  create_namespace = true
-  depends_on       = [kind_cluster.ortelius]
-
-  values = [
-    file("external-dns/values.yaml"),
-  ]
-}
-
 # nginx ingress
 resource "helm_release" "ingress_nginx" {
   name             = "ingress-nginx"
