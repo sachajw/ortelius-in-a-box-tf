@@ -85,14 +85,16 @@ resource "null_resource" "wait_for_ingress_nginx" {
 }
 
 # Keptn Lifecycle Toolkit https://github.com/keptn/lifecycle-toolkit
+resource "null_resource" "keptn" {
+  depends_on = [kind_cluster.ortelius]
+}
+
 provisioner "local-exec" {
   command = <<EOF
       kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.10.0/cert-manager.yaml
       kubectl apply -f https://github.com/keptn/lifecycle-toolkit/releases/download/v0.4.0/manifest.yaml
     EOF
 }
-depends_on = [kind_cluster.ortelius]
-
 
 # argocd
 resource "helm_release" "argocd" {
