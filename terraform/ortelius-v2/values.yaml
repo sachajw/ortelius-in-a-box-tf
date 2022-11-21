@@ -12,3 +12,28 @@ ms-nginx.ingress.dnsname: ""
 ms-nginx.ingress.scheme: "internal"
 ms-general.jwt.privatekey: "jwt.pri"
 ms-general.jwt.publickey: "jwt.pub"
+ingress:
+  annotations: {}
+  enabled: false
+  hosts:
+    - chart-example.local
+  paths:
+  - path: /
+  pathType: Prefix
+  backend:
+    service:
+      name: ms-nginx
+      port:
+        number: 80
+  tls: []
+  rules:
+nameOverride: ''
+nodeSelector: {}
+replicaCount: 1
+resources: {}
+service:
+  port: 80
+  targetPort: 80
+  nodePort:
+  type: NodePort
+tolerations: []
