@@ -146,13 +146,22 @@ resource "helm_release" "kubescape" {
 #}
 
 # ortelius
-#resource "helm_release" "ortelius" {
-#  name             = "ortelius"
-#  chart            = "ortelius"
-#  repository       = "https://ortelius.github.io/ortelius-charts/"
-#  namespace        = "ortelius"
-#  create_namespace = true
-#  depends_on       = [kind_cluster.ortelius]
-#
-#  #values = [file("ortelius/values.yaml")]
-#}
+resource "helm_release" "ortelius" {
+  name             = "ortelius"
+  chart            = "ortelius"
+  repository       = "https://ortelius.github.io/ortelius-charts/"
+  version          = "10.0.42"
+  namespace        = "ortelius"
+  create_namespace = true
+  depends_on       = [kind_cluster.ortelius]
+
+  set {
+    name  = "ms-general.dbpass"
+    value = "Wms0063206#"
+  }
+  set {
+    name  = "ms-general.dbhost"
+    value = "postgres.svc.cluster.local"
+  }
+  #values = [file("ortelius/values.yaml")]
+}
