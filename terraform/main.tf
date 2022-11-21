@@ -113,7 +113,7 @@ resource "helm_release" "argocd" {
 # https://github.com/kubescape/kubescape
 resource "helm_release" "kubescape" {
   name             = "kubescape"
-  chart            = "kubescape"
+  chart            = "kubescape-cloud-operator"
   repository       = "https://kubescape.github.io/helm-charts/"
   namespace        = "kubescape"
   create_namespace = true
