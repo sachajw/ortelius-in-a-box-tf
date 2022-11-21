@@ -33,6 +33,7 @@ No modules.
 |------|------|
 | [helm_release.argocd](https://registry.terraform.io/providers/hashicorp/helm/2.7.1/docs/resources/release) | resource |
 | [helm_release.ingress_nginx](https://registry.terraform.io/providers/hashicorp/helm/2.7.1/docs/resources/release) | resource |
+| [helm_release.kube_arangodb](https://registry.terraform.io/providers/hashicorp/helm/2.7.1/docs/resources/release) | resource |
 | [helm_release.kubescape](https://registry.terraform.io/providers/hashicorp/helm/2.7.1/docs/resources/release) | resource |
 | [helm_release.ortelius](https://registry.terraform.io/providers/hashicorp/helm/2.7.1/docs/resources/release) | resource |
 | [kind_cluster.ortelius](https://registry.terraform.io/providers/tehcyx/kind/latest/docs/resources/cluster) | resource |

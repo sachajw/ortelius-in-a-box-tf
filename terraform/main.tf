@@ -90,6 +90,7 @@ resource "null_resource" "keptn" {
   provisioner "local-exec" {
     command = <<EOF
       kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.10.0/cert-manager.yaml
+      sleep 10
       kubectl apply -f https://github.com/keptn/lifecycle-toolkit/releases/download/v0.4.0/manifest.yaml
     EOF
   }
@@ -138,17 +139,17 @@ resource "helm_release" "kubescape" {
 #}
 
 # arangodb https://www.arangodb.com/
-#resource "helm_release" "kube_arangodb" {
-#  name             = "arangodb"
-#  chart            = "./arangodb/kube-arangodb"
-#  namespace        = "arangodb"
-#  create_namespace = true
-#  depends_on       = [kind_cluster.ortelius]
-#
-#  values = [
-#    file("arangodb/kube-arangodb/values.yaml"),
-#  ]
-#}
+resource "helm_release" "kube_arangodb" {
+  name             = "arangodb"
+  chart            = "./arangodb/kube-arangodb"
+  namespace        = "arangodb"
+  create_namespace = true
+  depends_on       = [kind_cluster.ortelius]
+
+  values = [
+    file("arangodb/kube-arangodb/values.yaml"),
+  ]
+}
 
 # ortelius
 resource "helm_release" "ortelius" {
