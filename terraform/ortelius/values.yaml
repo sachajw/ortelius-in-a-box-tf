@@ -60,12 +60,12 @@ ingress:
   paths: []
   tls: []
 nameOverride: ''
-nodeSelector: nginx
+nodeSelector: {}
 replicaCount: 1
 resources: {}
 service:
   port: 80
-  type: ClusterIP
+  type: NodePort
 tolerations: []
 ---
 replicaCount: 1
