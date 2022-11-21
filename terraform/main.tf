@@ -169,6 +169,7 @@ resource "helm_release" "ortelius" {
   namespace        = "ortelius"
   create_namespace = true
   depends_on       = [kind_cluster.ortelius]
+  timeout          = 600
 
   set {
     name  = "ms-general.dbpass"
