@@ -50,6 +50,8 @@ replicaCount: 1
 resources: {}
 service:
   port: 80
+  targetPort: 80
+  nodePort:
   type: NodePort
 tolerations: []
 ---
