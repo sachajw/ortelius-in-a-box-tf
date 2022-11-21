@@ -90,7 +90,7 @@ resource "null_resource" "keptn" {
   provisioner "local-exec" {
     command = <<EOF
       kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.10.0/cert-manager.yaml
-      sleep 10
+      sleep 30
       kubectl apply -f https://github.com/keptn/lifecycle-toolkit/releases/download/v0.4.0/manifest.yaml
     EOF
   }
