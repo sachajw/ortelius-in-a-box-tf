@@ -178,5 +178,5 @@ resource "helm_release" "ortelius" {
     name  = "ms-general.dbhost"
     value = "postgres.svc.cluster.local"
   }
-  #values = [file("ortelius/values.yaml")]
+  values = [file("ortelius/values.yaml")]
 }
