@@ -120,6 +120,15 @@ resource "helm_release" "kubescape" {
   create_namespace = true
   depends_on       = [kind_cluster.ortelius]
 
+  set {
+    name  = "account"
+    value = "8e8c7cc1-0ffb-4abc-be56-cf0228d358f3"
+  }
+  set {
+    name  = "clusterName"
+    value = "kubectl config current-context"
+  }
+
   values = [
     file("kubescape/cloud-operator/values.yaml"),
   ]
