@@ -165,7 +165,6 @@ resource "helm_release" "ortelius" {
   name             = "ortelius"
   chart            = "ortelius"
   repository       = "https://ortelius.github.io/ortelius-charts/"
-  version          = "10.0.42"
   namespace        = "ortelius"
   create_namespace = true
   depends_on       = [kind_cluster.ortelius]
@@ -179,5 +178,5 @@ resource "helm_release" "ortelius" {
     name  = "ms-general.dbhost"
     value = "postgres.svc.cluster.local"
   }
-  values = [file("ortelius-v2/values.yaml")]
+  values = [file("ortelius/values.yaml")]
 }
