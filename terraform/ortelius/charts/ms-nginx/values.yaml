@@ -14,15 +14,6 @@ ingress:
   paths: []
   tls: []
   rules:
-  - http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: ms-nginx
-            port:
-              number: 80
 nameOverride: ''
 nodeSelector: {}
 replicaCount: 1
