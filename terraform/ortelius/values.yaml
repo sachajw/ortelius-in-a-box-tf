@@ -52,7 +52,7 @@ replicaCount: 1
 resources: {}
 service:
   port: 80
-  type: ClusterIP
+  type: NodePort
 tolerations: []
 ---
 affinity: {}
