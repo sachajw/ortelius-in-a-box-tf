@@ -118,6 +118,11 @@ resource "helm_release" "kubescape" {
   namespace        = "kubescape"
   create_namespace = true
   depends_on       = [kind_cluster.ortelius]
+
+  values = [
+    file("kubescape/cloud-operator/values.yaml"),
+  ]
+
 }
 
 # keptn-ortelius-service
