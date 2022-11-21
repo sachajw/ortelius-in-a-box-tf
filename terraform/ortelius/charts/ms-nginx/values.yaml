@@ -20,5 +20,5 @@ replicaCount: 1
 resources: {}
 service:
   port: 80
-  type: NodePort
+  type: ClusterIP
 tolerations: []
