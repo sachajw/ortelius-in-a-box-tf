@@ -109,7 +109,8 @@ resource "helm_release" "argocd" {
   ]
 }
 
-# argocd
+# Kubescape K8s cluster & image security https://kubescape.github.io/helm-charts/
+# https://github.com/kubescape/kubescape
 resource "helm_release" "kubescape" {
   name             = "kubescape"
   chart            = "kubescape"
