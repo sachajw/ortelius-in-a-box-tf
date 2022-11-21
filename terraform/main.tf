@@ -84,6 +84,16 @@ resource "null_resource" "wait_for_ingress_nginx" {
   depends_on = [helm_release.ingress_nginx]
 }
 
+# Keptn Lifecycle Toolkit https://github.com/keptn/lifecycle-toolkit
+provisioner "local-exec" {
+  command = <<EOF
+      kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.10.0/cert-manager.yaml
+      kubectl apply -f https://github.com/keptn/lifecycle-toolkit/releases/download/v0.4.0/manifest.yaml
+    EOF
+}
+depends_on = [kind_cluster.ortelius]
+
+
 # argocd
 resource "helm_release" "argocd" {
   name             = "argocd"
@@ -95,6 +105,16 @@ resource "helm_release" "argocd" {
   values = [
     file("argo-cd/values.yaml"),
   ]
+}
+
+# argocd
+resource "helm_release" "kubescape" {
+  name             = "kubescape"
+  chart            = "kubescape"
+  repository       = "https://kubescape.github.io/helm-charts/"
+  namespace        = "kubescape"
+  create_namespace = true
+  depends_on       = [kind_cluster.ortelius]
 }
 
 # keptn-ortelius-service
@@ -109,7 +129,7 @@ resource "helm_release" "argocd" {
 #  values = [file("keptn-ortelius-service/values.yaml")]
 #}
 
-# arangodb
+# arangodb https://www.arangodb.com/
 #resource "helm_release" "kube_arangodb" {
 #  name             = "arangodb"
 #  chart            = "./arangodb/kube-arangodb"
