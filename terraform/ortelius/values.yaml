@@ -60,7 +60,7 @@ ingress:
   paths: []
   tls: []
 nameOverride: ''
-nodeSelector: {}
+nodeSelector: nginx
 replicaCount: 1
 resources: {}
 service:
