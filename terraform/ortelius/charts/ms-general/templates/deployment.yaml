@@ -36,19 +36,7 @@ spec:
                 secretKeyRef:
                   name: pgcred
                   key: DBConnectionString
-            - name: jwtkeys
-              valueFrom:
-                secretKeyRef:
-                name: jwt
-                key: privatekey
           ports:
             - name: http
               containerPort: 8080
-          volumeMounts:
-            - name: jwt-volume
-              mountPath: /opt/deployhub/keys
-      volumes:
-        - name: jwt-volume
-          secret:
-            secretName: jwtkeys
 ---
