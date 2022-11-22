@@ -177,7 +177,7 @@ resource "helm_release" "dep_pkg_cud" {
   chart            = "ortelius"
   repository       = "https://ortelius.github.io/ortelius-charts/"
   namespace        = "ortelius"
-  create_namespace = false
+  create_namespace = true
   depends_on       = [kind_cluster.ortelius]
 
   values = [file("ortelius/charts/ms-dep-pkg-cud/values.yaml")]
@@ -188,7 +188,7 @@ resource "helm_release" "dep_pkg_r" {
   chart            = "ortelius"
   repository       = "https://ortelius.github.io/ortelius-charts/"
   namespace        = "ortelius"
-  create_namespace = false
+  create_namespace = true
   depends_on       = [kind_cluster.ortelius]
 
   values = [file("ortelius/charts/ms-dep-pkg-r/values.yaml")]
@@ -199,7 +199,7 @@ resource "helm_release" "general" {
   chart            = "ortelius"
   repository       = "https://ortelius.github.io/ortelius-charts/"
   namespace        = "ortelius"
-  create_namespace = false
+  create_namespace = true
   depends_on       = [kind_cluster.ortelius]
 
   set {
@@ -218,7 +218,7 @@ resource "helm_release" "nginx" {
   chart            = "ortelius"
   repository       = "https://ortelius.github.io/ortelius-charts/"
   namespace        = "ortelius"
-  create_namespace = false
+  create_namespace = true
   depends_on       = [kind_cluster.ortelius]
 
   values = [file("ortelius/charts/ms-nginx/values.yaml")]
@@ -229,7 +229,7 @@ resource "helm_release" "scorecard" {
   chart            = "ortelius"
   repository       = "https://ortelius.github.io/ortelius-charts/"
   namespace        = "ortelius"
-  create_namespace = false
+  create_namespace = true
   depends_on       = [kind_cluster.ortelius]
 
   values = [file("ortelius/charts/ms-scorecard/values.yaml")]
@@ -240,7 +240,7 @@ resource "helm_release" "textfile_crud" {
   chart            = "ortelius"
   repository       = "https://ortelius.github.io/ortelius-charts/"
   namespace        = "ortelius"
-  create_namespace = false
+  create_namespace = true
   depends_on       = [kind_cluster.ortelius]
 
   values = [file("ortelius/charts/ms-textfile-crud/values.yaml")]
@@ -251,7 +251,7 @@ resource "helm_release" "ui" {
   chart            = "ortelius"
   repository       = "https://ortelius.github.io/ortelius-charts/"
   namespace        = "ortelius"
-  create_namespace = false
+  create_namespace = true
   depends_on       = [kind_cluster.ortelius]
 
   values = [file("ortelius/charts/ms-ui/values.yaml")]
@@ -262,7 +262,7 @@ resource "helm_release" "validate_user" {
   chart            = "ortelius"
   repository       = "https://ortelius.github.io/ortelius-charts/"
   namespace        = "ortelius"
-  create_namespace = false
+  create_namespace = true
   depends_on       = [kind_cluster.ortelius]
 
   values = [file("ortelius/charts/ms-validate-user/values.yaml")]
