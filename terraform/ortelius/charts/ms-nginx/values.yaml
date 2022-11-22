@@ -9,11 +9,11 @@ image:
   pullPolicy: Always
 ingress:
   enum:
-    alb: "OFF"
+    alb: "ON"
     volumemnt: ""
     sslcert: "ON"
     ssloff: "OFF"
-  type: ssloff # alb, volumemnt, sslcert, ssloff  
+  type: ssloff # alb, volumemnt, sslcert, ssloff
   alb_certificate_arn:
   alb_subnets:
   dnsname:
@@ -24,3 +24,10 @@ ingress:
     privatekkey: |
       -----BEGIN PRIVATE KEY-----
       -----END PRIVATE KEY-----
+path: /*
+pathType: Prefix
+backend:
+  service:
+    name: ms-nginx
+    port:
+      number: 80

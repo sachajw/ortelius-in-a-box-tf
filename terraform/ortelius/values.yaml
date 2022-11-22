@@ -33,22 +33,6 @@ ingress:
       -----BEGIN PRIVATE KEY-----
       -----END PRIVATE KEY-----
 ---
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: ms-nginx-ingress
-spec:
-  rules:
-  - http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: ms-nginx
-            port:
-              number: 80
----
 replicaCount: 1
 image:
   repository: quay.io/ortelius/ms-ui
