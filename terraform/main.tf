@@ -178,7 +178,7 @@ resource "helm_release" "dep_pkg_cud" {
   repository       = "https://ortelius.github.io/ortelius-charts/"
   namespace        = "ortelius"
   create_namespace = true
-  depends_on       = [helm_release.compitem_crude]
+  depends_on       = [helm_release.compitem_crud]
 
   values = [file("ortelius/charts/ms-dep-pkg-cud/values.yaml")]
 }
