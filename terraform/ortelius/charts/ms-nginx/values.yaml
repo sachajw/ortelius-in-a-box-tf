@@ -9,7 +9,7 @@ image:
   pullPolicy: Always
 ingress:
   enum:
-    alb: "ON"
+    alb: "OFF"
     volumemnt: ""
     sslcert: "ON"
     ssloff: "OFF"
@@ -24,10 +24,3 @@ ingress:
     privatekkey: |
       -----BEGIN PRIVATE KEY-----
       -----END PRIVATE KEY-----
-path: /*
-pathType: Prefix
-backend:
-  service:
-    name: ms-nginx
-    port:
-      number: 80
