@@ -161,109 +161,120 @@ resource "helm_release" "kube_arangodb" {
 }
 
 # ortelius
-resource "helm_release" "compitem_crud" {
+resource "helm_release" "ortelius" {
   name             = "ortelius"
-  chart            = "./ortelius/charts/ms-compitem-crud"
+  chart            = "ortelius"
   repository       = "https://ortelius.github.io/ortelius-charts/"
   namespace        = "ortelius"
   create_namespace = true
   depends_on       = [kind_cluster.ortelius]
 
-  values = [file("ortelius/charts/ms-compitem-crud/values.yaml")]
+  values = [file("ortelius/charts/*/values.yaml")]
 }
 
-resource "helm_release" "dep_pkg_cud" {
-  name             = "ortelius"
-  chart            = "./ortelius/charts/ms-dep-pkg-cud"
-  repository       = "https://ortelius.github.io/ortelius-charts/"
-  namespace        = "ortelius"
-  create_namespace = true
-  depends_on       = [helm_release.compitem_crud]
-
-  values = [file("ortelius/charts/ms-dep-pkg-cud/values.yaml")]
-}
-
-resource "helm_release" "dep_pkg_r" {
-  name             = "ortelius"
-  chart            = "./ortelius/charts/ms-dep-pkg-r"
-  repository       = "https://ortelius.github.io/ortelius-charts/"
-  namespace        = "ortelius"
-  create_namespace = true
-  depends_on       = [helm_release.dep_pkg_cud]
-
-  values = [file("ortelius/charts/ms-dep-pkg-r/values.yaml")]
-}
-
-resource "helm_release" "general" {
-  name             = "ortelius"
-  chart            = "./ortelius/charts/ms-general"
-  repository       = "https://ortelius.github.io/ortelius-charts/"
-  namespace        = "ortelius"
-  create_namespace = true
-  depends_on       = [helm_release.dep_pkg_r]
-
-  set {
-    name  = "ms-general.dbpass"
-    value = "Wms0063206#"
-  }
-  set {
-    name  = "ms-general.dbhost"
-    value = "postgres.svc.cluster.local"
-  }
-  values = [file("ortelius/charts/ms-general/values.yaml")]
-}
-
-resource "helm_release" "scorecard" {
-  name             = "ortelius"
-  chart            = "./ortelius/charts/ms-scorecard"
-  repository       = "https://ortelius.github.io/ortelius-charts/"
-  namespace        = "ortelius"
-  create_namespace = true
-  depends_on       = [helm_release.general]
-
-  values = [file("ortelius/charts/ms-scorecard/values.yaml")]
-}
-
-resource "helm_release" "textfile_crud" {
-  name             = "ortelius"
-  chart            = "./ortelius/charts/ms-textfile-crud"
-  repository       = "https://ortelius.github.io/ortelius-charts/"
-  namespace        = "ortelius"
-  create_namespace = true
-  depends_on       = [helm_release.scorecard]
-
-  values = [file("ortelius/charts/ms-textfile-crud/values.yaml")]
-}
-
-resource "helm_release" "ui" {
-  name             = "ortelius"
-  chart            = "./ortelius/charts/ms-ui"
-  repository       = "https://ortelius.github.io/ortelius-charts/"
-  namespace        = "ortelius"
-  create_namespace = true
-  depends_on       = [helm_release.textfile_crud]
-
-  values = [file("ortelius/charts/ms-ui/values.yaml")]
-}
-
-resource "helm_release" "validate_user" {
-  name             = "ortelius"
-  chart            = "./ortelius/charts/ms-validate-user"
-  repository       = "https://ortelius.github.io/ortelius-charts/"
-  namespace        = "ortelius"
-  create_namespace = true
-  depends_on       = [helm_release.ui]
-
-  values = [file("ortelius/charts/ms-validate-user/values.yaml")]
-}
-
-resource "helm_release" "nginx" {
-  name             = "ortelius"
-  chart            = "./ortelius/charts/ms-nginx"
-  repository       = "https://ortelius.github.io/ortelius-charts/"
-  namespace        = "ortelius"
-  create_namespace = true
-  depends_on       = [helm_release.validate_user]
-
-  values = [file("ortelius/charts/ms-nginx/values.yaml")]
-}
+#resource "helm_release" "compitem_crud" {
+#  name             = "ortelius"
+#  chart            = "./ortelius/charts/ms-compitem-crud"
+#  repository       = "https://ortelius.github.io/ortelius-charts/"
+#  namespace        = "ortelius"
+#  create_namespace = true
+#  depends_on       = [kind_cluster.ortelius]
+#
+#  values = [file("ortelius/charts/ms-compitem-crud/values.yaml")]
+#}
+#
+#resource "helm_release" "dep_pkg_cud" {
+#  name             = "ortelius"
+#  chart            = "./ortelius/charts/ms-dep-pkg-cud"
+#  repository       = "https://ortelius.github.io/ortelius-charts/"
+#  namespace        = "ortelius"
+#  create_namespace = true
+#  depends_on       = [helm_release.compitem_crud]
+#
+#  values = [file("ortelius/charts/ms-dep-pkg-cud/values.yaml")]
+#}
+#
+#resource "helm_release" "dep_pkg_r" {
+#  name             = "ortelius"
+#  chart            = "./ortelius/charts/ms-dep-pkg-r"
+#  repository       = "https://ortelius.github.io/ortelius-charts/"
+#  namespace        = "ortelius"
+#  create_namespace = true
+#  depends_on       = [helm_release.dep_pkg_cud]
+#
+#  values = [file("ortelius/charts/ms-dep-pkg-r/values.yaml")]
+#}
+#
+#resource "helm_release" "general" {
+#  name             = "ortelius"
+#  chart            = "./ortelius/charts/ms-general"
+#  repository       = "https://ortelius.github.io/ortelius-charts/"
+#  namespace        = "ortelius"
+#  create_namespace = true
+#  depends_on       = [helm_release.dep_pkg_r]
+#
+#  set {
+#    name  = "ms-general.dbpass"
+#    value = "Wms0063206#"
+#  }
+#  set {
+#    name  = "ms-general.dbhost"
+#    value = "postgres.svc.cluster.local"
+#  }
+#  values = [file("ortelius/charts/ms-general/values.yaml")]
+#}
+#
+#resource "helm_release" "scorecard" {
+#  name             = "ortelius"
+#  chart            = "./ortelius/charts/ms-scorecard"
+#  repository       = "https://ortelius.github.io/ortelius-charts/"
+#  namespace        = "ortelius"
+#  create_namespace = true
+#  depends_on       = [helm_release.general]
+#
+#  values = [file("ortelius/charts/ms-scorecard/values.yaml")]
+#}
+#
+#resource "helm_release" "textfile_crud" {
+#  name             = "ortelius"
+#  chart            = "./ortelius/charts/ms-textfile-crud"
+#  repository       = "https://ortelius.github.io/ortelius-charts/"
+#  namespace        = "ortelius"
+#  create_namespace = true
+#  depends_on       = [helm_release.scorecard]
+#
+#  values = [file("ortelius/charts/ms-textfile-crud/values.yaml")]
+#}
+#
+#resource "helm_release" "ui" {
+#  name             = "ortelius"
+#  chart            = "./ortelius/charts/ms-ui"
+#  repository       = "https://ortelius.github.io/ortelius-charts/"
+#  namespace        = "ortelius"
+#  create_namespace = true
+#  depends_on       = [helm_release.textfile_crud]
+#
+#  values = [file("ortelius/charts/ms-ui/values.yaml")]
+#}
+#
+#resource "helm_release" "validate_user" {
+#  name             = "ortelius"
+#  chart            = "./ortelius/charts/ms-validate-user"
+#  repository       = "https://ortelius.github.io/ortelius-charts/"
+#  namespace        = "ortelius"
+#  create_namespace = true
+#  depends_on       = [helm_release.ui]
+#
+#  values = [file("ortelius/charts/ms-validate-user/values.yaml")]
+#}
+#
+#resource "helm_release" "nginx" {
+#  name             = "ortelius"
+#  chart            = "./ortelius/charts/ms-nginx"
+#  repository       = "https://ortelius.github.io/ortelius-charts/"
+#  namespace        = "ortelius"
+#  create_namespace = true
+#  depends_on       = [helm_release.validate_user]
+#
+#  values = [file("ortelius/charts/ms-nginx/values.yaml")]
+#}
