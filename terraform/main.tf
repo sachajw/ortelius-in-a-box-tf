@@ -161,12 +161,45 @@ resource "helm_release" "kube_arangodb" {
 }
 
 # ortelius
-resource "helm_release" "ortelius" {
+resource "helm_release" "compitem_crud" {
   name             = "ortelius"
   chart            = "ortelius"
   repository       = "https://ortelius.github.io/ortelius-charts/"
   namespace        = "ortelius"
   create_namespace = true
+  depends_on       = [kind_cluster.ortelius]
+
+  values = [file("ortelius/ms-compitem-crud/values.yaml")]
+}
+
+resource "helm_release" "dep_pkg_cud" {
+  name             = "ortelius"
+  chart            = "ortelius"
+  repository       = "https://ortelius.github.io/ortelius-charts/"
+  namespace        = "ortelius"
+  create_namespace = false
+  depends_on       = [kind_cluster.ortelius]
+
+  values = [file("ortelius/ms-dep-pkg-cud/values.yaml")]
+}
+
+resource "helm_release" "dep_pkg_r" {
+  name             = "ortelius"
+  chart            = "ortelius"
+  repository       = "https://ortelius.github.io/ortelius-charts/"
+  namespace        = "ortelius"
+  create_namespace = false
+  depends_on       = [kind_cluster.ortelius]
+
+  values = [file("ortelius/ms-dep-pkg-r/values.yaml")]
+}
+
+resource "helm_release" "general" {
+  name             = "ortelius"
+  chart            = "ortelius"
+  repository       = "https://ortelius.github.io/ortelius-charts/"
+  namespace        = "ortelius"
+  create_namespace = false
   depends_on       = [kind_cluster.ortelius]
 
   set {
@@ -177,5 +210,60 @@ resource "helm_release" "ortelius" {
     name  = "ms-general.dbhost"
     value = "postgres.svc.cluster.local"
   }
-  #values = [file("ortelius/values.yaml")]
+  values = [file("ortelius/ms-general/values.yaml")]
+}
+
+resource "helm_release" "nginx" {
+  name             = "ortelius"
+  chart            = "ortelius"
+  repository       = "https://ortelius.github.io/ortelius-charts/"
+  namespace        = "ortelius"
+  create_namespace = false
+  depends_on       = [kind_cluster.ortelius]
+
+  values = [file("ortelius/ms-nginx/values.yaml")]
+}
+
+resource "helm_release" "scorecard" {
+  name             = "ortelius"
+  chart            = "ortelius"
+  repository       = "https://ortelius.github.io/ortelius-charts/"
+  namespace        = "ortelius"
+  create_namespace = false
+  depends_on       = [kind_cluster.ortelius]
+
+  values = [file("ortelius/ms-scorecard/values.yaml")]
+}
+
+resource "helm_release" "textfile_crud" {
+  name             = "ortelius"
+  chart            = "ortelius"
+  repository       = "https://ortelius.github.io/ortelius-charts/"
+  namespace        = "ortelius"
+  create_namespace = false
+  depends_on       = [kind_cluster.ortelius]
+
+  values = [file("ortelius/ms-textfile-crud/values.yaml")]
+}
+
+resource "helm_release" "ui" {
+  name             = "ortelius"
+  chart            = "ortelius"
+  repository       = "https://ortelius.github.io/ortelius-charts/"
+  namespace        = "ortelius"
+  create_namespace = false
+  depends_on       = [kind_cluster.ortelius]
+
+  values = [file("ortelius/ms-ui/values.yaml")]
+}
+
+resource "helm_release" "validate_user" {
+  name             = "ortelius"
+  chart            = "ortelius"
+  repository       = "https://ortelius.github.io/ortelius-charts/"
+  namespace        = "ortelius"
+  create_namespace = false
+  depends_on       = [kind_cluster.ortelius]
+
+  values = [file("ortelius/ms-validate-user/values.yaml")]
 }
