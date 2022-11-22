@@ -32,6 +32,14 @@ ingress:
     privatekkey: |
       -----BEGIN PRIVATE KEY-----
       -----END PRIVATE KEY-----
+  paths:
+  - path: /
+  pathType: Prefix
+  backend:
+    service:
+      name: ms-nginx
+      port:
+        number: 80
 ---
 replicaCount: 1
 image:
