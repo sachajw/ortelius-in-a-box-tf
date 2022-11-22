@@ -169,7 +169,7 @@ resource "helm_release" "compitem_crud" {
   create_namespace = true
   depends_on       = [kind_cluster.ortelius]
 
-  values = [file("ortelius/ms-compitem-crud/values.yaml")]
+  values = [file("ortelius/charts/ms-compitem-crud/values.yaml")]
 }
 
 resource "helm_release" "dep_pkg_cud" {
@@ -180,7 +180,7 @@ resource "helm_release" "dep_pkg_cud" {
   create_namespace = false
   depends_on       = [kind_cluster.ortelius]
 
-  values = [file("ortelius/ms-dep-pkg-cud/values.yaml")]
+  values = [file("ortelius/charts/ms-dep-pkg-cud/values.yaml")]
 }
 
 resource "helm_release" "dep_pkg_r" {
@@ -191,7 +191,7 @@ resource "helm_release" "dep_pkg_r" {
   create_namespace = false
   depends_on       = [kind_cluster.ortelius]
 
-  values = [file("ortelius/ms-dep-pkg-r/values.yaml")]
+  values = [file("ortelius/charts/ms-dep-pkg-r/values.yaml")]
 }
 
 resource "helm_release" "general" {
@@ -210,7 +210,7 @@ resource "helm_release" "general" {
     name  = "ms-general.dbhost"
     value = "postgres.svc.cluster.local"
   }
-  values = [file("ortelius/ms-general/values.yaml")]
+  values = [file("ortelius/charts/ms-general/values.yaml")]
 }
 
 resource "helm_release" "nginx" {
@@ -221,7 +221,7 @@ resource "helm_release" "nginx" {
   create_namespace = false
   depends_on       = [kind_cluster.ortelius]
 
-  values = [file("ortelius/ms-nginx/values.yaml")]
+  values = [file("ortelius/charts/ms-nginx/values.yaml")]
 }
 
 resource "helm_release" "scorecard" {
@@ -232,7 +232,7 @@ resource "helm_release" "scorecard" {
   create_namespace = false
   depends_on       = [kind_cluster.ortelius]
 
-  values = [file("ortelius/ms-scorecard/values.yaml")]
+  values = [file("ortelius/charts/ms-scorecard/values.yaml")]
 }
 
 resource "helm_release" "textfile_crud" {
@@ -243,7 +243,7 @@ resource "helm_release" "textfile_crud" {
   create_namespace = false
   depends_on       = [kind_cluster.ortelius]
 
-  values = [file("ortelius/ms-textfile-crud/values.yaml")]
+  values = [file("ortelius/charts/ms-textfile-crud/values.yaml")]
 }
 
 resource "helm_release" "ui" {
@@ -254,7 +254,7 @@ resource "helm_release" "ui" {
   create_namespace = false
   depends_on       = [kind_cluster.ortelius]
 
-  values = [file("ortelius/ms-ui/values.yaml")]
+  values = [file("ortelius/charts/ms-ui/values.yaml")]
 }
 
 resource "helm_release" "validate_user" {
@@ -265,5 +265,5 @@ resource "helm_release" "validate_user" {
   create_namespace = false
   depends_on       = [kind_cluster.ortelius]
 
-  values = [file("ortelius/ms-validate-user/values.yaml")]
+  values = [file("ortelius/charts/ms-validate-user/values.yaml")]
 }
