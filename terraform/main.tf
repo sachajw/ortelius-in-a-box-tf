@@ -54,7 +54,7 @@ provider "helm" {
   }
 }
 
-# ortelius
+# ortelius https://artifacthub.io/packages/helm/ortelius/ortelius
 resource "helm_release" "ortelius" {
   name             = "ortelius"
   chart            = "ortelius"
@@ -62,6 +62,7 @@ resource "helm_release" "ortelius" {
   namespace        = "ortelius"
   create_namespace = true
   depends_on       = [kind_cluster.ortelius]
+  timeout = 600
 
   set {
     name  = "ms-general.dbpass"
@@ -75,32 +76,25 @@ resource "helm_release" "ortelius" {
     name  = "ms-general.dbhost"
     value = "postgres.svc.cluster.local"
   }
-#  set {
-#    name = "ingress.type"
-#    value = "ssloff,alb"
-#  }
-    set {
-    name = "ingress.enum.alb"
-    value = "on"
-  }
 
   values = [file("ortelius/values.yaml")]
 }
 
-# arangodb https://www.arangodb.com/
+# arangodb https://www.arangodb.com/ https://github.com/arangodb/kube-arangodb
 resource "helm_release" "kube_arangodb" {
   name             = "arangodb"
   chart            = "./arangodb/kube-arangodb"
   namespace        = "arangodb"
   create_namespace = true
   depends_on       = [kind_cluster.ortelius]
+  timeout = 600
 
   values = [
     file("arangodb/kube-arangodb/values.yaml"),
   ]
 }
 
-# nginx ingress
+# nginx ingress controller maintained by the K8s community https://github.com/kubernetes/ingress-nginx/
 resource "helm_release" "ingress_nginx" {
   name             = "ingress-nginx"
   repository       = "https://kubernetes.github.io/ingress-nginx"
@@ -108,6 +102,7 @@ resource "helm_release" "ingress_nginx" {
   namespace        = var.ingress_nginx_namespace
   create_namespace = true
   depends_on       = [kind_cluster.ortelius]
+  timeout = 600
 
   values = [file("ingress-nginx/values.yaml")]
 }
@@ -126,7 +121,6 @@ resource "null_resource" "wait_for_ingress_nginx" {
         --timeout=180s
     EOF
   }
-
   depends_on = [helm_release.ingress_nginx]
 }
 
@@ -143,13 +137,14 @@ resource "null_resource" "keptn" {
   depends_on = [kind_cluster.ortelius]
 }
 
-# argocd
+# argocd https://argoproj.github.io/argo-helm/
 resource "helm_release" "argocd" {
   name             = "argocd"
   chart            = "argo-cd"
   namespace        = "argocd"
   create_namespace = true
   depends_on       = [kind_cluster.ortelius]
+  timeout = 600
 
   values = [
     file("argo-cd/values.yaml"),
@@ -165,6 +160,7 @@ resource "helm_release" "kubescape" {
   namespace        = "kubescape"
   create_namespace = true
   depends_on       = [kind_cluster.ortelius]
+  timeout = 600
 
   set {
     name  = "account"
@@ -178,7 +174,6 @@ resource "helm_release" "kubescape" {
   values = [
     file("kubescape/cloud-operator/values.yaml"),
   ]
-
 }
 
 # keptn-ortelius-service
@@ -189,113 +184,6 @@ resource "helm_release" "kubescape" {
 #  namespace        = "keptn"
 #  create_namespace = true
 #  depends_on       = [kind_cluster.ortelius]
-#
+#  timeout = 600
 #  values = [file("keptn-ortelius-service/values.yaml")]
-#}
-
-#resource "helm_release" "compitem_crud" {
-#  name             = "ortelius"
-#  chart            = "./ortelius/charts/ms-compitem-crud"
-#  repository       = "https://ortelius.github.io/ortelius-charts/"
-#  namespace        = "ortelius"
-#  create_namespace = true
-#  depends_on       = [kind_cluster.ortelius]
-#
-#  values = [file("ortelius/charts/ms-compitem-crud/values.yaml")]
-#}
-#
-#resource "helm_release" "dep_pkg_cud" {
-#  name             = "ortelius"
-#  chart            = "./ortelius/charts/ms-dep-pkg-cud"
-#  repository       = "https://ortelius.github.io/ortelius-charts/"
-#  namespace        = "ortelius"
-#  create_namespace = true
-#  depends_on       = [helm_release.compitem_crud]
-#
-#  values = [file("ortelius/charts/ms-dep-pkg-cud/values.yaml")]
-#}
-#
-#resource "helm_release" "dep_pkg_r" {
-#  name             = "ortelius"
-#  chart            = "./ortelius/charts/ms-dep-pkg-r"
-#  repository       = "https://ortelius.github.io/ortelius-charts/"
-#  namespace        = "ortelius"
-#  create_namespace = true
-#  depends_on       = [helm_release.dep_pkg_cud]
-#
-#  values = [file("ortelius/charts/ms-dep-pkg-r/values.yaml")]
-#}
-#
-#resource "helm_release" "general" {
-#  name             = "ortelius"
-#  chart            = "./ortelius/charts/ms-general"
-#  repository       = "https://ortelius.github.io/ortelius-charts/"
-#  namespace        = "ortelius"
-#  create_namespace = true
-#  depends_on       = [helm_release.dep_pkg_r]
-#
-#  set {
-#    name  = "ms-general.dbpass"
-#    value = "Wms0063206#"
-#  }
-#  set {
-#    name  = "ms-general.dbhost"
-#    value = "postgres.svc.cluster.local"
-#  }
-#  values = [file("ortelius/charts/ms-general/values.yaml")]
-#}
-#
-#resource "helm_release" "scorecard" {
-#  name             = "ortelius"
-#  chart            = "./ortelius/charts/ms-scorecard"
-#  repository       = "https://ortelius.github.io/ortelius-charts/"
-#  namespace        = "ortelius"
-#  create_namespace = true
-#  depends_on       = [helm_release.general]
-#
-#  values = [file("ortelius/charts/ms-scorecard/values.yaml")]
-#}
-#
-#resource "helm_release" "textfile_crud" {
-#  name             = "ortelius"
-#  chart            = "./ortelius/charts/ms-textfile-crud"
-#  repository       = "https://ortelius.github.io/ortelius-charts/"
-#  namespace        = "ortelius"
-#  create_namespace = true
-#  depends_on       = [helm_release.scorecard]
-#
-#  values = [file("ortelius/charts/ms-textfile-crud/values.yaml")]
-#}
-#
-#resource "helm_release" "ui" {
-#  name             = "ortelius"
-#  chart            = "./ortelius/charts/ms-ui"
-#  repository       = "https://ortelius.github.io/ortelius-charts/"
-#  namespace        = "ortelius"
-#  create_namespace = true
-#  depends_on       = [helm_release.textfile_crud]
-#
-#  values = [file("ortelius/charts/ms-ui/values.yaml")]
-#}
-#
-#resource "helm_release" "validate_user" {
-#  name             = "ortelius"
-#  chart            = "./ortelius/charts/ms-validate-user"
-#  repository       = "https://ortelius.github.io/ortelius-charts/"
-#  namespace        = "ortelius"
-#  create_namespace = true
-#  depends_on       = [helm_release.ui]
-#
-#  values = [file("ortelius/charts/ms-validate-user/values.yaml")]
-#}
-#
-#resource "helm_release" "nginx" {
-#  name             = "ortelius"
-#  chart            = "./ortelius/charts/ms-nginx"
-#  repository       = "https://ortelius.github.io/ortelius-charts/"
-#  namespace        = "ortelius"
-#  create_namespace = true
-#  depends_on       = [helm_release.validate_user]
-#
-#  values = [file("ortelius/charts/ms-nginx/values.yaml")]
 #}
