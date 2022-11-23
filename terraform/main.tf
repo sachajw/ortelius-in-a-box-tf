@@ -80,6 +80,20 @@ resource "helm_release" "ortelius" {
   values = [file("ortelius/values.yaml")]
 }
 
+# ortelius backstage https://github.com/ortelius/Backstage
+resource "helm_release" "argocd" {
+  name             = "argocd"
+  chart            = "argo-cd"
+  namespace        = "argocd"
+  create_namespace = true
+  depends_on       = [kind_cluster.ortelius]
+  timeout = 600
+
+  values = [
+    file("argo-cd/values.yaml"),
+  ]
+}
+
 # arangodb https://www.arangodb.com/ https://github.com/arangodb/kube-arangodb
 resource "helm_release" "kube_arangodb" {
   name             = "arangodb"
@@ -124,7 +138,7 @@ resource "null_resource" "wait_for_ingress_nginx" {
   depends_on = [helm_release.ingress_nginx]
 }
 
-# Keptn Lifecycle Toolkit https://github.com/keptn/lifecycle-toolkit
+# keptn lifecycle toolkit https://github.com/keptn/lifecycle-toolkit
 resource "null_resource" "keptn" {
 
   provisioner "local-exec" {
@@ -151,7 +165,7 @@ resource "helm_release" "argocd" {
   ]
 }
 
-# Kubescape K8s cluster & image security https://kubescape.github.io/helm-charts/
+# kubescape K8s cluster & image security https://kubescape.github.io/helm-charts/
 # https://github.com/kubescape/kubescape
 resource "helm_release" "kubescape" {
   name             = "kubescape"
