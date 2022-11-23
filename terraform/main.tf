@@ -54,60 +54,6 @@ provider "helm" {
   }
 }
 
-# ortelius https://artifacthub.io/packages/helm/ortelius/ortelius
-resource "helm_release" "ortelius" {
-  name             = "ortelius"
-  chart            = "ortelius"
-  repository       = "https://ortelius.github.io/ortelius-charts/"
-  namespace        = "ortelius"
-  create_namespace = true
-  depends_on       = [kind_cluster.ortelius]
-  timeout = 600
-
-  set {
-    name  = "ms-general.dbpass"
-    value = "Wms0063206#"
-  }
-  set {
-    name  = "ms-general.dbhost"
-    value = "postgres.svc.cluster.local"
-  }
-  set {
-    name  = "ms-general.dbhost"
-    value = "postgres.svc.cluster.local"
-  }
-
-  values = [file("ortelius/values.yaml")]
-}
-
-# ortelius backstage https://github.com/ortelius/Backstage
-resource "helm_release" "backstage" {
-  name             = "backstage"
-  chart            = "backstage"
-  namespace        = "backstage"
-  create_namespace = true
-  depends_on       = [kind_cluster.ortelius]
-  timeout = 600
-
-  values = [
-    file("backstage/values.yaml"),
-  ]
-}
-
-# arangodb https://www.arangodb.com/ https://github.com/arangodb/kube-arangodb
-resource "helm_release" "kube_arangodb" {
-  name             = "arangodb"
-  chart            = "./arangodb/kube-arangodb"
-  namespace        = "arangodb"
-  create_namespace = true
-  depends_on       = [kind_cluster.ortelius]
-  timeout = 600
-
-  values = [
-    file("arangodb/kube-arangodb/values.yaml"),
-  ]
-}
-
 # nginx ingress controller maintained by the K8s community https://github.com/kubernetes/ingress-nginx/
 resource "helm_release" "ingress_nginx" {
   name             = "ingress-nginx"
@@ -136,6 +82,20 @@ resource "null_resource" "wait_for_ingress_nginx" {
     EOF
   }
   depends_on = [helm_release.ingress_nginx]
+}
+
+# arangodb https://www.arangodb.com/ https://github.com/arangodb/kube-arangodb
+resource "helm_release" "kube_arangodb" {
+  name             = "arangodb"
+  chart            = "./arangodb/kube-arangodb"
+  namespace        = "arangodb"
+  create_namespace = true
+  depends_on       = [kind_cluster.ortelius]
+  timeout = 600
+
+  values = [
+    file("arangodb/kube-arangodb/values.yaml"),
+  ]
 }
 
 # keptn lifecycle toolkit https://github.com/keptn/lifecycle-toolkit
@@ -187,6 +147,46 @@ resource "helm_release" "kubescape" {
 
   values = [
     file("kubescape/cloud-operator/values.yaml"),
+  ]
+}
+
+# ortelius https://artifacthub.io/packages/helm/ortelius/ortelius
+resource "helm_release" "ortelius" {
+  name             = "ortelius"
+  chart            = "ortelius"
+  repository       = "https://ortelius.github.io/ortelius-charts/"
+  namespace        = "ortelius"
+  create_namespace = true
+  depends_on       = [kind_cluster.ortelius]
+  timeout = 600
+
+  set {
+    name  = "ms-general.dbpass"
+    value = "Wms0063206#"
+  }
+  set {
+    name  = "ms-general.dbhost"
+    value = "postgres.svc.cluster.local"
+  }
+  set {
+    name  = "ms-general.dbhost"
+    value = "postgres.svc.cluster.local"
+  }
+
+  values = [file("ortelius/values.yaml")]
+}
+
+# ortelius backstage https://github.com/ortelius/Backstage
+resource "helm_release" "backstage" {
+  name             = "backstage"
+  chart            = "backstage"
+  namespace        = "backstage"
+  create_namespace = true
+  depends_on       = [kind_cluster.ortelius]
+  timeout = 600
+
+  values = [
+    file("backstage/values.yaml"),
   ]
 }
 
