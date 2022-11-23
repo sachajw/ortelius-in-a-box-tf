@@ -4,16 +4,16 @@
 replicaCount: 1
 image:
   repository: quay.io/ortelius/ms-nginx
-  tag: svc_cat-v10.0.22-g13db9f
-  sha: sha256:9e0867a683b178e7a7aefad94fd84ef88a8c749a570775f72039b423b8733bb8
+  tag: svc_cat-v10.0.28-gd403e3
+  sha: sha256:2d77095e9f99596c167bdf291d73f16a69716950177fc8d5eb63dd6d39b7b286
   pullPolicy: Always
 ingress:
   enum:
-    alb: "ON"
+    alb: "OFF"
     volumemnt: ""
     sslcert: "ON"
     ssloff: "OFF"
-  type: "ssloff,alb" #, volumemnt, sslcert, ssloff
+  type: ssloff # alb, volumemnt, sslcert, ssloff  
   alb_certificate_arn:
   alb_subnets:
   dnsname:
