@@ -127,28 +127,28 @@ resource "helm_release" "argocd" {
 
 # kubescape K8s cluster & image security https://kubescape.github.io/helm-charts/
 # https://github.com/kubescape/kubescape
-resource "helm_release" "kubescape" {
-  name             = "kubescape"
-  chart            = "kubescape-cloud-operator"
-  repository       = "https://kubescape.github.io/helm-charts/"
-  namespace        = "kubescape"
-  create_namespace = true
-  depends_on       = [kind_cluster.ortelius]
-  timeout = 600
-
-  set {
-    name  = "account"
-    value = "8e8c7cc1-0ffb-4abc-be56-cf0228d358f3"
-  }
-  set {
-    name  = "clusterName"
-    value = "kubectl config current-context"
-  }
-
-  values = [
-    file("kubescape/cloud-operator/values.yaml"),
-  ]
-}
+#resource "helm_release" "kubescape" {
+#  name             = "kubescape"
+#  chart            = "kubescape-cloud-operator"
+#  repository       = "https://kubescape.github.io/helm-charts/"
+#  namespace        = "kubescape"
+#  create_namespace = true
+#  depends_on       = [kind_cluster.ortelius]
+#  timeout = 600
+#
+#  set {
+#    name  = "account"
+#    value = "8e8c7cc1-0ffb-4abc-be56-cf0228d358f3"
+#  }
+#  set {
+#    name  = "clusterName"
+#    value = "kubectl config current-context"
+#  }
+#
+#  values = [
+#    file("kubescape/cloud-operator/values.yaml"),
+#  ]
+#}
 
 # ortelius https://artifacthub.io/packages/helm/ortelius/ortelius
 resource "helm_release" "ortelius" {
