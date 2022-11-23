@@ -81,10 +81,10 @@ resource "helm_release" "ortelius" {
 }
 
 # ortelius backstage https://github.com/ortelius/Backstage
-resource "helm_release" "argocd" {
-  name             = "argocd"
-  chart            = "argo-cd"
-  namespace        = "argocd"
+resource "helm_release" "backstage" {
+  name             = "backstage"
+  chart            = "backstage"
+  namespace        = "backstage"
   create_namespace = true
   depends_on       = [kind_cluster.ortelius]
   timeout = 600
