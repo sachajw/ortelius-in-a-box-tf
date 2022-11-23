@@ -90,7 +90,7 @@ resource "helm_release" "backstage" {
   timeout = 600
 
   values = [
-    file("argo-cd/values.yaml"),
+    file("backstage/values.yaml"),
   ]
 }
 
