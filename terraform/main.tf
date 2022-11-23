@@ -75,10 +75,10 @@ resource "helm_release" "ortelius" {
     name  = "ms-general.dbhost"
     value = "postgres.svc.cluster.local"
   }
-  set {
-    name = "ingress.type"
-    value = "ssloff,alb"
-  }
+#  set {
+#    name = "ingress.type"
+#    value = "ssloff,alb"
+#  }
     set {
     name = "ingress.enum.alb"
     value = "on"
