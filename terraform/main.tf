@@ -169,7 +169,7 @@ resource "helm_release" "ortelius" {
   create_namespace = true
   depends_on       = [kind_cluster.ortelius]
 
-  values = [file("ortelius/charts/*/values.yaml")]
+  values = [file("ortelius/values.yaml")]
 }
 
 #resource "helm_release" "compitem_crud" {
