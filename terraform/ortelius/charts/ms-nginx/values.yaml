@@ -8,12 +8,13 @@ image:
   sha: sha256:2d77095e9f99596c167bdf291d73f16a69716950177fc8d5eb63dd6d39b7b286
   pullPolicy: Always
 ingress:
+  ingressClassName: nginx
   enum:
     alb: "OFF"
     volumemnt: ""
     sslcert: "ON"
     ssloff: "OFF"
-  type: ssloff # alb, volumemnt, sslcert, ssloff  
+  type: ssloff # alb, volumemnt, sslcert, ssloff
   alb_certificate_arn:
   alb_subnets:
   dnsname:
