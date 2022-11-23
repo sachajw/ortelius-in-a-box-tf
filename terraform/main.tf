@@ -54,6 +54,52 @@ provider "helm" {
   }
 }
 
+# ortelius
+resource "helm_release" "ortelius" {
+  name             = "ortelius"
+  chart            = "ortelius"
+  repository       = "https://ortelius.github.io/ortelius-charts/"
+  namespace        = "ortelius"
+  create_namespace = true
+  depends_on       = [kind_cluster.ortelius]
+
+  set {
+    name  = "ms-general.dbpass"
+    value = "Wms0063206#"
+  }
+  set {
+    name  = "ms-general.dbhost"
+    value = "postgres.svc.cluster.local"
+  }
+  set {
+    name  = "ms-general.dbhost"
+    value = "postgres.svc.cluster.local"
+  }
+  set {
+    name = "ingress.type"
+    value = "ssloff,alb"
+  }
+    set {
+    name = "ingress.enum.alb"
+    value = "on"
+  }
+
+  values = [file("ortelius/values.yaml")]
+}
+
+# arangodb https://www.arangodb.com/
+resource "helm_release" "kube_arangodb" {
+  name             = "arangodb"
+  chart            = "./arangodb/kube-arangodb"
+  namespace        = "arangodb"
+  create_namespace = true
+  depends_on       = [kind_cluster.ortelius]
+
+  values = [
+    file("arangodb/kube-arangodb/values.yaml"),
+  ]
+}
+
 # nginx ingress
 resource "helm_release" "ingress_nginx" {
   name             = "ingress-nginx"
@@ -146,31 +192,6 @@ resource "helm_release" "kubescape" {
 #
 #  values = [file("keptn-ortelius-service/values.yaml")]
 #}
-
-# arangodb https://www.arangodb.com/
-resource "helm_release" "kube_arangodb" {
-  name             = "arangodb"
-  chart            = "./arangodb/kube-arangodb"
-  namespace        = "arangodb"
-  create_namespace = true
-  depends_on       = [kind_cluster.ortelius]
-
-  values = [
-    file("arangodb/kube-arangodb/values.yaml"),
-  ]
-}
-
-# ortelius
-resource "helm_release" "ortelius" {
-  name             = "ortelius"
-  chart            = "ortelius"
-  repository       = "https://ortelius.github.io/ortelius-charts/"
-  namespace        = "ortelius"
-  create_namespace = true
-  depends_on       = [kind_cluster.ortelius]
-
-  values = [file("ortelius/values.yaml")]
-}
 
 #resource "helm_release" "compitem_crud" {
 #  name             = "ortelius"
