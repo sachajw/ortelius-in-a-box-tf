@@ -16,6 +16,12 @@ variable "kind_cluster_config_path" {
 #  default     = "4.3.0"
 #}
 
+variable "ingress_nginx_namespace" {
+  type        = string
+  description = "The nginx ingress namespace"
+  default     = "ingress-nginx"
+}
+
 variable "metallb_namespace" {
   type        = string
   description = "The MetalLB loadbalancer namespace"
