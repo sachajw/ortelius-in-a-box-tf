@@ -85,18 +85,18 @@ resource "null_resource" "wait_for_ingress_nginx" {
 }
 
 # arangodb https://www.arangodb.com/ https://github.com/arangodb/kube-arangodb
-resource "helm_release" "kube_arangodb" {
-  name             = "arangodb"
-  chart            = "./arangodb/kube-arangodb"
-  namespace        = "arangodb"
-  create_namespace = true
-  depends_on       = [kind_cluster.ortelius]
-  timeout = 600
-
-  values = [
-    file("arangodb/kube-arangodb/values.yaml"),
-  ]
-}
+#resource "helm_release" "kube_arangodb" {
+#  name             = "arangodb"
+#  chart            = "./arangodb/kube-arangodb"
+#  namespace        = "arangodb"
+#  create_namespace = true
+#  depends_on       = [kind_cluster.ortelius]
+#  timeout = 600
+#
+#  values = [
+#    file("arangodb/kube-arangodb/values.yaml"),
+#  ]
+#}
 
 # keptn lifecycle toolkit https://github.com/keptn/lifecycle-toolkit
 resource "null_resource" "keptn" {
@@ -111,19 +111,19 @@ resource "null_resource" "keptn" {
   depends_on = [kind_cluster.ortelius]
 }
 
-# argocd https://argoproj.github.io/argo-helm/
-resource "helm_release" "argocd" {
-  name             = "argocd"
-  chart            = "argo-cd"
-  namespace        = "argocd"
-  create_namespace = true
-  depends_on       = [kind_cluster.ortelius]
-  timeout = 600
-
-  values = [
-    file("argo-cd/values.yaml"),
-  ]
-}
+## argocd https://argoproj.github.io/argo-helm/
+#resource "helm_release" "argocd" {
+#  name             = "argocd"
+#  chart            = "argo-cd"
+#  namespace        = "argocd"
+#  create_namespace = true
+#  depends_on       = [kind_cluster.ortelius]
+#  timeout = 600
+#
+#  values = [
+#    file("argo-cd/values.yaml"),
+#  ]
+#}
 
 # kubescape K8s cluster & image security https://kubescape.github.io/helm-charts/
 # https://github.com/kubescape/kubescape
