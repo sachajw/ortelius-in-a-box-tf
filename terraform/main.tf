@@ -1,3 +1,4 @@
+# kind https://kind.sigs.k8s.io/
 provider "kind" {}
 
 resource "kind_cluster" "ortelius" {
@@ -151,6 +152,7 @@ resource "null_resource" "keptn" {
 #}
 
 # ortelius https://artifacthub.io/packages/helm/ortelius/ortelius
+# postgresql https://artifacthub.io/packages/helm/bitnami/postgresql-ha
 resource "helm_release" "ortelius" {
   name             = "ortelius"
   chart            = "ortelius"
@@ -166,11 +168,7 @@ resource "helm_release" "ortelius" {
   }
   set {
     name  = "ms-general.dbhost"
-    value = "postgres.svc.cluster.local"
-  }
-  set {
-    name  = "ms-general.dbhost"
-    value = "postgres.svc.cluster.local"
+    value = "postgresql.ortelius.svc.cluster.local"
   }
 }
 
