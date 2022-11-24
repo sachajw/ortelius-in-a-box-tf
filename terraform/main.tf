@@ -64,7 +64,7 @@ resource "helm_release" "metallb" {
   depends_on       = [kind_cluster.ortelius]
   timeout = 600
 
-  values = [file("ingress-nginx/values.yaml")]
+  values = [file("metallb/values.yaml")]
 }
 
 # nginx ingress controller maintained by the K8s community https://github.com/kubernetes/ingress-nginx/
