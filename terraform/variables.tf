@@ -16,7 +16,7 @@ variable "kind_cluster_config_path" {
 #  default     = "4.3.0"
 #}
 
-variable "metallbnamespace" {
+variable "metallb_namespace" {
   type        = string
   description = "The MetalLB loadbalancer namespace"
   default     = "metallb"
