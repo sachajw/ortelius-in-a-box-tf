@@ -1,4 +1,4 @@
-# kind https://kind.sigs.k8s.io/
+# kind https://kind.sigs.k8s.io/-
 provider "kind" {}
 
 resource "kind_cluster" "ortelius" {
@@ -100,17 +100,17 @@ resource "null_resource" "wait_for_ingress_nginx" {
 #}
 
 # keptn lifecycle toolkit https://github.com/keptn/lifecycle-toolkit
-resource "null_resource" "keptn" {
-
-  provisioner "local-exec" {
-    command = <<EOF
-      kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.10.0/cert-manager.yaml
-      sleep 45
-      kubectl apply -f https://github.com/keptn/lifecycle-toolkit/releases/download/v0.4.0/manifest.yaml
-    EOF
-  }
-  depends_on = [kind_cluster.ortelius]
-}
+#resource "null_resource" "keptn" {
+#
+#  provisioner "local-exec" {
+#    command = <<EOF
+#      kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.10.0/cert-manager.yaml
+#      sleep 45
+#      kubectl apply -f https://github.com/keptn/lifecycle-toolkit/releases/download/v0.4.0/manifest.yaml
+#    EOF
+#  }
+#  depends_on = [kind_cluster.ortelius]
+#}
 
 ## argocd https://argoproj.github.io/argo-helm/
 #resource "helm_release" "argocd" {
