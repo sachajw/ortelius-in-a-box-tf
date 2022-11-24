@@ -55,6 +55,18 @@ provider "helm" {
   }
 }
 
+resource "helm_release" "metallb" {
+  name             = "metallb"
+  repository       = "https://metallb.github.io/metallb"
+  chart            = "metallb"
+  namespace        = var.metallb_namespace
+  create_namespace = true
+  depends_on       = [kind_cluster.ortelius]
+  timeout = 600
+
+  values = [file("ingress-nginx/values.yaml")]
+}
+
 # nginx ingress controller maintained by the K8s community https://github.com/kubernetes/ingress-nginx/
 resource "helm_release" "ingress_nginx" {
   name             = "ingress-nginx"
