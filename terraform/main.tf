@@ -55,6 +55,7 @@ provider "helm" {
   }
 }
 
+# metallb loadbalancer https://metallb.universe.tf/ https://github.com/metallb/metallb
 resource "helm_release" "metallb" {
   name             = "metallb"
   repository       = "https://metallb.github.io/metallb"
