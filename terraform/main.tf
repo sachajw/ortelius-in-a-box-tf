@@ -63,7 +63,7 @@ resource "helm_release" "metallb" {
   namespace        = var.metallb_namespace
   create_namespace = true
   depends_on       = [kind_cluster.ortelius]
-  timeout = 600
+  timeout          = 600
 
   values = [file("metallb/values.yaml")]
 }
@@ -76,7 +76,7 @@ resource "helm_release" "ingress_nginx" {
   namespace        = var.ingress_nginx_namespace
   create_namespace = true
   depends_on       = [kind_cluster.ortelius]
-  timeout = 600
+  timeout          = 600
 
   values = [file("ingress-nginx/values.yaml")]
 }
@@ -173,7 +173,7 @@ resource "helm_release" "ortelius" {
   namespace        = "ortelius"
   create_namespace = true
   depends_on       = [kind_cluster.ortelius]
-  timeout = 600
+  timeout          = 600
 
   set {
     name  = "ms-general.dbpass"
