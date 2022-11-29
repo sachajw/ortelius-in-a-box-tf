@@ -37,7 +37,7 @@ resource "kind_cluster" "ortelius" {
 }
 
 provider "kubectl" {
-  apply_retry_count = 15
+  apply_retry_count      = 15
   host                   = kind_cluster.ortelius.endpoint
   cluster_ca_certificate = kind_cluster.ortelius.cluster_ca_certificate
   client_certificate     = kind_cluster.ortelius.client_certificate
@@ -45,7 +45,7 @@ provider "kubectl" {
   load_config_file       = false
 
   exec {
-    command     = "create secret generic -n metallb-system memberlist"
+    command = "create secret generic -n metallb-system memberlist"
     args = [
       "--from-literal=secretkey=",
       "$(openssl rand -base64 128)",
@@ -120,14 +120,14 @@ resource "helm_release" "ortelius" {
   depends_on       = [kind_cluster.ortelius]
   timeout          = 600
 
-#  set {
-#    name  = "ms-general.dbpass"
-#    value = "Wms0063206#"
-#  }
-#  set {
-#    name  = "ms-general.dbhost"
-#    value = "postgresql.ortelius.svc.cluster.local"
-#  }
+  #  set {
+  #    name  = "ms-general.dbpass"
+  #    value = "Wms0063206#"
+  #  }
+  #  set {
+  #    name  = "ms-general.dbhost"
+  #    value = "postgresql.ortelius.svc.cluster.local"
+  #  }
 }
 
 # arangodb https://www.arangodb.com/ https://github.com/arangodb/kube-arangodb
