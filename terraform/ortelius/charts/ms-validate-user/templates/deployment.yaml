@@ -34,7 +34,7 @@ spec:
         - name: {{ include "ms-validate-user.name" . }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: Always
-          env:    
+          env:
             - name: DB_USER
               valueFrom:
                 secretKeyRef:
@@ -63,4 +63,4 @@ spec:
           ports:
             - name: http
               containerPort: 80
----   
+---
