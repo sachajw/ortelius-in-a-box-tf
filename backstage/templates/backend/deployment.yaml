@@ -43,6 +43,11 @@ spec:
           image: {{ include "backstage.backendImage" . }}
           imagePullPolicy: {{ .Values.backend.image.pullPolicy }}
           env:
+            - name: POSTGRES_CONNECTION_STRING
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.psql.connectionString.secret }}
+                  key: {{ .Values.psql.connectionString.key }}
             - name: POSTGRES_HOST
               value: {{ .Values.psql.host | quote }}
             - name: POSTGRES_PORT
@@ -69,6 +74,36 @@ spec:
                 secretKeyRef:
                   name: backstage-secrets
                   key: GITHUB_CLIENT_SECRET
+            - name: KUBERNETES_URL
+              valueFrom:
+                secretKeyRef:
+                  name: backstage-secrets
+                  key: KUBERNETES_URL
+            - name: KUBERNETES_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: backstage-secrets
+                  key: KUBERNETES_TOKEN
+            - name: ARGOCD_BASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: backstage-secrets
+                  key: ARGOCD_BASE_URL
+            - name: ARGOCD_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: backstage-secrets
+                  key: ARGOCD_USERNAME
+            - name: ARGOCD_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: backstage-secrets
+                  key: ARGOCD_PASSWORD
+            - name: ARGOCD_AUTH_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: backstage-secrets
+                  key: ARGOCD_AUTH_TOKEN
             {{- with .Values.backend.env }}
             {{- toYaml . | nindent 12 }}
             {{- end }}

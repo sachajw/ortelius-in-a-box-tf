@@ -1,9 +1,3 @@
-variable "kind_cluster_name" {
-  type        = string
-  description = "The name of the cluster."
-  default     = "ortelius-in-a-box"
-}
-
 variable "kind_cluster_config_path" {
   type        = string
   description = "Cluster's kubeconfig location"
@@ -26,4 +20,10 @@ variable "metallb_namespace" {
   type        = string
   description = "The MetalLB loadbalancer namespace"
   default     = "metallb"
+}
+
+variable "kind_cluster_name" {
+  type        = string
+  description = "The name of the cluster."
+  default     = "ortelius"
 }

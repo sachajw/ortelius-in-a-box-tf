@@ -55,19 +55,6 @@ provider "helm" {
   }
 }
 
-# metallb loadbalancer https://metallb.universe.tf/ https://github.com/metallb/metallb
-resource "helm_release" "metallb" {
-  name             = "metallb"
-  repository       = "https://metallb.github.io/metallb"
-  chart            = "metallb"
-  namespace        = var.metallb_namespace
-  create_namespace = true
-  depends_on       = [kind_cluster.ortelius]
-  timeout          = 600
-
-  values = [file("metallb/values.yaml")]
-}
-
 # nginx ingress controller maintained by the K8s community https://github.com/kubernetes/ingress-nginx/
 resource "helm_release" "ingress_nginx" {
   name             = "ingress-nginx"
@@ -96,6 +83,40 @@ resource "null_resource" "wait_for_ingress_nginx" {
     EOF
   }
   depends_on = [helm_release.ingress_nginx]
+}
+
+# metallb loadbalancer https://metallb.universe.tf/ https://github.com/metallb/metallb
+resource "helm_release" "metallb" {
+  name             = "metallb"
+  repository       = "https://metallb.github.io/metallb"
+  chart            = "metallb"
+  namespace        = var.metallb_namespace
+  create_namespace = true
+  depends_on       = [kind_cluster.ortelius]
+  timeout          = 600
+
+  values = [file("metallb/values.yaml")]
+}
+
+# ortelius https://artifacthub.io/packages/helm/ortelius/ortelius
+# postgresql https://artifacthub.io/packages/helm/bitnami/postgresql-ha
+resource "helm_release" "ortelius" {
+  name             = "ortelius"
+  chart            = "ortelius"
+  repository       = "https://ortelius.github.io/ortelius-charts/"
+  namespace        = "ortelius"
+  create_namespace = true
+  depends_on       = [kind_cluster.ortelius]
+  timeout          = 600
+
+#  set {
+#    name  = "ms-general.dbpass"
+#    value = "Wms0063206#"
+#  }
+#  set {
+#    name  = "ms-general.dbhost"
+#    value = "postgresql.ortelius.svc.cluster.local"
+#  }
 }
 
 # arangodb https://www.arangodb.com/ https://github.com/arangodb/kube-arangodb
@@ -164,31 +185,11 @@ resource "null_resource" "wait_for_ingress_nginx" {
 #  ]
 #}
 
-# ortelius https://artifacthub.io/packages/helm/ortelius/ortelius
-# postgresql https://artifacthub.io/packages/helm/bitnami/postgresql-ha
-resource "helm_release" "ortelius" {
-  name             = "ortelius"
-  chart            = "ortelius"
-  repository       = "https://ortelius.github.io/ortelius-charts/"
-  namespace        = "ortelius"
-  create_namespace = true
-  depends_on       = [kind_cluster.ortelius]
-  timeout          = 600
-
-#  set {
-#    name  = "ms-general.dbpass"
-#    value = "Wms0063206#"
-#  }
-#  set {
-#    name  = "ms-general.dbhost"
-#    value = "postgresql.ortelius.svc.cluster.local"
-#  }
-}
-
 # ortelius backstage https://github.com/ortelius/Backstage
-#resource "helm_release" "backstage" {
+# resource "helm_release" "backstage" {
 #  name             = "backstage"
 #  chart            = "backstage"
+#  repository       = "https://github.com/ortelius/backstage"
 #  namespace        = "backstage"
 #  create_namespace = true
 #  depends_on       = [kind_cluster.ortelius]
