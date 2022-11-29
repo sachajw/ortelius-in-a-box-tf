@@ -175,14 +175,14 @@ resource "helm_release" "ortelius" {
   depends_on       = [kind_cluster.ortelius]
   timeout          = 600
 
-  set {
-    name  = "ms-general.dbpass"
-    value = "Wms0063206#"
-  }
-  set {
-    name  = "ms-general.dbhost"
-    value = "postgresql.ortelius.svc.cluster.local"
-  }
+#  set {
+#    name  = "ms-general.dbpass"
+#    value = "Wms0063206#"
+#  }
+#  set {
+#    name  = "ms-general.dbhost"
+#    value = "postgresql.ortelius.svc.cluster.local"
+#  }
 }
 
 # ortelius backstage https://github.com/ortelius/Backstage
