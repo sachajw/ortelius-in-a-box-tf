@@ -37,11 +37,20 @@ resource "kind_cluster" "ortelius" {
 }
 
 provider "kubectl" {
+  apply_retry_count = 15
   host                   = kind_cluster.ortelius.endpoint
   cluster_ca_certificate = kind_cluster.ortelius.cluster_ca_certificate
   client_certificate     = kind_cluster.ortelius.client_certificate
   client_key             = kind_cluster.ortelius.client_key
   load_config_file       = false
+
+  exec {
+    command     = "create secret generic -n metallb-system memberlist"
+    args = [
+      "--from-literal=secretkey=",
+      "$(openssl rand -base64 128)",
+    ]
+  }
 }
 
 provider "helm" {
@@ -97,6 +106,8 @@ resource "helm_release" "metallb" {
 
   values = [file("metallb/values.yaml")]
 }
+
+
 
 # ortelius https://artifacthub.io/packages/helm/ortelius/ortelius
 # postgresql https://artifacthub.io/packages/helm/bitnami/postgresql-ha
