@@ -1,5 +1,22 @@
 ### [Ortelius Issue 535](https://github.com/ortelius/ortelius/issues/535)
-### Start here and work your way down one stair at a time
+
+### Deployment Benchmark Times
+```
+time terraform apply
+```
+#### Dell G15 5510
+- Intel Core i5-10200H CPU @ 2.40GHZ
+- 8 GB RAM
+- SSD Disk
+- Windows 10
+- Benchmark time to deploy `10min`
+#### Mac M1
+- Apple Silicon CPU
+- 16 GB RAM
+- SSD Disk
+- OSX Ventura
+- Benchmark time to deploy `7min`
+
 ### [VSCode](https://code.visualstudio.com/) IDE
 - Download `VSCode IDE` [here](https://code.visualstudio.com/download)
 - Security starts in the IDE

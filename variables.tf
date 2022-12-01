@@ -22,6 +22,12 @@ variable "metallb_namespace" {
   default     = "metallb"
 }
 
+variable "purelb_namespace" {
+  type        = string
+  description = "The PureLB loadbalancer namespace"
+  default     = "purelb"
+}
+
 variable "kind_cluster_name" {
   type        = string
   description = "The name of the cluster."
