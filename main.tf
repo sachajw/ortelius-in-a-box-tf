@@ -44,13 +44,6 @@ provider "kubectl" {
   client_key             = kind_cluster.ortelius.client_key
   load_config_file       = false
 
-  exec {
-    command = "create secret generic -n metallb-system memberlist"
-    args = [
-      "--from-literal=secretkey=",
-      "$(openssl rand -base64 128)",
-    ]
-  }
 }
 
 provider "helm" {
@@ -95,19 +88,17 @@ resource "null_resource" "wait_for_ingress_nginx" {
 }
 
 # metallb loadbalancer https://metallb.universe.tf/ https://github.com/metallb/metallb
-#resource "helm_release" "metallb" {
-#  name             = "metallb"
-#  repository       = "https://metallb.github.io/metallb"
-#  chart            = "metallb"
-#  namespace        = var.metallb_namespace
-#  create_namespace = true
-#  depends_on       = [kind_cluster.ortelius]
-#  timeout          = 600
-#
-#  values = [file("metallb/values.yaml")]
-#}
+resource "helm_release" "metallb" {
+  name             = "metallb"
+  repository       = "https://metallb.github.io/metallb"
+  chart            = "metallb"
+  namespace        = var.metallb_namespace
+  create_namespace = true
+  depends_on       = [kind_cluster.ortelius]
+  timeout          = 600
 
-
+  #values = [file("metallb/values.yaml")]
+}
 
 # ortelius https://artifacthub.io/packages/helm/ortelius/ortelius
 # postgresql https://artifacthub.io/packages/helm/bitnami/postgresql-ha
