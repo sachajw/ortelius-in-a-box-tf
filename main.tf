@@ -119,15 +119,6 @@ resource "helm_release" "ortelius" {
   create_namespace = true
   depends_on       = [kind_cluster.ortelius]
   timeout          = 600
-
-  #  set {
-  #    name  = "ms-general.dbpass"
-  #    value = "Wms0063206#"
-  #  }
-  #  set {
-  #    name  = "ms-general.dbhost"
-  #    value = "postgresql.ortelius.svc.cluster.local"
-  #  }
 }
 
 # arangodb https://www.arangodb.com/ https://github.com/arangodb/kube-arangodb
